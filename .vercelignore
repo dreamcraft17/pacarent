@@ -1,7 +1,7 @@
-api/
-publish/
-deploy/
-docs/
+/api/
+/publish/
+/deploy/
+/docs/
 docker-compose.yml
 **/.env
 **/.env.local
