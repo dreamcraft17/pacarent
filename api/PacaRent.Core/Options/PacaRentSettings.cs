@@ -9,6 +9,9 @@ public class PacaRentSettings
     public string DocumentEncryptionKey { get; set; } = "";
     public string EmergencyHelpUrl { get; set; } = "tel:112";
     public string EmergencyHelpLabel { get; set; } = "Hubungi 112 (Darurat)";
+
+    /// <summary>Lewati OTP setelah daftar (testing/MVP). Matikan saat SMS/email OTP siap.</summary>
+    public bool SkipRegistrationOtp { get; set; } = true;
 }
 
 public class JwtSettings

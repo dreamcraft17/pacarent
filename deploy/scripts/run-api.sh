@@ -9,15 +9,19 @@ if [[ ! -f "$API_DIR/PacaRent.Api.dll" ]]; then
   exit 1
 fi
 
-if [[ -r "$ENV_FILE" ]]; then
-  set -a
-  # shellcheck disable=SC1090
-  source "$ENV_FILE"
-  set +a
-else
+if [[ ! -r "$ENV_FILE" ]]; then
   echo "Cannot read env file: $ENV_FILE (fix permissions for PM2 user)" >&2
   exit 1
 fi
+
+while IFS= read -r line || [[ -n "$line" ]]; do
+  line="${line%%$'\r'}"
+  [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
+  key="${line%%=*}"
+  val="${line#*=}"
+  [[ -z "$key" || "$line" != *"="* ]] && continue
+  export "$key=$val"
+done < "$ENV_FILE"
 
 cd "$API_DIR"
 exec /usr/bin/dotnet "$API_DIR/PacaRent.Api.dll"

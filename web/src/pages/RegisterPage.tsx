@@ -1,9 +1,11 @@
 import { useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { api } from '../api/client';
+import { api, setTokens } from '../api/client';
+import { useAuth } from '../auth/AuthContext';
 
 export default function RegisterPage() {
   const nav = useNavigate();
+  const { refreshMe } = useAuth();
   const [form, setForm] = useState({
     email: '',
     phone: '',
@@ -13,59 +15,39 @@ export default function RegisterPage() {
     city: 'Jakarta',
     termsAccepted: false,
   });
-  const [otp, setOtp] = useState('');
-  const [destination, setDestination] = useState('');
-  const [step, setStep] = useState<'form' | 'otp'>('form');
   const [error, setError] = useState('');
 
   const register = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
     try {
-      const res = await api<{ destination: string }>('/api/auth/register', {
+      const data = await api<{
+        accessToken?: string;
+        refreshToken?: string;
+        requiresOtp?: boolean;
+        destination?: string;
+      }>('/api/auth/register', {
         method: 'POST',
         body: JSON.stringify({ ...form, termsAccepted: true }),
       });
-      setDestination(res.destination);
-      setStep('otp');
+
+      if (data.accessToken && data.refreshToken) {
+        setTokens(data.accessToken, data.refreshToken);
+        await refreshMe();
+        nav('/bookings');
+        return;
+      }
+
+      if (data.requiresOtp) {
+        nav('/login', { state: { message: 'Daftar berhasil. Verifikasi OTP lalu masuk.' } });
+        return;
+      }
+
+      nav('/login');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Gagal daftar');
     }
   };
-
-  const verify = async (e: FormEvent) => {
-    e.preventDefault();
-    try {
-      await api('/api/auth/verify-otp', {
-        method: 'POST',
-        body: JSON.stringify({ destination, code: otp }),
-      });
-      nav('/login');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'OTP gagal');
-    }
-  };
-
-  if (step === 'otp') {
-    return (
-      <div className="auth-split">
-        <aside className="auth-split-aside">
-          <h2>Verifikasi nomor/email</h2>
-          <p>Kode 6 digit dikirim ke kontak yang kamu daftarkan. Masa berlaku 5 menit.</p>
-        </aside>
-        <div className="auth-split-form">
-          <h2>Masukkan OTP</h2>
-          <p className="muted">Dev: cek log API untuk kode OTP.</p>
-          <form onSubmit={verify}>
-            <label htmlFor="otp">Kode OTP</label>
-            <input id="otp" inputMode="numeric" value={otp} onChange={(e) => setOtp(e.target.value)} required />
-            {error && <p style={{ color: 'var(--pr-danger)' }}>{error}</p>}
-            <button type="submit">Verifikasi</button>
-          </form>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="auth-split">
@@ -74,7 +56,7 @@ export default function RegisterPage() {
         <p>Usia 18+. Profil mitra terverifikasi KTP—bukan chat anonim.</p>
         <ul>
           <li>Setujui S&amp;K &amp; kebijakan privasi (UU PDP)</li>
-          <li>Verifikasi OTP setelah registrasi</li>
+          <li>Langsung masuk setelah daftar (fase testing)</li>
           <li>Kontak darurat opsional di profil</li>
         </ul>
       </aside>
@@ -140,7 +122,7 @@ export default function RegisterPage() {
           </label>
           {error && <p style={{ color: 'var(--pr-danger)' }}>{error}</p>}
           <button type="submit" disabled={!form.termsAccepted}>
-            Daftar &amp; kirim OTP
+            Daftar
           </button>
         </form>
       </div>

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PacaRent.Api.Extensions;
+using PacaRent.Core.Options;
 using PacaRent.Api.Models;
 using PacaRent.Core.Entities;
 using PacaRent.Core.Enums;
@@ -19,7 +20,8 @@ public class AuthController(
     IOtpService otp,
     ITokenService tokens,
     IAuditService audit,
-    IOptions<Core.Options.JwtSettings> jwtOptions) : ControllerBase
+    IOptions<JwtSettings> jwtOptions,
+    IOptions<PacaRentSettings> pacaRentOptions) : ControllerBase
 {
     [HttpPost("register")]
     [EnableRateLimiting("auth")]
@@ -66,10 +68,17 @@ public class AuthController(
         };
         db.Users.Add(user);
         await db.SaveChangesAsync(ct);
+        await audit.LogAsync(userId, "register", "user", userId.ToString(), null, ct);
+
+        if (pacaRentOptions.Value.SkipRegistrationOtp)
+        {
+            var tokenResponse = await IssueTokensAsync(user, ct);
+            await audit.LogAsync(userId, "login", "user", userId.ToString(), null, ct);
+            return Ok(tokenResponse);
+        }
 
         await otp.IssueAsync(destination, ct);
-        await audit.LogAsync(userId, "register", "user", userId.ToString(), null, ct);
-        return Ok(new { message = "Registrasi berhasil. Verifikasi OTP.", destination });
+        return Ok(new { message = "Registrasi berhasil. Verifikasi OTP.", destination, requiresOtp = true });
     }
 
     [HttpPost("verify-otp")]
@@ -121,7 +130,15 @@ public class AuthController(
 
         user.FailedLoginAttempts = 0;
         user.LoginLockedUntil = null;
+        await db.SaveChangesAsync(ct);
 
+        var tokenResponse = await IssueTokensAsync(user, ct);
+        await audit.LogAsync(user.Id, "login", "user", user.Id.ToString(), null, ct);
+        return Ok(tokenResponse);
+    }
+
+    private async Task<TokenResponse> IssueTokensAsync(User user, CancellationToken ct)
+    {
         var (access, expires) = tokens.CreateAccessToken(user);
         var refreshPlain = tokens.GenerateRefreshTokenPlain();
         db.RefreshTokens.Add(new RefreshToken
@@ -132,9 +149,7 @@ public class AuthController(
             ExpiresAt = DateTime.UtcNow.AddDays(jwtOptions.Value.RefreshTokenDays)
         });
         await db.SaveChangesAsync(ct);
-        await audit.LogAsync(user.Id, "login", "user", user.Id.ToString(), null, ct);
-
-        return Ok(new TokenResponse(access, expires, refreshPlain, user.Id, user.Role.ToString()));
+        return new TokenResponse(access, expires, refreshPlain, user.Id, user.Role.ToString());
     }
 
     [HttpPost("refresh")]
