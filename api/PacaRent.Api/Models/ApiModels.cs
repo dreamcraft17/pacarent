@@ -1,0 +1,60 @@
+namespace PacaRent.Api.Models;
+
+public record ApiError(string Code, string Message, object? Detail = null);
+
+public record AuthRegisterRequest(
+    string? Email,
+    string? Phone,
+    string Password,
+    string FullName,
+    DateOnly BirthDate,
+    string City,
+    bool TermsAccepted);
+
+public record AuthVerifyOtpRequest(string Destination, string Code);
+
+public record AuthLoginRequest(string Login, string Password);
+
+public record AuthRefreshRequest(string RefreshToken);
+
+public record TokenResponse(
+    string AccessToken,
+    DateTime ExpiresAt,
+    string RefreshToken,
+    Guid UserId,
+    string Role);
+
+public record UpdateProfileRequest(
+    string FullName,
+    string City,
+    string? PhotoUrl,
+    string? EmergencyContactName,
+    string? EmergencyContactPhone,
+    DateOnly BirthDate);
+
+public record PartnerApplyRequest(
+    string Bio,
+    decimal HourlyRate,
+    int[] CategoryIds,
+    IFormFile? Ktp,
+    IFormFile? Selfie);
+
+public record CreateBookingRequest(
+    Guid PartnerId,
+    int CategoryId,
+    DateTime ScheduledAt,
+    int DurationHours,
+    string MeetingLocation,
+    string? Notes);
+
+public record CreateReviewRequest(Guid BookingId, Guid TargetId, int Rating, string? Comment);
+
+public record CreateReportRequest(
+    string TargetType,
+    Guid TargetId,
+    string Reason,
+    string Description);
+
+public record RejectPartnerRequest(string Reason);
+
+public record PaymentWebhookPayload(string BookingId, string Status, string? GatewayRef);

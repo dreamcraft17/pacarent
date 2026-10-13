@@ -1,0 +1,6 @@
+@PacaRent.Api_HostAddress = http://localhost:5261
+
+GET {{PacaRent.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

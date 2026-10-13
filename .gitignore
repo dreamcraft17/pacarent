@@ -1,0 +1,10 @@
+bin/
+obj/
+publish/
+node_modules/
+web/dist/
+data/
+.dotnet-cli/
+*.user
+.env
+appsettings.*.local.json

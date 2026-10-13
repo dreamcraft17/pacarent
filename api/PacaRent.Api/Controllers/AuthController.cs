@@ -1,0 +1,168 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using PacaRent.Api.Extensions;
+using PacaRent.Api.Models;
+using PacaRent.Core.Entities;
+using PacaRent.Core.Enums;
+using PacaRent.Core.Rules;
+using PacaRent.Infra.Data;
+using PacaRent.Infra.Services;
+
+namespace PacaRent.Api.Controllers;
+
+[ApiController]
+[Route("api/auth")]
+public class AuthController(
+    PacaRentDbContext db,
+    IOtpService otp,
+    ITokenService tokens,
+    IAuditService audit,
+    IOptions<Core.Options.JwtSettings> jwtOptions) : ControllerBase
+{
+    [HttpPost("register")]
+    [EnableRateLimiting("auth")]
+    public async Task<IActionResult> Register([FromBody] AuthRegisterRequest req, CancellationToken ct)
+    {
+        if (!req.TermsAccepted)
+        {
+            return BadRequest(new ApiError("terms_required", "Anda harus menyetujui Syarat & Ketentuan."));
+        }
+
+        if (string.IsNullOrWhiteSpace(req.Email) && string.IsNullOrWhiteSpace(req.Phone))
+        {
+            return BadRequest(new ApiError("contact_required", "Email atau nomor HP wajib diisi."));
+        }
+
+        if (!BusinessRules.IsAdult(req.BirthDate))
+        {
+            return BadRequest(new ApiError("underage", "Usia minimal 18 tahun."));
+        }
+
+        var destination = (req.Email ?? req.Phone)!.Trim().ToLowerInvariant();
+        if (await db.Users.AnyAsync(u => u.Email == req.Email || u.Phone == req.Phone, ct))
+        {
+            return Conflict(new ApiError("exists", "Akun sudah terdaftar."));
+        }
+
+        var userId = Guid.NewGuid();
+        var user = new User
+        {
+            Id = userId,
+            Email = req.Email?.Trim().ToLowerInvariant(),
+            Phone = req.Phone?.Trim(),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(req.Password),
+            Role = UserRole.User,
+            TermsAccepted = true,
+            TermsAcceptedAt = DateTime.UtcNow,
+            Profile = new UserProfile
+            {
+                UserId = userId,
+                FullName = req.FullName.Trim(),
+                BirthDate = req.BirthDate,
+                City = req.City.Trim()
+            }
+        };
+        db.Users.Add(user);
+        await db.SaveChangesAsync(ct);
+
+        await otp.IssueAsync(destination, ct);
+        await audit.LogAsync(userId, "register", "user", userId.ToString(), null, ct);
+        return Ok(new { message = "Registrasi berhasil. Verifikasi OTP.", destination });
+    }
+
+    [HttpPost("verify-otp")]
+    [EnableRateLimiting("auth")]
+    public async Task<IActionResult> VerifyOtp([FromBody] AuthVerifyOtpRequest req, CancellationToken ct)
+    {
+        if (!await otp.VerifyAsync(req.Destination, req.Code, ct))
+        {
+            return BadRequest(new ApiError("otp_invalid", "OTP tidak valid atau kedaluwarsa."));
+        }
+
+        return Ok(new { verified = true });
+    }
+
+    [HttpPost("login")]
+    [EnableRateLimiting("auth")]
+    public async Task<IActionResult> Login([FromBody] AuthLoginRequest req, CancellationToken ct)
+    {
+        var login = req.Login.Trim().ToLowerInvariant();
+        var user = await db.Users.Include(u => u.Profile)
+            .FirstOrDefaultAsync(u => u.Email == login || u.Phone == login, ct);
+        if (user is null)
+        {
+            return Unauthorized(new ApiError("invalid_credentials", "Login gagal."));
+        }
+
+        if (user.Status == UserStatus.Blocked)
+        {
+            return StatusCode(403, new ApiError("blocked", "Akun diblokir."));
+        }
+
+        if (user.LoginLockedUntil is not null && user.LoginLockedUntil > DateTime.UtcNow)
+        {
+            return StatusCode(429, new ApiError("locked", "Akun terkunci sementara."));
+        }
+
+        if (!BCrypt.Net.BCrypt.Verify(req.Password, user.PasswordHash))
+        {
+            user.FailedLoginAttempts++;
+            if (user.FailedLoginAttempts >= BusinessRules.MaxFailedLogins)
+            {
+                user.LoginLockedUntil = DateTime.UtcNow.AddMinutes(BusinessRules.LoginLockMinutes);
+                user.FailedLoginAttempts = 0;
+            }
+
+            await db.SaveChangesAsync(ct);
+            return Unauthorized(new ApiError("invalid_credentials", "Login gagal."));
+        }
+
+        user.FailedLoginAttempts = 0;
+        user.LoginLockedUntil = null;
+
+        var (access, expires) = tokens.CreateAccessToken(user);
+        var refreshPlain = tokens.GenerateRefreshTokenPlain();
+        db.RefreshTokens.Add(new RefreshToken
+        {
+            Id = Guid.NewGuid(),
+            UserId = user.Id,
+            TokenHash = tokens.HashToken(refreshPlain),
+            ExpiresAt = DateTime.UtcNow.AddDays(jwtOptions.Value.RefreshTokenDays)
+        });
+        await db.SaveChangesAsync(ct);
+        await audit.LogAsync(user.Id, "login", "user", user.Id.ToString(), null, ct);
+
+        return Ok(new TokenResponse(access, expires, refreshPlain, user.Id, user.Role.ToString()));
+    }
+
+    [HttpPost("refresh")]
+    public async Task<IActionResult> Refresh([FromBody] AuthRefreshRequest req, CancellationToken ct)
+    {
+        var hash = tokens.HashToken(req.RefreshToken);
+        var stored = await db.RefreshTokens
+            .Include(r => r.User)
+            .FirstOrDefaultAsync(r => r.TokenHash == hash && r.RevokedAt == null && r.ExpiresAt > DateTime.UtcNow, ct);
+        if (stored is null)
+        {
+            return Unauthorized(new ApiError("invalid_refresh", "Refresh token tidak valid."));
+        }
+
+        var (access, expires) = tokens.CreateAccessToken(stored.User);
+        return Ok(new TokenResponse(access, expires, req.RefreshToken, stored.UserId, stored.User.Role.ToString()));
+    }
+
+    [HttpGet("me")]
+    [Microsoft.AspNetCore.Authorization.Authorize]
+    public async Task<IActionResult> Me(CancellationToken ct)
+    {
+        var userId = HttpContext.GetUserId();
+        if (userId is null) return Unauthorized();
+        var user = await db.Users.AsNoTracking()
+            .Include(u => u.Profile)
+            .Include(u => u.PartnerProfile)
+            .FirstOrDefaultAsync(u => u.Id == userId, ct);
+        return user is null ? NotFound() : Ok(user);
+    }
+}

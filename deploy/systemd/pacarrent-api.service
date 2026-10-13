@@ -1,0 +1,16 @@
+[Unit]
+Description=PacaRent API (.NET 8)
+After=network.target postgresql.service
+
+[Service]
+WorkingDirectory=/opt/pacarent/api
+ExecStart=/usr/bin/dotnet /opt/pacarent/api/PacaRent.Api.dll
+EnvironmentFile=/etc/pacarrent/api.env
+User=pacarent
+Group=pacarent
+Restart=always
+RestartSec=5
+SyslogIdentifier=pacarrent-api
+
+[Install]
+WantedBy=multi-user.target

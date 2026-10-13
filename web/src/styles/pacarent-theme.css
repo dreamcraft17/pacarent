@@ -1,0 +1,25 @@
+:root {
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Source Sans 3', system-ui, sans-serif;
+
+  --pr-primary: var(--colors-primary-DEFAULT);
+  --pr-primary-hover: var(--colors-primary-700);
+  --pr-primary-soft: #e6f4f2;
+  --pr-heading: var(--colors-neutral-900);
+  --pr-text: var(--colors-neutral-700);
+  --pr-muted: var(--colors-neutral-500);
+  --pr-border: var(--colors-neutral-200);
+  --pr-surface: #ffffff;
+  --pr-bg: #f3f7f6;
+  --pr-danger: var(--colors-semantic-error-base, #dc2626);
+  --pr-success: var(--colors-semantic-success-dark);
+  --pr-radius: var(--borders-radius-default, 8px);
+  --pr-shadow: 0 1px 2px rgb(15 23 42 / 6%), 0 4px 12px rgb(15 118 110 / 6%);
+
+  /* Dating-style accents — warm like, teal brand (bukan pink/ungu template) */
+  --pr-like: #c94d66;
+  --pr-like-soft: #fce8ed;
+  --pr-like-ring: rgb(201 77 102 / 35%);
+  --pr-discover-bg: #faf7f5;
+  --pr-card-radius: 22px;
+}
