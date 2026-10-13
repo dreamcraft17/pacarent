@@ -1,60 +1,144 @@
-# PacaRent (MVP Web)
+# PacaRent
 
 > **Author:** Dozer  
-> **Date:** 2026-10-12
+> **Last updated:** 2026-10-13
 
-Platform web **sewa pacar & teman kencan**: daftar → cari → booking → bayar → selesai → ulasan.
+Platform web **sewa pacar & teman kencan**: daftar → jelajahi mitra → booking → bayar (escrow) → selesai → ulasan. MVP monorepo: API ASP.NET Core + SPA React.
 
-Dokumen produk: [`docs/PRD.md`](docs/PRD.md), [`docs/SRS.md`](docs/SRS.md), [`docs/SDD.md`](docs/SDD.md).
+Dokumen produk: [`docs/PRD.md`](docs/PRD.md) · [`docs/SRS.md`](docs/SRS.md) · [`docs/SDD.md`](docs/SDD.md) · status implementasi: [`docs/IMPLEMENTATION-STATUS.md`](docs/IMPLEMENTATION-STATUS.md)
 
-## Struktur
+## Tech stack
 
-| Folder | Isi |
-|--------|-----|
-| `api/` | ASP.NET Core 8 — `PacaRent.Api`, `PacaRent.Core`, `PacaRent.Infra`, `PacaRent.Tests` |
-| `web/` | React + Vite (bahasa Indonesia, responsif) |
-| `deploy/` | Nginx, systemd, skrip deploy, contoh env |
-| `docs/` | PRD, SRS, SDD |
+| Lapisan | Teknologi |
+|---------|-----------|
+| API | ASP.NET Core 8, JWT, EF Core |
+| DB | PostgreSQL 16 (produksi); in-memory (dev default) |
+| Web | React 19, Vite 8, React Router 7, TypeScript |
+| Edge (opsional) | Netlify / Vercel untuk static web saja |
+| VPS (referensi SDD) | Nginx, systemd, `deploy/` |
+
+## Prasyarat
+
+- **.NET 8 SDK** (`dotnet --version`)
+- **Node.js 20+** dan npm (untuk `web/`)
+- **Docker** (opsional) — hanya untuk PostgreSQL lokal via `docker compose`
+- Di macOS, hindari port **5000** untuk API (sering bentrok AirPlay); dev memakai **5050**
+
+## Struktur repo
+
+| Path | Isi |
+|------|-----|
+| `api/` | Solution `PacaRent.sln` — Api, Core, Infra, Tests |
+| `web/` | Frontend Vite; build → `web/dist/` |
+| `deploy/` | Nginx, systemd, `scripts/deploy.sh`, `api.env.example` |
+| `docs/` | PRD, SRS, SDD, panduan deploy, riset UX |
+| `netlify.toml` | Build Netlify (base `web/`) |
+| `docker-compose.yml` | Postgres lokal saja (bukan container app) |
+
+## Konfigurasi
+
+### Development (default)
+
+`api/PacaRent.Api/appsettings.Development.json` mengaktifkan **`Database:UseInMemory: true`** — tidak perlu Postgres untuk preview UI. Seed admin + mitra demo otomatis saat API start.
+
+### Production / Postgres
+
+Variabel utama (lihat [`deploy/scripts/api.env.example`](deploy/scripts/api.env.example)):
+
+| Variabel | Fungsi |
+|----------|--------|
+| `ConnectionStrings__DefaultConnection` | PostgreSQL |
+| `Jwt__Secret` | Signing JWT (min. 32 karakter) |
+| `PacaRent__DocumentEncryptionKey` | Enkripsi upload KTP/selfie |
+| `PacaRent__DocumentStoragePath` | Folder dokumen di server |
+| `Doku__*` | Payment gateway (mock dimatikan di prod) |
+| `Smtp__*` | Email OTP (mock dimatikan di prod) |
+| `ASPNETCORE_URLS` | Bind Kestrel (contoh `http://127.0.0.1:5000`) |
+
+Jangan commit secret nyata. Override via env file atau secret manager.
 
 ## Jalankan lokal
 
+### 1. API
+
 ```bash
-# Database
-docker compose up -d
-
-# API (port 5000)
-export DOTNET_ROOT="$HOME/.dotnet"
+export DOTNET_ROOT="${DOTNET_ROOT:-$HOME/.dotnet}"
 export PATH="$DOTNET_ROOT:$PATH"
-cd api/PacaRent.Api
-dotnet run --urls http://localhost:5050
 
-# Web (port 5173, proxy /api)
-cd web && npm install && npm run dev
+cd api/PacaRent.Api
+ASPNETCORE_ENVIRONMENT=Development dotnet run --urls http://localhost:5050
 ```
 
-Akun admin seed: `admin@pacarent.local` / `Admin123!`
+- Swagger (dev): `http://localhost:5050/swagger`
+- Health: `http://localhost:5050/health`
 
-OTP dev: kode 6 digit muncul di **log API** (mock SMS/email).
+### 2. Web
 
-Pembayaran dev: endpoint mock DOKU (`POST /api/payments/mock/complete/{bookingId}`) — ganti ke webhook DOKU produksi setelah akun gateway disetujui.
+Terminal kedua:
 
-## Deploy frontend (Vercel / Netlify)
+```bash
+cd web
+npm install
+npm run dev
+```
 
-Panduan langkah demi langkah (hybrid: web di edge, API di VPS): [`docs/guides/DEPLOY-VERCEL-NETLIFY.md`](docs/guides/DEPLOY-VERCEL-NETLIFY.md).
+Buka `http://localhost:5173`. Permintaan ke `/api/*` di-proxy ke `http://localhost:5050` ([`web/vite.config.ts`](web/vite.config.ts)).
 
-File siap pakai: [`netlify.toml`](netlify.toml), [`web/vercel.json`](web/vercel.json) — **ganti URL API** sebelum produksi.
+### 3. PostgreSQL (opsional)
 
-## Deploy VPS (tanpa Docker app)
+Jika ingin dev against Postgres, matikan in-memory di `appsettings.Development.json` (`UseInMemory: false`), lalu:
+
+```bash
+docker compose up -d
+```
+
+Connection string default ada di [`api/PacaRent.Api/appsettings.json`](api/PacaRent.Api/appsettings.json).
+
+## Akun demo (in-memory dev)
+
+| Peran | Login | Password |
+|-------|--------|----------|
+| Admin | `admin@pacarent.local` | `Admin123!` |
+| Mitra | `mitra@pacarent.local` | `Mitra123!` |
+
+OTP registrasi: kode 6 digit di **log API** (`Smtp:UseMock`). Pembayaran dev: mock DOKU — lihat Swagger / [`docs/IMPLEMENTATION-STATUS.md`](docs/IMPLEMENTATION-STATUS.md).
+
+## Scripts web
+
+Dijalankan dari folder `web/`:
+
+| Perintah | Fungsi |
+|----------|--------|
+| `npm run dev` | Dev server port 5173 |
+| `npm run build` | `tsc -b && vite build` → `dist/` |
+| `npm run preview` | Preview build production |
+| `npm run lint` | `oxlint` |
+
+## Tes API
+
+```bash
+cd api
+dotnet test
+```
+
+## Deploy
+
+### Frontend — Vercel atau Netlify
+
+Web saja; **API harus host terpisah** (VPS atau host .NET).
+
+Panduan: [`docs/guides/DEPLOY-VERCEL-NETLIFY.md`](docs/guides/DEPLOY-VERCEL-NETLIFY.md)
+
+Sebelum produksi, ganti URL API di [`netlify.toml`](netlify.toml) dan [`web/vercel.json`](web/vercel.json).
+
+### Full stack — VPS (SDD)
 
 ```bash
 ./deploy/scripts/deploy.sh
-# rsync publish/ ke /opt/pacarent, salin deploy/scripts/api.env.example → /etc/pacarrent/api.env
-sudo systemctl enable --now pacarrent-api
 ```
 
-## Cakupan SRS (MVP)
+Artefak di `publish/api` dan `publish/web`. Salin ke server, set `/etc/pacarrent/api.env` dari [`deploy/scripts/api.env.example`](deploy/scripts/api.env.example), enable [`deploy/systemd/pacarrent-api.service`](deploy/systemd/pacarrent-api.service), pasang [`deploy/nginx/pacarrent.conf`](deploy/nginx/pacarrent.conf).
 
-Lihat [`docs/IMPLEMENTATION-STATUS.md`](docs/IMPLEMENTATION-STATUS.md) untuk pemetaan FR/NFR ke kode.
+## Batasan MVP
 
-**Belum produksi-ready tanpa konfigurasi eksternal:** integrasi DOKU live (signature + disbursement), SMTP/OTP SMS-WA nyata, konsultasi hukum escrow, target metrik/TBD di PRD.
-# pacarent
+Belum siap produksi penuh tanpa setup eksternal: DOKU live, SMTP/SMS-WA nyata, review hukum escrow, beberapa angka target di PRD masih TBD. Rincian: [`docs/IMPLEMENTATION-STATUS.md`](docs/IMPLEMENTATION-STATUS.md).
