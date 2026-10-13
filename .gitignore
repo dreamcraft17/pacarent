@@ -3,7 +3,8 @@ obj/
 publish/
 node_modules/
 web/dist/
-data/
+# Upload dokumen runtime (bukan folder kode PacaRent.Infra/Data)
+/data/
 .dotnet-cli/
 *.user
 .env

@@ -84,15 +84,11 @@ npm run dev
 
 Buka `http://localhost:5173`. Permintaan ke `/api/*` di-proxy ke `http://localhost:5050` ([`web/vite.config.ts`](web/vite.config.ts)).
 
-### 3. PostgreSQL (opsional)
+### 3. PostgreSQL (opsional di lokal)
 
-Jika ingin dev against Postgres, matikan in-memory di `appsettings.Development.json` (`UseInMemory: false`), lalu:
+Dev default **in-memory** (tanpa Postgres). Untuk Postgres lokal, set `Database:UseInMemory` false di `appsettings.Development.json` dan jalankan Postgres sendiri, atau `docker compose up -d` jika memakai Docker.
 
-```bash
-docker compose up -d
-```
-
-Connection string default ada di [`api/PacaRent.Api/appsettings.json`](api/PacaRent.Api/appsettings.json).
+**VPS produksi (tanpa Docker):** [`docs/guides/VPS-DEPLOY-NO-DOCKER.md`](docs/guides/VPS-DEPLOY-NO-DOCKER.md)
 
 ## Akun demo (in-memory dev)
 
@@ -127,9 +123,11 @@ dotnet test
 
 Web saja; **API harus host terpisah** (VPS atau host .NET).
 
-Panduan: [`docs/guides/DEPLOY-VERCEL-NETLIFY.md`](docs/guides/DEPLOY-VERCEL-NETLIFY.md)
+Quickstart Vercel: [`docs/guides/VERCEL-QUICKSTART.md`](docs/guides/VERCEL-QUICKSTART.md)
 
-Sebelum produksi, ganti URL API di [`netlify.toml`](netlify.toml) dan [`web/vercel.json`](web/vercel.json).
+Panduan lengkap: [`docs/guides/DEPLOY-VERCEL-NETLIFY.md`](docs/guides/DEPLOY-VERCEL-NETLIFY.md)
+
+Di Vercel, set env **`VITE_API_BASE`** ke URL API (lihat [`web/.env.example`](web/.env.example)). Netlify: proxy di [`netlify.toml`](netlify.toml).
 
 ### Full stack — VPS (SDD)
 

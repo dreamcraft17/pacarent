@@ -1,6 +1,16 @@
 const TOKEN_KEY = 'pacarent_access';
 const REFRESH_KEY = 'pacarent_refresh';
 
+/** Dev: kosong → Vite proxy /api. Vercel: set VITE_API_BASE ke origin API (https://…). */
+function apiUrl(path: string): string {
+  if (path.startsWith('http://') || path.startsWith('https://')) {
+    return path;
+  }
+  const normalized = path.startsWith('/') ? path : `/${path}`;
+  const base = import.meta.env.VITE_API_BASE?.replace(/\/$/, '') ?? '';
+  return base ? `${base}${normalized}` : normalized;
+}
+
 export function getAccessToken() {
   return localStorage.getItem(TOKEN_KEY);
 }
@@ -26,7 +36,7 @@ export async function api<T>(
   const token = getAccessToken();
   if (token) headers.set('Authorization', `Bearer ${token}`);
 
-  const res = await fetch(path, { ...options, headers });
+  const res = await fetch(apiUrl(path), { ...options, headers });
   if (!res.ok) {
     const err = await res.json().catch(() => ({ message: res.statusText }));
     throw new Error(err.message || err.Message || 'Request gagal');

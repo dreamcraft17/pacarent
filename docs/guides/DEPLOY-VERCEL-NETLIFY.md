@@ -124,30 +124,13 @@ API sudah `AllowAnyOrigin` di [`Program.cs`](../../api/PacaRent.Api/Program.cs).
 
 ## Bagian C — Deploy web di Vercel
 
-### C1. Siapkan `vercel.json`
+### C1. Konfigurasi repo (sudah ada)
 
-Di folder **`pacarent/web/`**:
+- [`web/vercel.json`](../../web/vercel.json) — build Vite, cache assets
+- [`web/.env.example`](../../web/.env.example) — `VITE_API_BASE`
+- [`web/src/api/client.ts`](../../web/src/api/client.ts) — prefix API dari env saat build
 
-```json
-{
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "vite",
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "https://api.pacarent.id/api/:path*"
-    },
-    {
-      "source": "/((?!api/).*)",
-      "destination": "/index.html"
-    }
-  ]
-}
-```
-
-Ganti `https://api.pacarent.id` dengan URL API kamu.
+**Tidak** perlu rewrite `/api` di `vercel.json`: set **`VITE_API_BASE`** di dashboard Vercel ke origin API (HTTPS).
 
 ### C2. Langkah di dashboard Vercel
 
@@ -155,7 +138,7 @@ Ganti `https://api.pacarent.id` dengan URL API kamu.
 2. **Root Directory:** `web` (penting — monorepo).
 3. Framework Preset: **Vite** (terdeteksi otomatis).
 4. **Build Command:** `npm run build` · **Output Directory:** `dist`.
-5. Environment Variables: opsional `VITE_*` jika nanti client pakai base URL absolut (**saat ini** [`client.ts`](../../web/src/api/client.ts) memakai path relatif `/api` — cukup rewrite di atas).
+5. **Environment Variables → Production & Preview:** `VITE_API_BASE` = `https://<api-host>` (wajib jika API di domain lain).
 6. **Deploy**.
 7. Custom domain + cek `/api/categories`.
 
