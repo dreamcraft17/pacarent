@@ -176,8 +176,16 @@ public class AuthController(
         if (userId is null) return Unauthorized();
         var user = await db.Users.AsNoTracking()
             .Include(u => u.Profile)
-            .Include(u => u.PartnerProfile)
             .FirstOrDefaultAsync(u => u.Id == userId, ct);
-        return user is null ? NotFound() : Ok(user);
+        if (user is null)
+        {
+            return NotFound();
+        }
+
+        AuthMeProfileDto? profile = user.Profile is null
+            ? null
+            : new AuthMeProfileDto(user.Profile.FullName, user.Profile.City);
+
+        return Ok(new AuthMeResponse(user.Id, user.Email, user.Phone, user.Role.ToString(), profile));
     }
 }
