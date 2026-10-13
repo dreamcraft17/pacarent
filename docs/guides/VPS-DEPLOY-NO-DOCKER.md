@@ -114,35 +114,52 @@ curl -s http://127.0.0.1:5000/api/categories
 
 Migrasi EF jalan otomatis saat API start.
 
+### Alternatif: PM2 (ganti systemd)
+
+Jangan jalankan **systemd dan PM2** bersamaan (port 5000 bentrok).
+
+```bash
+sudo systemctl stop pacarrent-api
+sudo systemctl disable pacarrent-api
+
+# PM2 user (dntech) harus bisa baca env
+sudo chgrp dntech /etc/pacarrent/api.env
+sudo chmod 640 /etc/pacarrent/api.env
+
+cd ~/pacarent
+git pull
+chmod +x deploy/scripts/run-api.sh
+
+# Node + PM2 (sekali)
+command -v pm2 >/dev/null || npm install -g pm2
+
+pm2 start deploy/pm2/ecosystem.config.cjs
+pm2 save
+pm2 startup   # ikuti perintah sudo yang dicetak PM2
+```
+
+Log: `pm2 logs pacarrent-api` · restart: `pm2 restart pacarrent-api`
+
 ---
 
 ## 5. Nginx + HTTPS (subdomain API)
 
-File `/etc/nginx/sites-available/pacarent-api` — ganti domain:
-
-```nginx
-server {
-    listen 80;
-    server_name api.pacarent.id;
-
-    location / {
-        proxy_pass http://127.0.0.1:5000;
-        proxy_http_version 1.1;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-```
+Contoh DN Tech: **`api.pacarent.dntech.id`**. Template repo: [`deploy/nginx/pacarent-api.dntech.id.conf`](../../deploy/nginx/pacarent-api.dntech.id.conf).
 
 ```bash
+sudo cp ~/pacarent/deploy/nginx/pacarent-api.dntech.id.conf /etc/nginx/sites-available/pacarent-api
 sudo ln -sf /etc/nginx/sites-available/pacarent-api /etc/nginx/sites-enabled/
 sudo nginx -t && sudo systemctl reload nginx
-sudo certbot --nginx -d api.pacarent.id
+sudo certbot --nginx -d api.pacarent.dntech.id
 ```
 
-DNS: **A** `api` → IP VPS.
+DNS: record **A** `api.pacarent.dntech.id` → IP VPS (atau CNAME ke host yang sama).
+
+Tes setelah SSL:
+
+```bash
+curl -s https://api.pacarent.dntech.id/health
+```
 
 ---
 
@@ -152,7 +169,7 @@ Env **Production + Preview:**
 
 | Key | Value |
 |-----|--------|
-| `VITE_API_BASE` | `https://api.pacarent.id` |
+| `VITE_API_BASE` | `https://api.pacarent.dntech.id` |
 
 Redeploy web setelah env diset.
 
@@ -170,6 +187,7 @@ Copy `publish/web` ke `/var/www/pacarent/web`, pakai [`deploy/nginx/pacarrent.co
 |---------|----------|
 | API exit / DB error | `journalctl -u pacarrent-api -n 80`; cek connection string & `Database__UseInMemory=false` |
 | `password authentication failed` | Reset password user `pacarent` di Postgres |
-| 502 Nginx | `curl 127.0.0.1:5000/health`; pastikan `pacarrent-api` active |
+| 502 Nginx | `curl 127.0.0.1:5000/health`; pastikan API jalan (`systemctl` atau `pm2 status`) |
+| PM2 env denied | `chmod 640` + `chgrp dntech` pada `/etc/pacarrent/api.env` |
 
 Lihat juga: [`VERCEL-QUICKSTART.md`](VERCEL-QUICKSTART.md).
