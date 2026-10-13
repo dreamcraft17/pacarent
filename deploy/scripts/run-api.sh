@@ -23,6 +23,13 @@ while IFS= read -r line || [[ -n "$line" ]]; do
   val="${line#*=}"
 
   [[ -z "$key" ]] && continue
+
+  if [[ "$val" == \"*\" && "$val" == *\" ]]; then
+    val="${val:1:-1}"
+  elif [[ "$val" == \'*\' && "$val" == *\' ]]; then
+    val="${val:1:-1}"
+  fi
+
   export "$key=$val"
 done < "$ENV_FILE"
 
