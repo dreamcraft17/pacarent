@@ -15,11 +15,14 @@ if [[ ! -r "$ENV_FILE" ]]; then
 fi
 
 while IFS= read -r line || [[ -n "$line" ]]; do
-  line="${line%%$'\r'}"
+  line="${line%$'\r'}"
   [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
+  [[ "$line" != *"="* ]] && continue
+
   key="${line%%=*}"
   val="${line#*=}"
-  [[ -z "$key" || "$line" != *"="* ]] && continue
+
+  [[ -z "$key" ]] && continue
   export "$key=$val"
 done < "$ENV_FILE"
 
