@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Jalankan setelah `git pull` (merge). Pasang sekali: deploy/scripts/install-vps-auto-deploy.sh
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+DEPLOY="$ROOT/deploy/scripts/vps-deploy-api.sh"
+
+[[ -x "$DEPLOY" ]] || exit 0
+[[ -d /opt/pacarent/api ]] || exit 0
+
+exec "$DEPLOY"

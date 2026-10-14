@@ -6,6 +6,9 @@
 
 Frontend di **Vercel**; di VPS hanya **PostgreSQL (native) + API .NET + Nginx**.
 
+**Cheat sheet** (update rutin + syntax `dotnet publish`): [`VPS-DEPLOY-CHEATSHEET.md`](VPS-DEPLOY-CHEATSHEET.md).  
+**Auto deploy setelah `git pull`:** jalankan sekali `./deploy/scripts/install-vps-auto-deploy.sh` di VPS.
+
 ## Prasyarat
 
 ```bash
