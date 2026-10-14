@@ -2,24 +2,17 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { api } from '../api/client';
 import FilterMenu from '../components/FilterMenu';
 import PartnerCardStack, { type StackPartner } from '../components/PartnerCardStack';
-import VisitorLocationControl from '../components/VisitorLocationControl';
-import { useVisitorLocation } from '../hooks/useVisitorLocation';
+import { jabodetabekFilterOptions } from '../data/jabodetabek-cities';
 
 type Category = { id: number; name: string };
 
 export default function DiscoverPage() {
-  const visitorLocation = useVisitorLocation();
-  const [useNearby, setUseNearby] = useState(true);
   const [categories, setCategories] = useState<Category[]>([]);
   const [partners, setPartners] = useState<StackPartner[]>([]);
   const [category, setCategory] = useState('');
+  const [city, setCity] = useState('');
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
-
-  const cityQuery =
-    useNearby && visitorLocation.status === 'ready' && visitorLocation.filterCity
-      ? visitorLocation.filterCity
-      : '';
 
   useEffect(() => {
     api<Category[]>('/api/categories').then(setCategories).catch(console.error);
@@ -30,7 +23,7 @@ export default function DiscoverPage() {
     setLoadError(false);
     const q = new URLSearchParams();
     if (category) q.set('category', category);
-    if (cityQuery) q.set('city', cityQuery);
+    if (city) q.set('city', city);
     api<StackPartner[]>(`/api/partners?${q}`)
       .then(setPartners)
       .catch(() => {
@@ -38,18 +31,15 @@ export default function DiscoverPage() {
         setPartners([]);
       })
       .finally(() => setLoading(false));
-  }, [category, cityQuery]);
+  }, [category, city]);
 
   useEffect(() => {
-    if (visitorLocation.status === 'loading' || visitorLocation.status === 'idle') {
-      return;
-    }
     load();
-  }, [load, visitorLocation.status]);
+  }, [load]);
 
   const resetFilters = () => {
     setCategory('');
-    setUseNearby(false);
+    setCity('');
   };
 
   const categoryOptions = useMemo(
@@ -60,7 +50,7 @@ export default function DiscoverPage() {
     [categories],
   );
 
-  const hasActiveFilters = Boolean(category || (useNearby && cityQuery));
+  const cityOptions = useMemo(() => jabodetabekFilterOptions('Semua kota (Jabodetabek)'), []);
 
   return (
     <div className="discover-page">
@@ -72,10 +62,12 @@ export default function DiscoverPage() {
           options={categoryOptions}
           onChange={setCategory}
         />
-        <VisitorLocationControl
-          location={visitorLocation}
-          useNearby={useNearby}
-          onToggleNearby={setUseNearby}
+        <FilterMenu
+          label="Kota"
+          placeholder="Kota"
+          value={city}
+          options={cityOptions}
+          onChange={setCity}
         />
       </div>
 
@@ -90,9 +82,9 @@ export default function DiscoverPage() {
 
       <PartnerCardStack
         partners={partners}
-        loading={loading || visitorLocation.status === 'loading'}
+        loading={loading}
         fetchFailed={loadError}
-        hasActiveFilters={hasActiveFilters}
+        hasActiveFilters={Boolean(category || city)}
         onResetFilters={resetFilters}
         onReload={load}
       />

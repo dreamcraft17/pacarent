@@ -1,30 +1,22 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api, setTokens } from '../api/client';
 import { useAuth } from '../auth/AuthContext';
-import { useVisitorLocation } from '../hooks/useVisitorLocation';
+import { jabodetabekCities } from '../data/jabodetabek-cities';
 
 export default function RegisterPage() {
   const nav = useNavigate();
   const { refreshMe } = useAuth();
-  const visitorLocation = useVisitorLocation();
   const [form, setForm] = useState({
     email: '',
     phone: '',
     password: '',
     fullName: '',
     birthDate: '2000-01-01',
-    city: 'Jakarta',
+    city: 'Jakarta Selatan',
     termsAccepted: false,
   });
   const [error, setError] = useState('');
-
-  useEffect(() => {
-    if (visitorLocation.status !== 'ready' || !visitorLocation.filterCity) return;
-    setForm((f) =>
-      f.city === 'Jakarta' || !f.city.trim() ? { ...f, city: visitorLocation.filterCity } : f,
-    );
-  }, [visitorLocation.status, visitorLocation.filterCity]);
 
   const register = async (e: FormEvent) => {
     e.preventDefault();
@@ -102,16 +94,19 @@ export default function RegisterPage() {
             onChange={(e) => setForm({ ...form, birthDate: e.target.value })}
             required
           />
-          <label htmlFor="city">Kota</label>
-          <input
+          <label htmlFor="city">Kota (Jabodetabek)</label>
+          <select
             id="city"
             value={form.city}
             onChange={(e) => setForm({ ...form, city: e.target.value })}
-            placeholder={
-              visitorLocation.status === 'ready' ? visitorLocation.label : 'Dari lokasi kamu (GPS)'
-            }
             required
-          />
+          >
+            {jabodetabekCities.map((c) => (
+              <option key={c.id} value={c.name}>
+                {c.name}
+              </option>
+            ))}
+          </select>
           <label htmlFor="pw">Password</label>
           <input
             id="pw"

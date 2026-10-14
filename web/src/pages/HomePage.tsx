@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../api/client';
-import VisitorLocationControl from '../components/VisitorLocationControl';
-import { useVisitorLocation } from '../hooks/useVisitorLocation';
+import { jabodetabekCities } from '../data/jabodetabek-cities';
 
 type Category = { id: number; name: string };
 type Partner = {
@@ -17,19 +16,13 @@ type Partner = {
 };
 
 export default function HomePage() {
-  const visitorLocation = useVisitorLocation();
-  const [useNearby, setUseNearby] = useState(true);
   const [categories, setCategories] = useState<Category[]>([]);
   const [partners, setPartners] = useState<Partner[]>([]);
   const [category, setCategory] = useState('');
+  const [city, setCity] = useState('');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [loadError, setLoadError] = useState(false);
-
-  const cityQuery =
-    useNearby && visitorLocation.status === 'ready' && visitorLocation.filterCity
-      ? visitorLocation.filterCity
-      : '';
 
   useEffect(() => {
     api<Category[]>('/api/categories').then(setCategories).catch(() => setLoadError(true));
@@ -39,18 +32,17 @@ export default function HomePage() {
     setLoadError(false);
     const q = new URLSearchParams();
     if (category) q.set('category', category);
-    if (cityQuery) q.set('city', cityQuery);
+    if (city) q.set('city', city);
     if (minPrice) q.set('minPrice', minPrice);
     if (maxPrice) q.set('maxPrice', maxPrice);
     api<Partner[]>(`/api/partners?${q}`)
       .then(setPartners)
       .catch(() => setLoadError(true));
-  }, [category, cityQuery, minPrice, maxPrice]);
+  }, [category, city, minPrice, maxPrice]);
 
   useEffect(() => {
-    if (visitorLocation.status === 'loading' || visitorLocation.status === 'idle') return;
     search();
-  }, [search, visitorLocation.status]);
+  }, [search]);
 
   return (
     <div>
@@ -65,7 +57,7 @@ export default function HomePage() {
         <div className="card card-highlight">
           <h2>Cara kerja</h2>
           <ol className="hero-steps">
-            <li>Cari mitra dekat lokasi kamu (GPS / Maps)</li>
+            <li>Cari mitra berdasarkan kota &amp; kategori (Jabodetabek)</li>
             <li>Booking → mitra terima → bayar (dana ditahan)</li>
             <li>Bertemu sesuai lokasi booking → selesai → ulasan</li>
           </ol>
@@ -86,13 +78,16 @@ export default function HomePage() {
               ))}
             </select>
           </div>
-          <div className="filters-location">
-            <span className="filters-location-label">Lokasi</span>
-            <VisitorLocationControl
-              location={visitorLocation}
-              useNearby={useNearby}
-              onToggleNearby={setUseNearby}
-            />
+          <div>
+            <label htmlFor="city">Kota (Jabodetabek)</label>
+            <select id="city" value={city} onChange={(e) => setCity(e.target.value)}>
+              <option value="">Semua kota</option>
+              {jabodetabekCities.map((c) => (
+                <option key={c.id} value={c.name}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             <label htmlFor="minp">Harga min/jam (Rp)</label>
@@ -150,7 +145,7 @@ export default function HomePage() {
 
       {!loadError && partners.length === 0 && (
         <div className="card empty-state">
-          Belum ada mitra di lokasi ini. Coba &quot;Semua kota&quot; atau daftar sebagai mitra.
+          Belum ada mitra di filter ini. Coba kota lain atau daftar sebagai mitra.
         </div>
       )}
     </div>

@@ -1,0 +1,19 @@
+{
+  "region": "Jabodetabek",
+  "description": "Jakarta, Bogor, Depok, Tangerang, Bekasi — kota/kabupaten utama di JMR (referensi nama resmi daerah).",
+  "cities": [
+    { "id": "jakarta-pusat", "name": "Jakarta Pusat" },
+    { "id": "jakarta-utara", "name": "Jakarta Utara" },
+    { "id": "jakarta-barat", "name": "Jakarta Barat" },
+    { "id": "jakarta-selatan", "name": "Jakarta Selatan" },
+    { "id": "jakarta-timur", "name": "Jakarta Timur" },
+    { "id": "jakarta", "name": "Jakarta" },
+    { "id": "bogor", "name": "Bogor" },
+    { "id": "depok", "name": "Depok" },
+    { "id": "bekasi", "name": "Bekasi" },
+    { "id": "cikarang", "name": "Cikarang" },
+    { "id": "tangerang", "name": "Tangerang" },
+    { "id": "tangerang-selatan", "name": "Tangerang Selatan" },
+    { "id": "cibinong", "name": "Cibinong" }
+  ]
+}
