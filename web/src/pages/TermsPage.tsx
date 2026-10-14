@@ -30,7 +30,7 @@ export default function TermsPage() {
           </span>
           <div>
             <strong>Saling menghormati</strong>
-            <span>Pelecehan, ancaman, dan penipuan tidak diperbolehkan.</span>
+            <span>Pelecehan, ancaman, dan penipuan diluar tanggung jawab Platform (PacaRent).</span>
           </div>
         </div>
         <div className="terms-summary-item">
