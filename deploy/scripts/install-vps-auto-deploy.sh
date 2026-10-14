@@ -11,6 +11,9 @@ chmod +x deploy/git-hooks/post-merge
 
 git config core.hooksPath deploy/git-hooks
 
+# Fast-forward pull tidak selalu memicu post-merge — alias `git pull` aman di VPS ini saja.
+git config alias.pull '!f() { command git pull "$@" && "'"$ROOT"'/deploy/scripts/vps-deploy-api.sh"; }; f'
+
 cat <<EOF
 
 ╔══════════════════════════════════════════════════════════════╗
@@ -19,18 +22,19 @@ cat <<EOF
 ║  Sekarang cukup:                                             ║
 ║    cd ~/pacarent && git pull                                 ║
 ║                                                              ║
+║  (Alias git pull di repo ini → pull + deploy script)         ║
+║                                                              ║
 ║  Kalau commit baru mengubah folder api/ atau run-api.sh:     ║
 ║    → dotnet publish → /opt/pacarent/api → pm2 restart       ║
 ║  Kalau pull cuma docs/web saja: build dilewati.              ║
 ║                                                              ║
-║  Pakai merge pull (default). Hindari: git pull --rebase      ║
 ║  Deploy paksa: ./deploy/scripts/vps-deploy-api.sh --force    ║
 ╚══════════════════════════════════════════════════════════════╝
 
 EOF
 
 if [[ ! -d /opt/pacarent/api ]]; then
-  echo "CATATAN: /opt/pacarent/api belum ada — hook deploy baru jalan setelah API terpasang."
+  echo "CATATAN: /opt/pacarent/api belum ada — deploy baru jalan setelah API terpasang."
 fi
 
 if [[ ! -w /opt/pacarent/api ]] 2>/dev/null; then

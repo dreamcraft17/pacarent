@@ -53,6 +53,14 @@ Deploy paksa tanpa peduli diff: `./deploy/scripts/vps-deploy-api.sh --force`
 
 Hook hanya jalan jika folder **`/opt/pacarent/api`** sudah terpasang.
 
+**Error `bash\r: No such file or directory`** — line ending Windows (CRLF). Di VPS:
+
+```bash
+sed -i 's/\r$//' deploy/scripts/*.sh deploy/git-hooks/post-merge
+chmod +x deploy/scripts/*.sh deploy/git-hooks/post-merge
+./deploy/scripts/install-vps-auto-deploy.sh
+```
+
 Deploy manual (tanpa pull):
 
 ```bash
