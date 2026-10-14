@@ -917,6 +917,29 @@ button.ghost {
   border: 1px solid #d4cfc9;
 }
 
+.discover-empty-state--launch {
+  padding: 2.25rem 1.35rem 2rem;
+  border-color: color-mix(in srgb, var(--pr-primary) 35%, #d4cfc9);
+  background: linear-gradient(165deg, #fff 0%, var(--pr-primary-soft, #eef8f6) 100%);
+}
+
+.discover-empty-eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pr-primary);
+}
+
+.discover-empty-hero {
+  font-size: clamp(1.15rem, 4.5vw, 1.45rem);
+  line-height: 1.25;
+  margin: 0 0 0.65rem;
+  color: var(--pr-text);
+  text-wrap: balance;
+}
+
 .discover-empty-state h2 {
   font-size: 1.05rem;
   margin-bottom: 0.35rem;
@@ -935,6 +958,33 @@ button.ghost {
   flex-wrap: wrap;
   gap: 0.5rem;
   justify-content: center;
+}
+
+.discover-empty-actions--stack {
+  flex-direction: column;
+  align-items: stretch;
+  max-width: 16.5rem;
+  margin: 0 auto;
+}
+
+.discover-empty-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  text-align: center;
+}
+
+.discover-empty-tertiary {
+  margin-top: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--pr-muted);
+  text-decoration: none;
+}
+
+.discover-empty-tertiary:hover {
+  color: var(--pr-primary);
 }
 
 .discover-empty-primary {

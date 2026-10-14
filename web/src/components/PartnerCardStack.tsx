@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IconClose, IconHeart, IconInfo } from './DatingIcons';
 
 export type StackPartner = {
@@ -17,6 +17,7 @@ export type StackPartner = {
 type Props = {
   partners: StackPartner[];
   loading?: boolean;
+  fetchFailed?: boolean;
   hasActiveFilters?: boolean;
   onResetFilters?: () => void;
   onReload?: () => void;
@@ -25,6 +26,7 @@ type Props = {
 export default function PartnerCardStack({
   partners,
   loading = false,
+  fetchFailed = false,
   hasActiveFilters = false,
   onResetFilters,
   onReload,
@@ -95,15 +97,54 @@ export default function PartnerCardStack({
 
   if (!current) {
     const exhausted = partners.length > 0;
+
+    if (fetchFailed) {
+      return (
+        <div className="discover-empty-state">
+          <h2>Tidak bisa memuat profil</h2>
+          <p className="discover-empty-copy">Cek koneksi atau coba lagi sebentar.</p>
+          <div className="discover-empty-actions">
+            {onReload && (
+              <button type="button" className="discover-empty-primary" onClick={onReload}>
+                Coba lagi
+              </button>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    if (!exhausted && !hasActiveFilters) {
+      return (
+        <div className="discover-empty-state discover-empty-state--launch">
+          <p className="discover-empty-eyebrow">PacaRent baru dibuka</p>
+          <h2 className="discover-empty-hero">Ayo jadi mitra / pengguna pertama kami!</h2>
+          <p className="discover-empty-copy">
+            Belum ada profil terverifikasi di sini. Daftar akun untuk booking, atau ajukan jadi mitra supaya orang
+            lain bisa mulai swipe.
+          </p>
+          <div className="discover-empty-actions discover-empty-actions--stack">
+            <Link className="discover-empty-primary discover-empty-link" to="/mitra/daftar">
+              Jadi mitra
+            </Link>
+            <Link className="discover-empty-secondary discover-empty-link" to="/register">
+              Daftar sebagai pengguna
+            </Link>
+            <Link className="discover-empty-tertiary" to="/login">
+              Sudah punya akun? Masuk
+            </Link>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="discover-empty-state">
         <h2>{exhausted ? 'Profil habis' : 'Belum ada mitra'}</h2>
         <p className="discover-empty-copy">
           {exhausted
             ? 'Ganti filter atau balik lagi nanti.'
-            : hasActiveFilters
-              ? 'Filter kepanjangan—coba semua kategori/kota.'
-              : 'Belum ada yang terverifikasi. Muat ulang setelah API jalan.'}
+            : 'Filter kepanjangan—coba semua kategori/kota.'}
         </p>
         <div className="discover-empty-actions">
           {hasActiveFilters && onResetFilters && (

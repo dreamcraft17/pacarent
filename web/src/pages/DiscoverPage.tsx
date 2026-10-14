@@ -84,7 +84,7 @@ export default function DiscoverPage() {
 
       {loadError && (
         <div className="discover-alert" role="alert">
-          <p>API belum nyala. Jalankan backend di port 5050.</p>
+          <p>Tidak bisa hubung ke server. Coba lagi atau cek koneksi.</p>
           <button type="button" className="discover-alert-btn" onClick={load}>
             Coba lagi
           </button>
@@ -94,6 +94,7 @@ export default function DiscoverPage() {
       <PartnerCardStack
         partners={partners}
         loading={loading}
+        fetchFailed={loadError}
         hasActiveFilters={Boolean(category || city)}
         onResetFilters={resetFilters}
         onReload={load}
