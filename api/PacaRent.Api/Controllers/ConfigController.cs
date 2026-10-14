@@ -13,6 +13,6 @@ public class ConfigController(IOptions<PacaRentSettings> settings) : ControllerB
     {
         emergencyHelpUrl = settings.Value.EmergencyHelpUrl,
         emergencyHelpLabel = settings.Value.EmergencyHelpLabel,
-        termsSummary = "Sewa pacar, teman kencan, dan teman acara—booking aman dengan mitra terverifikasi."
+        termsSummary = "Sewa pacar, teman kencan, dan teman acara—booking langsung lewat platform."
     });
 }

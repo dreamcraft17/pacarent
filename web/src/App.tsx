@@ -75,7 +75,7 @@ function Shell() {
       </main>
       {!hideBottomNav && <BottomNav />}
       <footer className="footer footer-minimal">
-        PT DN Tech · Escrow · Mitra ditinjau admin
+        PT DN Tech · Escrow · Profil mitra aktif
       </footer>
     </div>
   );

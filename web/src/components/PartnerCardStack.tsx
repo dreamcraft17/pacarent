@@ -125,15 +125,14 @@ export default function PartnerCardStack({
             Jadilah salah satu mitra pertama PacaRent
           </h2>
           <p className="discover-empty-copy">
-            Belum ada profil mitra di area ini. Ajukan profilmu dengan KTP dan selfie; setelah ditinjau admin, kamu
-            bisa mulai menerima booking.
+            Belum ada profil mitra di area ini. Ajukan profilmu sekarang dan langsung mulai menerima booking.
           </p>
           <ul className="discover-launch-trust" aria-label="Keamanan PacaRent">
             <li>
               <span className="discover-launch-trust-icon" aria-hidden>
                 ✓
               </span>
-              <span>Profil ditinjau sebelum tampil</span>
+              <span>Profil langsung aktif setelah daftar</span>
             </li>
             <li>
               <span className="discover-launch-trust-icon" aria-hidden>

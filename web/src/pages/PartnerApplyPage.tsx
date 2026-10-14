@@ -6,8 +6,6 @@ export default function PartnerApplyPage() {
   const [bio, setBio] = useState('');
   const [hourlyRate, setHourlyRate] = useState('100000');
   const [selected, setSelected] = useState<number[]>([]);
-  const [ktp, setKtp] = useState<File | null>(null);
-  const [selfie, setSelfie] = useState<File | null>(null);
   const [msg, setMsg] = useState('');
 
   useEffect(() => {
@@ -20,16 +18,10 @@ export default function PartnerApplyPage() {
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!ktp || !selfie) {
-      setMsg('KTP dan selfie wajib');
-      return;
-    }
     const fd = new FormData();
     fd.append('bio', bio);
     fd.append('hourlyRate', hourlyRate);
     selected.forEach((id) => fd.append('categoryIds', String(id)));
-    fd.append('ktp', ktp);
-    fd.append('selfie', selfie);
     const token = localStorage.getItem('pacarent_access');
     const res = await fetch('/api/partners/apply', {
       method: 'POST',
@@ -40,7 +32,7 @@ export default function PartnerApplyPage() {
       setMsg('Gagal mengirim');
       return;
     }
-    setMsg('Pendaftaran mitra menunggu verifikasi admin.');
+    setMsg('Profil mitra aktif. Kamu sudah bisa menerima booking.');
   };
 
   return (
@@ -62,10 +54,6 @@ export default function PartnerApplyPage() {
             {c.name}
           </label>
         ))}
-        <label>KTP</label>
-        <input type="file" accept="image/*,.pdf" onChange={(e) => setKtp(e.target.files?.[0] ?? null)} />
-        <label>Selfie verifikasi</label>
-        <input type="file" accept="image/*" onChange={(e) => setSelfie(e.target.files?.[0] ?? null)} />
         <button type="submit">Kirim</button>
       </form>
       {msg && <p>{msg}</p>}

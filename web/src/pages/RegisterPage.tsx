@@ -57,7 +57,7 @@ export default function RegisterPage() {
     <div className="auth-split">
       <aside className="auth-split-aside">
         <h2>Daftar untuk mulai jelajahi</h2>
-        <p>Usia 18+. Profil mitra ditinjau admin—bukan chat anonim.</p>
+        <p>Usia 18+. Booking lewat platform—bukan chat anonim.</p>
         <ul>
           <li>Setujui S&amp;K &amp; kebijakan privasi (UU PDP)</li>
           <li>Langsung masuk setelah daftar (fase testing)</li>

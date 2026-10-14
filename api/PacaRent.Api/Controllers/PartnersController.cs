@@ -121,21 +121,24 @@ public class PartnersController(
         var user = await db.Users.Include(u => u.PartnerProfile).FirstOrDefaultAsync(u => u.Id == uid, ct);
         if (user is null) return NotFound();
 
-        if (req.Ktp is null || req.Selfie is null)
-        {
-            return BadRequest(new ApiError("documents_required", "KTP dan selfie wajib diunggah."));
-        }
-
-        var ktpRef = await documents.SaveEncryptedAsync(req.Ktp.OpenReadStream(), req.Ktp.FileName, ct);
-        var selfieRef = await documents.SaveEncryptedAsync(req.Selfie.OpenReadStream(), req.Selfie.FileName, ct);
-
         user.Role = UserRole.Partner;
         user.PartnerProfile ??= new PartnerProfile { UserId = uid };
         user.PartnerProfile.Bio = req.Bio.Trim();
         user.PartnerProfile.HourlyRate = req.HourlyRate;
-        user.PartnerProfile.KtpFileRef = ktpRef;
-        user.PartnerProfile.SelfieFileRef = selfieRef;
-        user.PartnerProfile.VerificationStatus = VerificationStatus.Pending;
+        // Documents remain accepted for future verification, but are optional during MVP onboarding.
+        if (req.Ktp is not null)
+        {
+            user.PartnerProfile.KtpFileRef = await documents.SaveEncryptedAsync(
+                req.Ktp.OpenReadStream(), req.Ktp.FileName, ct);
+        }
+
+        if (req.Selfie is not null)
+        {
+            user.PartnerProfile.SelfieFileRef = await documents.SaveEncryptedAsync(
+                req.Selfie.OpenReadStream(), req.Selfie.FileName, ct);
+        }
+        // MVP onboarding is immediate; verification badges/documents can be added later.
+        user.PartnerProfile.VerificationStatus = VerificationStatus.Approved;
         user.PartnerProfile.RejectionReason = null;
 
         var existing = await db.PartnerCategories.Where(pc => pc.PartnerId == uid).ToListAsync(ct);
@@ -146,8 +149,8 @@ public class PartnersController(
         }
 
         await db.SaveChangesAsync(ct);
-        await notify.NotifyAsync(uid, NotificationType.Verification, "Pendaftaran mitra", "Dokumen Anda menunggu verifikasi admin.", ct);
+        await notify.NotifyAsync(uid, NotificationType.System, "Profil mitra aktif", "Profil Anda sudah aktif dan bisa menerima booking.", ct);
         await audit.LogAsync(uid, "partner_apply", "partner_profile", uid.ToString(), null, ct);
-        return Ok(new { status = "pending" });
+        return Ok(new { status = "active" });
     }
 }

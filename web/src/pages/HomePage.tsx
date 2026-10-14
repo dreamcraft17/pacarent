@@ -50,7 +50,7 @@ export default function HomePage() {
         <div>
           <h1>Sewa pacar, teman kencan, dan teman acara</h1>
           <p className="hero-lead">
-            Booking mitra yang sudah ditinjau admin untuk date, nongkrong, atau damping acara. Bayar lewat platform—dana
+            Booking mitra untuk date, nongkrong, atau damping acara. Bayar lewat platform—dana
             cair setelah layanan selesai.
           </p>
         </div>
