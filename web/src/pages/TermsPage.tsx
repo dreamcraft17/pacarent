@@ -7,7 +7,7 @@ export default function TermsPage() {
       <section>
         <h2>1. Peran PacaRent</h2>
         <p>
-          PacaRent (PT DN Tech) menyediakan platform digital yang mempertemukan <strong>pengguna</strong> dengan{' '}
+          PacaRent menyediakan platform digital yang mempertemukan <strong>pengguna</strong> dengan{' '}
           <strong>mitra</strong> untuk sewa pacar, teman kencan, nongkrong, dan damping acara. PacaRent{' '}
           <strong>bukan</strong> pihak dalam perjanjian layanan antara pengguna dan mitra, tidak mengawasi
           pertemuan secara langsung, dan tidak menjamin hasil atau kepuasan dari interaksi di lapangan.

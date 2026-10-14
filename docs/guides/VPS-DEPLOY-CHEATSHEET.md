@@ -6,7 +6,7 @@
 
 ## Summary
 
-Panduan singkat copy-paste untuk server DN Tech (`~/pacarent`, PM2, Nginx `api.pacarent.dntech.id`). Frontend tetap di **Vercel**. Panduan lengkap: [`VPS-DEPLOY-NO-DOCKER.md`](VPS-DEPLOY-NO-DOCKER.md).
+Panduan singkat copy-paste untuk VPS (`~/pacarent`, PM2, Nginx `api.pacarent.dntech.id`). Frontend tetap di **Vercel**. Panduan lengkap: [`VPS-DEPLOY-NO-DOCKER.md`](VPS-DEPLOY-NO-DOCKER.md).
 
 ---
 

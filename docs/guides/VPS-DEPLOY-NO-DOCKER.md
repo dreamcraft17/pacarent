@@ -147,7 +147,7 @@ Log: `pm2 logs pacarrent-api` · restart: `pm2 restart pacarrent-api`
 
 ## 5. Nginx + HTTPS (subdomain API)
 
-Contoh DN Tech: **`api.pacarent.dntech.id`**. Template repo: [`deploy/nginx/pacarent-api.dntech.id.conf`](../../deploy/nginx/pacarent-api.dntech.id.conf).
+Contoh host production: **`api.pacarent.dntech.id`**. Template repo: [`deploy/nginx/pacarent-api.dntech.id.conf`](../../deploy/nginx/pacarent-api.dntech.id.conf).
 
 ```bash
 sudo cp ~/pacarent/deploy/nginx/pacarent-api.dntech.id.conf /etc/nginx/sites-available/pacarent-api

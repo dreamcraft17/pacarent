@@ -75,7 +75,7 @@ function Shell() {
       </main>
       {!hideBottomNav && <BottomNav />}
       <footer className="footer footer-minimal">
-        PT DN Tech · Early access · Profil mitra terverifikasi
+        PacaRent · Early access · Profil mitra terverifikasi
       </footer>
     </div>
   );

@@ -3,7 +3,7 @@
 **Versi:** 0.2
 **Tanggal:** 13 Oktober 2026
 **Author:** Dozer
-**Pemilik:** Dozer, PT DN Tech
+**Pemilik:** Dozer (PacaRent)
 **Status:** Draf awal
 
 ---
