@@ -2,28 +2,27 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { api } from '../api/client';
 import FilterMenu from '../components/FilterMenu';
 import PartnerCardStack, { type StackPartner } from '../components/PartnerCardStack';
+import VisitorLocationControl from '../components/VisitorLocationControl';
+import { useVisitorLocation } from '../hooks/useVisitorLocation';
 
 type Category = { id: number; name: string };
 
 export default function DiscoverPage() {
+  const visitorLocation = useVisitorLocation();
+  const [useNearby, setUseNearby] = useState(true);
   const [categories, setCategories] = useState<Category[]>([]);
   const [partners, setPartners] = useState<StackPartner[]>([]);
   const [category, setCategory] = useState('');
-  const [city, setCity] = useState('');
-  const [cities, setCities] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
 
+  const cityQuery =
+    useNearby && visitorLocation.status === 'ready' && visitorLocation.filterCity
+      ? visitorLocation.filterCity
+      : '';
+
   useEffect(() => {
     api<Category[]>('/api/categories').then(setCategories).catch(console.error);
-    api<StackPartner[]>('/api/partners')
-      .then((list) => {
-        const uniq = [...new Set(list.map((p) => p.city.trim()).filter(Boolean))].sort((a, b) =>
-          a.localeCompare(b, 'id'),
-        );
-        setCities(uniq);
-      })
-      .catch(console.error);
   }, []);
 
   const load = useCallback(() => {
@@ -31,7 +30,7 @@ export default function DiscoverPage() {
     setLoadError(false);
     const q = new URLSearchParams();
     if (category) q.set('category', category);
-    if (city) q.set('city', city);
+    if (cityQuery) q.set('city', cityQuery);
     api<StackPartner[]>(`/api/partners?${q}`)
       .then(setPartners)
       .catch(() => {
@@ -39,15 +38,18 @@ export default function DiscoverPage() {
         setPartners([]);
       })
       .finally(() => setLoading(false));
-  }, [category, city]);
+  }, [category, cityQuery]);
 
   useEffect(() => {
+    if (visitorLocation.status === 'loading' || visitorLocation.status === 'idle') {
+      return;
+    }
     load();
-  }, [load]);
+  }, [load, visitorLocation.status]);
 
   const resetFilters = () => {
     setCategory('');
-    setCity('');
+    setUseNearby(false);
   };
 
   const categoryOptions = useMemo(
@@ -58,10 +60,7 @@ export default function DiscoverPage() {
     [categories],
   );
 
-  const cityOptions = useMemo(
-    () => [{ value: '', label: 'Semua kota' }, ...cities.map((c) => ({ value: c, label: c }))],
-    [cities],
-  );
+  const hasActiveFilters = Boolean(category || (useNearby && cityQuery));
 
   return (
     <div className="discover-page">
@@ -73,12 +72,10 @@ export default function DiscoverPage() {
           options={categoryOptions}
           onChange={setCategory}
         />
-        <FilterMenu
-          label="Kota"
-          placeholder="Kota"
-          value={city}
-          options={cityOptions}
-          onChange={setCity}
+        <VisitorLocationControl
+          location={visitorLocation}
+          useNearby={useNearby}
+          onToggleNearby={setUseNearby}
         />
       </div>
 
@@ -93,9 +90,9 @@ export default function DiscoverPage() {
 
       <PartnerCardStack
         partners={partners}
-        loading={loading}
+        loading={loading || visitorLocation.status === 'loading'}
         fetchFailed={loadError}
-        hasActiveFilters={Boolean(category || city)}
+        hasActiveFilters={hasActiveFilters}
         onResetFilters={resetFilters}
         onReload={load}
       />

@@ -1,11 +1,13 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api, setTokens } from '../api/client';
 import { useAuth } from '../auth/AuthContext';
+import { useVisitorLocation } from '../hooks/useVisitorLocation';
 
 export default function RegisterPage() {
   const nav = useNavigate();
   const { refreshMe } = useAuth();
+  const visitorLocation = useVisitorLocation();
   const [form, setForm] = useState({
     email: '',
     phone: '',
@@ -16,6 +18,13 @@ export default function RegisterPage() {
     termsAccepted: false,
   });
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (visitorLocation.status !== 'ready' || !visitorLocation.filterCity) return;
+    setForm((f) =>
+      f.city === 'Jakarta' || !f.city.trim() ? { ...f, city: visitorLocation.filterCity } : f,
+    );
+  }, [visitorLocation.status, visitorLocation.filterCity]);
 
   const register = async (e: FormEvent) => {
     e.preventDefault();
@@ -98,6 +107,9 @@ export default function RegisterPage() {
             id="city"
             value={form.city}
             onChange={(e) => setForm({ ...form, city: e.target.value })}
+            placeholder={
+              visitorLocation.status === 'ready' ? visitorLocation.label : 'Dari lokasi kamu (GPS)'
+            }
             required
           />
           <label htmlFor="pw">Password</label>

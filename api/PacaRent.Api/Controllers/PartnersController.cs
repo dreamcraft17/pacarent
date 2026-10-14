@@ -44,7 +44,9 @@ public class PartnersController(
         if (!string.IsNullOrWhiteSpace(city))
         {
             var c = city.Trim().ToLowerInvariant();
-            query = query.Where(u => u.Profile!.City.ToLower().Contains(c));
+            query = query.Where(u =>
+                u.Profile!.City.ToLower().Contains(c)
+                || c.Contains(u.Profile!.City.ToLower()));
         }
 
         if (minPrice is not null)
