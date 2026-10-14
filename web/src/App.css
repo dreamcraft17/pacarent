@@ -366,6 +366,229 @@ button.ghost {
   color: var(--pr-muted);
 }
 
+/* —— Terms / readable legal summary —— */
+.terms-page {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  background: var(--pr-surface);
+  border: 1px solid var(--pr-border);
+  border-radius: calc(var(--pr-radius) + 6px);
+  box-shadow: var(--pr-shadow);
+}
+
+.terms-header {
+  max-width: 44rem;
+  margin-bottom: 1.5rem;
+}
+
+.terms-eyebrow {
+  margin: 0 0 0.45rem;
+  color: var(--pr-primary);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.terms-header h1 {
+  margin-bottom: 0.65rem;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  letter-spacing: -0.035em;
+}
+
+.terms-lead {
+  max-width: 42rem;
+  margin-bottom: 0.75rem;
+  color: var(--pr-text);
+  font-size: 1.04rem;
+  line-height: 1.65;
+}
+
+.terms-updated {
+  margin: 0;
+  color: var(--pr-muted);
+  font-size: 0.8rem;
+}
+
+.terms-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.65rem;
+  margin-bottom: 2rem;
+  padding: 0.75rem;
+  border: 1px solid #cce8e4;
+  border-radius: 1rem;
+  background: var(--pr-primary-soft);
+}
+
+.terms-summary-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  min-width: 0;
+  padding: 0.55rem;
+}
+
+.terms-summary-item > div {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.terms-summary-item strong {
+  color: var(--pr-heading);
+  font-size: 0.82rem;
+}
+
+.terms-summary-item span:last-child {
+  color: var(--pr-text);
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+
+.terms-summary-icon {
+  display: inline-flex;
+  flex: 0 0 1.75rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--pr-primary);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.terms-layout {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.25rem);
+  align-items: start;
+}
+
+.terms-nav {
+  position: sticky;
+  top: 5rem;
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.75rem 0;
+}
+
+.terms-nav-title {
+  margin: 0 0 0.45rem;
+  color: var(--pr-heading);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.terms-nav a {
+  padding: 0.4rem 0.55rem;
+  border-left: 2px solid transparent;
+  color: var(--pr-muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.terms-nav a:hover,
+.terms-nav a:focus-visible {
+  border-left-color: var(--pr-primary);
+  color: var(--pr-primary);
+  background: var(--pr-primary-soft);
+}
+
+.terms-content {
+  min-width: 0;
+}
+
+.terms-section {
+  scroll-margin-top: 5rem;
+  padding: 0 0 1.75rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid var(--pr-border);
+}
+
+.terms-section:last-child {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.terms-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.85rem;
+}
+
+.terms-section-heading h2 {
+  margin: 0;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  letter-spacing: -0.02em;
+}
+
+.terms-section-number {
+  display: inline-flex;
+  flex: 0 0 2rem;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.65rem;
+  background: var(--pr-primary-soft);
+  color: var(--pr-primary);
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.terms-section p,
+.terms-section li {
+  color: var(--pr-text);
+  font-size: 0.95rem;
+  line-height: 1.72;
+}
+
+.terms-section ul {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.terms-section li::marker {
+  color: var(--pr-primary);
+}
+
+.terms-section-callout {
+  padding: 1.1rem 1.15rem 1.35rem;
+  border: 1px solid #ead3d8;
+  border-radius: 1rem;
+  background: #fff9fa;
+}
+
+.terms-section-callout .terms-section-heading {
+  margin-bottom: 0.5rem;
+}
+
+.terms-callout-lead {
+  margin: 0 0 0.85rem;
+  color: #8f3c50 !important;
+  font-size: 0.82rem !important;
+  font-weight: 700;
+}
+
+.terms-disclaimer {
+  margin: 1rem 0 0;
+  padding: 0.85rem 1rem;
+  border-radius: 0.75rem;
+  background: var(--colors-neutral-100);
+  color: var(--pr-muted) !important;
+  font-size: 0.82rem !important;
+}
+
 @media (max-width: 768px) {
   .hero {
     grid-template-columns: 1fr;
