@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { api } from '../api/client';
 import { useAuth } from '../auth/AuthContext';
 
@@ -42,12 +43,43 @@ export default function BookingsPage() {
   );
   const [review, setReview] = useState({ bookingId: '', targetId: '', rating: 5, comment: '' });
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [paymentUseMock, setPaymentUseMock] = useState(true);
+  const [paymentsEnabled, setPaymentsEnabled] = useState(false);
+
   const load = () => api<Booking[]>('/api/bookings').then(setItems).catch(console.error);
 
   useEffect(() => {
     load();
-    api<{ emergencyHelpUrl: string; emergencyHelpLabel: string }>('/api/config/public').then(setEmergency);
+    api<{
+      emergencyHelpUrl: string;
+      emergencyHelpLabel: string;
+      paymentUseMock?: boolean;
+      paymentsEnabled?: boolean;
+    }>('/api/config/public').then((cfg) => {
+      setEmergency({
+        emergencyHelpUrl: cfg.emergencyHelpUrl,
+        emergencyHelpLabel: cfg.emergencyHelpLabel,
+      });
+      setPaymentUseMock(cfg.paymentUseMock !== false);
+      setPaymentsEnabled(cfg.paymentsEnabled === true);
+    });
   }, []);
+
+  useEffect(() => {
+    if (!paymentsEnabled) return;
+    const fromDoku = searchParams.get('from') === 'doku';
+    const bookingId = searchParams.get('bookingId');
+    if (!fromDoku || !bookingId) return;
+    api<{ status: string }>(`/api/payments/sync/${bookingId}`, { method: 'POST' })
+      .then(() => load())
+      .finally(() => {
+        const next = new URLSearchParams(searchParams);
+        next.delete('from');
+        next.delete('bookingId');
+        setSearchParams(next, { replace: true });
+      });
+  }, [paymentsEnabled, searchParams, setSearchParams]);
 
   const act = async (id: string, action: string) => {
     await api(`/api/bookings/${id}/${action}`, { method: 'POST' });
@@ -55,12 +87,21 @@ export default function BookingsPage() {
   };
 
   const pay = async (id: string) => {
-    const checkout = await api<{ checkoutUrl: string }>(`/api/payments/checkout/${id}`, {
+    const checkout = await api<{ checkoutUrl: string; useMock?: boolean }>(`/api/payments/checkout/${id}`, {
       method: 'POST',
     });
-    await api(`/api/payments/mock/complete/${id}`, { method: 'POST' });
-    alert(`Pembayaran mock selesai (${checkout.checkoutUrl})`);
-    load();
+    const mock = checkout.useMock ?? paymentUseMock;
+    if (mock) {
+      await api(`/api/payments/mock/complete/${id}`, { method: 'POST' });
+      alert('Pembayaran mock selesai (dev).');
+      load();
+      return;
+    }
+    if (checkout.checkoutUrl.startsWith('http')) {
+      window.location.href = checkout.checkoutUrl;
+      return;
+    }
+    alert('URL checkout DOKU tidak valid. Cek konfigurasi API.');
   };
 
   const submitReview = async () => {
@@ -97,7 +138,13 @@ export default function BookingsPage() {
   return (
     <div>
       <h2>Booking saya</h2>
-      <p className="muted">Dana ditahan platform sampai layanan ditandai selesai (escrow).</p>
+      <p className="muted">
+        {paymentsEnabled ? (
+          <>Tarif mitra per booking — bayar lewat DOKU setelah fitur pembayaran aktif.</>
+        ) : (
+          <>Early access: pembayaran belum aktif. Setelah mitra terima, langsung koordinasi &amp; tandai selesai.</>
+        )}
+      </p>
       {emergency && (
         <a className="emergency" href={emergency.emergencyHelpUrl}>
           {emergency.emergencyHelpLabel}
@@ -122,11 +169,13 @@ export default function BookingsPage() {
                 </button>
               </>
             )}
-            {!isPartner && (b.status === 'Accepted' || b.status === 'accepted') && (
-              <button type="button" onClick={() => pay(b.id)}>
-                Bayar (mock DOKU)
-              </button>
-            )}
+            {!isPartner &&
+              paymentsEnabled &&
+              (b.status === 'Accepted' || b.status === 'accepted') && (
+                <button type="button" onClick={() => pay(b.id)}>
+                  {paymentUseMock ? 'Bayar (mock DOKU)' : 'Bayar via DOKU'}
+                </button>
+              )}
             {(b.status === 'InProgress' || b.status === 'inProgress' || b.status === 'Paid' || b.status === 'paid') && (
               <button type="button" onClick={() => act(b.id, 'complete')}>
                 Tandai selesai

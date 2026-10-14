@@ -17,7 +17,7 @@ export default function TrustStrip() {
         <span className="trust-icon" aria-hidden>
           ✓
         </span>
-        Dana ditahan hingga selesai
+        Gratis untuk mulai
       </li>
       <li>
         <span className="trust-icon" aria-hidden>

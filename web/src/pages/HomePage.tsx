@@ -50,15 +50,15 @@ export default function HomePage() {
         <div>
           <h1>Sewa pacar, teman kencan, dan teman acara</h1>
           <p className="hero-lead">
-            Booking mitra untuk date, nongkrong, atau damping acara. Bayar lewat platform—dana
-            cair setelah layanan selesai.
+            Booking mitra untuk date, nongkrong, atau damping acara. Early access: belum wajib bayar
+            online.
           </p>
         </div>
         <div className="card card-highlight">
           <h2>Cara kerja</h2>
           <ol className="hero-steps">
             <li>Cari mitra berdasarkan kota &amp; kategori (Jabodetabek)</li>
-            <li>Booking → mitra terima → bayar (dana ditahan)</li>
+            <li>Booking → mitra terima → koordinasi jadwal (bayar online menyusul)</li>
             <li>Bertemu sesuai lokasi booking → selesai → ulasan</li>
           </ol>
         </div>

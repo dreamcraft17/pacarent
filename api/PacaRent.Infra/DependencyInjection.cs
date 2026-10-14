@@ -37,6 +37,7 @@ public static class DependencyInjection
         services.AddScoped<IDocumentStorageService, DocumentStorageService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IOtpService, OtpService>();
+        services.AddHttpClient<DokuCheckoutClient>();
         services.AddScoped<IPaymentGatewayService, DokuPaymentGatewayService>();
 
         return services;

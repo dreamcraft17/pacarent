@@ -1,75 +1,137 @@
-using System.Security.Cryptography;
-using System.Text;
+using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PacaRent.Core.Options;
 
 namespace PacaRent.Infra.Services;
 
-public record PaymentCheckoutResult(string GatewayRef, string CheckoutUrl, decimal Amount);
+public record PaymentCheckoutResult(string GatewayRef, string CheckoutUrl, decimal Amount, string InvoiceNumber);
 
 public interface IPaymentGatewayService
 {
-    Task<PaymentCheckoutResult> CreateCheckoutAsync(Guid bookingId, decimal amount, string customerEmail, CancellationToken ct = default);
-    bool ValidateWebhookSignature(string payload, string signatureHeader);
-    string ParseBookingIdFromWebhook(string payload);
-    string ParsePaymentStatusFromWebhook(string payload);
+    Task<PaymentCheckoutResult> CreateCheckoutAsync(
+        Guid bookingId,
+        decimal amount,
+        DokuCustomer customer,
+        string callbackUrl,
+        CancellationToken ct = default);
+
+    bool ValidateNotificationSignature(
+        string payload,
+        string? signatureHeader,
+        string requestId,
+        string requestTimestamp,
+        string requestTarget);
+
+    string? ParseBookingIdFromNotification(string payload);
+    string? ParseTransactionStatusFromNotification(string payload);
+
+    Task<string?> QueryOrderStatusAsync(string invoiceNumber, CancellationToken ct = default);
 }
 
-/// <summary>
-/// DOKU integration stub: mock checkout in dev; wire real DOKU API per latest docs before production.
-/// </summary>
 public class DokuPaymentGatewayService(
+    DokuCheckoutClient doku,
     IOptions<DokuSettings> dokuOptions,
     ILogger<DokuPaymentGatewayService> logger) : IPaymentGatewayService
 {
-    public Task<PaymentCheckoutResult> CreateCheckoutAsync(Guid bookingId, decimal amount, string customerEmail, CancellationToken ct = default)
+    public async Task<PaymentCheckoutResult> CreateCheckoutAsync(
+        Guid bookingId,
+        decimal amount,
+        DokuCustomer customer,
+        string callbackUrl,
+        CancellationToken ct = default)
     {
         var settings = dokuOptions.Value;
-        var gatewayRef = $"DOKU-MOCK-{bookingId:N}";
+        var invoice = DokuInvoice.ForBooking(bookingId);
+        var amountIdr = (long)decimal.Truncate(amount);
+        if (amountIdr < 1) amountIdr = 1;
+
         if (settings.UseSandboxMock)
         {
+            var gatewayRef = $"DOKU-MOCK-{bookingId:N}";
             var url = $"/bayar/{bookingId}?ref={gatewayRef}";
-            logger.LogInformation("DOKU mock checkout booking={BookingId} amount={Amount}", bookingId, amount);
-            return Task.FromResult(new PaymentCheckoutResult(gatewayRef, url, amount));
+            logger.LogInformation("DOKU mock checkout booking={BookingId} amount={Amount}", bookingId, amountIdr);
+            return new PaymentCheckoutResult(gatewayRef, url, amount, invoice);
         }
 
-        // TODO: call DOKU create payment API when credentials are configured.
-        throw new InvalidOperationException("DOKU production mode belum diimplementasi. Set Doku:UseSandboxMock=true atau lengkapi integrasi.");
-    }
-
-    public bool ValidateWebhookSignature(string payload, string signatureHeader)
-    {
-        var secret = dokuOptions.Value.WebhookSecret;
-        if (string.IsNullOrWhiteSpace(secret))
+        if (!doku.IsConfigured)
         {
-            return dokuOptions.Value.UseSandboxMock;
+            throw new InvalidOperationException(
+                "DOKU live diminta tetapi ClientId/SecretKey kosong. Isi env atau set Doku__UseSandboxMock=true.");
         }
 
-        using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret));
-        var hash = Convert.ToHexString(hmac.ComputeHash(Encoding.UTF8.GetBytes(payload))).ToLowerInvariant();
-        return string.Equals(hash, signatureHeader, StringComparison.OrdinalIgnoreCase);
+        var description = $"PacaRent booking {invoice}";
+        var (checkoutUrl, requestId) = await doku.CreateCheckoutAsync(
+            invoice,
+            amountIdr,
+            description,
+            customer,
+            callbackUrl,
+            ct);
+
+        return new PaymentCheckoutResult(requestId, checkoutUrl, amount, invoice);
     }
 
-    public string ParseBookingIdFromWebhook(string payload)
+    public bool ValidateNotificationSignature(
+        string payload,
+        string? signatureHeader,
+        string requestId,
+        string requestTimestamp,
+        string requestTarget) =>
+        doku.VerifyNotificationSignature(payload, signatureHeader, requestId, requestTimestamp, requestTarget);
+
+    public string? ParseBookingIdFromNotification(string payload)
     {
-        using var doc = System.Text.Json.JsonDocument.Parse(payload);
-        if (doc.RootElement.TryGetProperty("bookingId", out var id))
+        try
         {
-            return id.GetString() ?? "";
+            using var doc = JsonDocument.Parse(payload);
+            if (doc.RootElement.TryGetProperty("order", out var order) &&
+                order.TryGetProperty("invoice_number", out var inv))
+            {
+                var invoice = inv.GetString();
+                if (invoice is not null && DokuInvoice.TryParseBookingId(invoice, out var bookingId))
+                {
+                    return bookingId.ToString();
+                }
+            }
+
+            if (doc.RootElement.TryGetProperty("bookingId", out var legacy))
+            {
+                return legacy.GetString();
+            }
+        }
+        catch (JsonException)
+        {
+            // ignore
         }
 
-        return "";
+        return null;
     }
 
-    public string ParsePaymentStatusFromWebhook(string payload)
+    public string? ParseTransactionStatusFromNotification(string payload)
     {
-        using var doc = System.Text.Json.JsonDocument.Parse(payload);
-        if (doc.RootElement.TryGetProperty("status", out var st))
+        try
         {
-            return st.GetString() ?? "";
+            using var doc = JsonDocument.Parse(payload);
+            if (doc.RootElement.TryGetProperty("transaction", out var tx) &&
+                tx.TryGetProperty("status", out var st))
+            {
+                return st.GetString();
+            }
+
+            if (doc.RootElement.TryGetProperty("status", out var legacy))
+            {
+                return legacy.GetString();
+            }
+        }
+        catch (JsonException)
+        {
+            // ignore
         }
 
-        return "";
+        return null;
     }
+
+    public Task<string?> QueryOrderStatusAsync(string invoiceNumber, CancellationToken ct = default) =>
+        doku.CheckOrderStatusAsync(invoiceNumber, ct);
 }

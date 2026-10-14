@@ -12,6 +12,9 @@ public class PacaRentSettings
 
     /// <summary>Lewati OTP setelah daftar (testing/MVP). Matikan saat SMS/email OTP siap.</summary>
     public bool SkipRegistrationOtp { get; set; } = true;
+
+    /// <summary>Rilis awal: tidak wajib bayar via DOKU; setelah mitra terima → langsung siap jalan.</summary>
+    public bool SkipBookingPayment { get; set; } = true;
 }
 
 public class JwtSettings
@@ -29,11 +32,27 @@ public class DokuSettings
 {
     public const string SectionName = "Doku";
 
+    /// <summary>Dev-only: mock checkout + webhook tanpa call DOKU.</summary>
     public bool UseSandboxMock { get; set; } = true;
+
+    /// <summary>Sama seperti DOKU_IS_PRODUCTION di dnPeople.</summary>
+    public bool IsProduction { get; set; }
+
     public string ClientId { get; set; } = "";
     public string SecretKey { get; set; } = "";
     public string WebhookSecret { get; set; } = "";
-    public string BaseUrl { get; set; } = "https://api.doku.com";
+
+    /// <summary>Public API base (tanpa trailing slash), untuk default webhook URL.</summary>
+    public string ApiPublicUrl { get; set; } = "";
+
+    /// <summary>Override penuh — e.g. https://api.pacarent.dntech.id/api/payments/webhook/doku</summary>
+    public string? NotificationUrl { get; set; }
+
+    /// <summary>Redirect setelah bayar di halaman DOKU — e.g. https://pacarent.vercel.app/bookings</summary>
+    public string WebCallbackUrl { get; set; } = "http://localhost:5173/bookings";
+
+    /// <summary>Optional — kosong = channel aktif di DOKU Back Office (recommended).</summary>
+    public string? PaymentMethodTypes { get; set; }
 }
 
 public class SmtpSettings

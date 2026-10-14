@@ -138,7 +138,7 @@ export default function PartnerCardStack({
               <span className="discover-launch-trust-icon" aria-hidden>
                 ✓
               </span>
-              <span>Dana ditahan sampai layanan selesai</span>
+              <span>Gratis untuk daftar &amp; booking</span>
             </li>
             <li>
               <span className="discover-launch-trust-icon" aria-hidden>
