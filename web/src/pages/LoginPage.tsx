@@ -1,20 +1,23 @@
 import { useState, type FormEvent } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
+import { getAuthRedirect } from '../auth/authRedirect';
 
 export default function LoginPage() {
   const { login } = useAuth();
   const nav = useNavigate();
+  const location = useLocation();
   const [loginId, setLoginId] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const from = getAuthRedirect(location.state);
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
     try {
       await login(loginId, password);
-      nav('/bookings');
+      nav(from);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Gagal masuk');
     }
@@ -57,7 +60,9 @@ export default function LoginPage() {
         <p className="muted" style={{ marginTop: '1rem' }}>
           Dev: admin@pacarent.local / Admin123!
         </p>
-        <Link to="/register">Belum punya akun? Daftar</Link>
+        <Link to="/register" state={from !== '/bookings' ? { from } : undefined}>
+          Belum punya akun? Daftar
+        </Link>
       </div>
     </div>
   );

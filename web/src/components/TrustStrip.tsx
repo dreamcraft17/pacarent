@@ -5,7 +5,7 @@ export default function TrustStrip() {
         <span className="trust-icon" aria-hidden>
           ✓
         </span>
-        Mitra verifikasi KTP
+        Identitas ditinjau sebelum tampil
       </li>
       <li>
         <span className="trust-icon" aria-hidden>

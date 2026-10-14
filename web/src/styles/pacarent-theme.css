@@ -22,4 +22,10 @@
   --pr-like-ring: rgb(201 77 102 / 35%);
   --pr-discover-bg: #faf7f5;
   --pr-card-radius: 22px;
+
+  /* Launch empty state */
+  --pr-launch-surface: #f7fbfa;
+  --pr-launch-border: color-mix(in srgb, var(--pr-primary) 35%, #d4cfc9);
+  --pr-launch-item-surface: rgb(15 118 110 / 8%);
+  --pr-launch-item-icon: var(--pr-primary);
 }

@@ -116,16 +116,41 @@ export default function PartnerCardStack({
 
     if (!exhausted && !hasActiveFilters) {
       return (
-        <div className="discover-empty-state discover-empty-state--launch">
+        <section
+          className="discover-empty-state discover-empty-state--launch"
+          aria-labelledby="discover-launch-title"
+        >
           <p className="discover-empty-eyebrow">PacaRent baru dibuka</p>
-          <h2 className="discover-empty-hero">Ayo jadi mitra / pengguna pertama kami!</h2>
+          <h2 id="discover-launch-title" className="discover-empty-hero">
+            Jadilah salah satu mitra pertama PacaRent
+          </h2>
           <p className="discover-empty-copy">
-            Belum ada profil terverifikasi di sini. Daftar akun untuk booking, atau ajukan jadi mitra supaya orang
-            lain bisa mulai swipe.
+            Belum ada profil mitra di area ini. Ajukan profilmu dengan KTP dan selfie; setelah ditinjau admin, kamu
+            bisa mulai menerima booking.
           </p>
+          <ul className="discover-launch-trust" aria-label="Keamanan PacaRent">
+            <li>
+              <span className="discover-launch-trust-icon" aria-hidden>
+                ✓
+              </span>
+              <span>Profil ditinjau sebelum tampil</span>
+            </li>
+            <li>
+              <span className="discover-launch-trust-icon" aria-hidden>
+                ✓
+              </span>
+              <span>Dana ditahan sampai layanan selesai</span>
+            </li>
+            <li>
+              <span className="discover-launch-trust-icon" aria-hidden>
+                ✓
+              </span>
+              <span>Laporan dan bantuan tersedia</span>
+            </li>
+          </ul>
           <div className="discover-empty-actions discover-empty-actions--stack">
             <Link className="discover-empty-primary discover-empty-link" to="/mitra/daftar">
-              Jadi mitra
+              Ajukan jadi mitra
             </Link>
             <Link className="discover-empty-secondary discover-empty-link" to="/register">
               Daftar sebagai pengguna
@@ -134,7 +159,7 @@ export default function PartnerCardStack({
               Sudah punya akun? Masuk
             </Link>
           </div>
-        </div>
+        </section>
       );
     }
 
@@ -250,7 +275,6 @@ function CardFace({ partner }: { partner: StackPartner }) {
             </div>
           </div>
           <div className="swipe-card-badges">
-            <span className="badge badge-verified">KTP OK</span>
             {partner.categories[0] && <span className="badge badge-category">{partner.categories[0]}</span>}
           </div>
           {bioTeaser && <p className="swipe-card-teaser">{bioTeaser}{partner.bio.length > 72 ? '…' : ''}</p>}

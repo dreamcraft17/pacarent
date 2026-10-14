@@ -1,12 +1,15 @@
 import { useState, type FormEvent } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { api, setTokens } from '../api/client';
 import { useAuth } from '../auth/AuthContext';
+import { getAuthRedirect } from '../auth/authRedirect';
 import { jabodetabekCities } from '../data/jabodetabek-cities';
 
 export default function RegisterPage() {
   const nav = useNavigate();
+  const location = useLocation();
   const { refreshMe } = useAuth();
+  const from = getAuthRedirect(location.state);
   const [form, setForm] = useState({
     email: '',
     phone: '',
@@ -35,16 +38,16 @@ export default function RegisterPage() {
       if (data.accessToken && data.refreshToken) {
         setTokens(data.accessToken, data.refreshToken);
         await refreshMe();
-        nav('/bookings');
+        nav(from);
         return;
       }
 
       if (data.requiresOtp) {
-        nav('/login', { state: { message: 'Daftar berhasil. Verifikasi OTP lalu masuk.' } });
+        nav('/login', { state: { message: 'Daftar berhasil. Verifikasi OTP lalu masuk.', from } });
         return;
       }
 
-      nav('/login');
+      nav('/login', { state: { from } });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Gagal daftar');
     }
@@ -54,7 +57,7 @@ export default function RegisterPage() {
     <div className="auth-split">
       <aside className="auth-split-aside">
         <h2>Daftar untuk mulai jelajahi</h2>
-        <p>Usia 18+. Profil mitra terverifikasi KTP—bukan chat anonim.</p>
+        <p>Usia 18+. Profil mitra ditinjau admin—bukan chat anonim.</p>
         <ul>
           <li>Setujui S&amp;K &amp; kebijakan privasi (UU PDP)</li>
           <li>Langsung masuk setelah daftar (fase testing)</li>

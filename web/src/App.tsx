@@ -75,7 +75,7 @@ function Shell() {
       </main>
       {!hideBottomNav && <BottomNav />}
       <footer className="footer footer-minimal">
-        PT DN Tech · Escrow · Mitra terverifikasi
+        PT DN Tech · Escrow · Mitra ditinjau admin
       </footer>
     </div>
   );
@@ -83,8 +83,17 @@ function Shell() {
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { me, loading } = useAuth();
+  const location = useLocation();
   if (loading) return <p>Memuat...</p>;
-  if (!me) return <Navigate to="/login" replace />;
+  if (!me) {
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{ from: `${location.pathname}${location.search}${location.hash}` }}
+      />
+    );
+  }
   return children;
 }
 

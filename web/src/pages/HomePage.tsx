@@ -50,7 +50,7 @@ export default function HomePage() {
         <div>
           <h1>Sewa pacar, teman kencan, dan teman acara</h1>
           <p className="hero-lead">
-            Booking mitra terverifikasi untuk date, nongkrong, atau damping acara. Bayar lewat platform—dana
+            Booking mitra yang sudah ditinjau admin untuk date, nongkrong, atau damping acara. Bayar lewat platform—dana
             cair setelah layanan selesai.
           </p>
         </div>
@@ -123,7 +123,6 @@ export default function HomePage() {
         {partners.map((p) => (
           <article key={p.id} className="card partner-card">
             <div className="partner-card-meta">
-              <span className="badge badge-verified">Terverifikasi</span>
               <span className="muted">
                 {p.city} · Rp {p.hourlyRate.toLocaleString('id-ID')}/jam
               </span>

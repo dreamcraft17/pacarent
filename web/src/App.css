@@ -997,9 +997,9 @@ button.ghost {
 }
 
 .discover-empty-state--launch {
-  padding: 2.25rem 1.35rem 2rem;
-  border-color: color-mix(in srgb, var(--pr-primary) 35%, #d4cfc9);
-  background: linear-gradient(165deg, #fff 0%, var(--pr-primary-soft, #eef8f6) 100%);
+  padding: 2rem 1.35rem 1.75rem;
+  border-color: var(--pr-launch-border);
+  background: var(--pr-launch-surface);
 }
 
 .discover-empty-eyebrow {
@@ -1030,6 +1030,43 @@ button.ghost {
   margin: 0 auto 1rem;
   max-width: 18rem;
   line-height: 1.45;
+}
+
+.discover-launch-trust {
+  display: grid;
+  gap: 0.45rem;
+  list-style: none;
+  margin: 0 auto 1.25rem;
+  padding: 0;
+  max-width: 18rem;
+  text-align: left;
+}
+
+.discover-launch-trust li {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 2rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.65rem;
+  background: var(--pr-launch-item-surface);
+  color: var(--pr-text);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.discover-launch-trust-icon {
+  display: inline-flex;
+  flex: 0 0 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--pr-launch-item-icon);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 800;
 }
 
 .discover-empty-actions {
@@ -1078,6 +1115,11 @@ button.ghost {
   min-height: 44px;
 }
 
+.discover-empty-primary:hover,
+.discover-empty-primary:focus-visible {
+  background: var(--pr-primary-hover);
+}
+
 .discover-empty-secondary {
   border: 1px solid #d4cfc9;
   background: #fff;
@@ -1088,6 +1130,12 @@ button.ghost {
   border-radius: 10px;
   cursor: pointer;
   min-height: 44px;
+}
+
+.discover-empty-secondary:hover,
+.discover-empty-secondary:focus-visible {
+  border-color: var(--pr-primary);
+  color: var(--pr-primary);
 }
 
 .swipe-card-skeleton {
