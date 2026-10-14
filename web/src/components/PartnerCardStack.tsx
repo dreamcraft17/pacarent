@@ -190,7 +190,7 @@ export default function PartnerCardStack({
   const stamp = dragX > 40 ? 'stamp-yes' : dragX < -40 ? 'stamp-no' : '';
 
   return (
-    <div className="discover-stage">
+    <div className="discover-stage" aria-label="Kartu profil mitra">
       {next && (
         <div className="swipe-card swipe-card-back" aria-hidden>
           <CardFace partner={next} />
@@ -232,6 +232,7 @@ export default function PartnerCardStack({
           <IconHeart />
         </button>
       </div>
+      <p className="swipe-hint">Geser kartu atau pilih aksi di bawah</p>
     </div>
   );
 }
