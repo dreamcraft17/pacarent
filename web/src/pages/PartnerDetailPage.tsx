@@ -2,6 +2,8 @@ import { useEffect, useState, type FormEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { api } from '../api/client';
 import { useAuth } from '../auth/AuthContext';
+import { trackBookingSubmitted } from '../lib/analytics';
+import { getBookingSource } from '../lib/viewport';
 
 export default function PartnerDetailPage() {
   const { id } = useParams();
@@ -42,6 +44,7 @@ export default function PartnerDetailPage() {
           notes: form.notes,
         }),
       });
+      trackBookingSubmitted(id, getBookingSource());
       setMsg('Booking dibuat. Mitra akan merespons.');
       nav('/bookings');
     } catch (err) {

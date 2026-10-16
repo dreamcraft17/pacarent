@@ -1,13 +1,15 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 import HomePage from './HomePage';
+import { trackDiscoveryView } from '../lib/analytics';
 
-/** Grid/list discovery — secondary to card stack (Tinder “Discovery” list mode). */
+/** Grid/list discovery — default on desktop; peer to card stack on mobile. */
 export default function BrowseListPage() {
+  useEffect(() => {
+    trackDiscoveryView('list');
+  }, []);
+
   return (
-    <div>
-      <p className="muted" style={{ marginBottom: '0.75rem' }}>
-        <Link to="/">← Kembali ke mode kartu</Link>
-      </p>
+    <div className="browse-list-page">
       <HomePage />
     </div>
   );

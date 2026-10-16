@@ -26,10 +26,10 @@ export default function LoginPage() {
   return (
     <div className="auth-split">
       <aside className="auth-split-aside">
-        <h2>Lanjutkan setelah match</h2>
-        <p>Masuk untuk booking date, kelola jadwal, dan ulasan setelah ketemu.</p>
+        <h2>Lanjutkan booking kamu</h2>
+        <p>Masuk untuk mengonfirmasi jadwal, kelola booking, dan ulasan setelah pertemuan.</p>
         <ul>
-          <li>Swipe di Jelajahi → hati → pilih tanggal &amp; lokasi</li>
+          <li>Jelajahi mitra (kartu atau daftar) → tertarik → pilih tanggal &amp; lokasi</li>
           <li>Gratis — early access, pembayaran online menyusul</li>
           <li>Tombol darurat saat pertemuan aktif</li>
         </ul>

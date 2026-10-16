@@ -1,18 +1,35 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { api } from '../api/client';
+import DiscoverTrustSidebar from '../components/DiscoverTrustSidebar';
 import FilterMenu from '../components/FilterMenu';
 import PartnerCardStack, { type StackPartner } from '../components/PartnerCardStack';
 import { jabodetabekFilterOptions } from '../data/jabodetabek-cities';
+import { trackDiscoveryView } from '../lib/analytics';
+import { getStoredDiscoveryMode, prefersDesktopBrowse } from '../lib/viewport';
 
 type Category = { id: number; name: string };
 
 export default function DiscoverPage() {
+  const nav = useNavigate();
   const [categories, setCategories] = useState<Category[]>([]);
   const [partners, setPartners] = useState<StackPartner[]>([]);
   const [category, setCategory] = useState('');
   const [city, setCity] = useState('');
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
+
+  useEffect(() => {
+    if (getStoredDiscoveryMode() === 'card') {
+      trackDiscoveryView('card');
+      return;
+    }
+    if (prefersDesktopBrowse() && getStoredDiscoveryMode() !== 'card') {
+      nav('/cari', { replace: true });
+      return;
+    }
+    trackDiscoveryView('card');
+  }, [nav]);
 
   useEffect(() => {
     api<Category[]>('/api/categories').then(setCategories).catch(console.error);
@@ -53,52 +70,55 @@ export default function DiscoverPage() {
   const cityOptions = useMemo(() => jabodetabekFilterOptions('Semua kota (Jabodetabek)'), []);
 
   return (
-    <div className="discover-page">
-      <section className="discover-intro" aria-labelledby="discover-title">
-        <div>
-          <p className="discover-intro-eyebrow">Jelajahi PacaRent</p>
-          <h1 id="discover-title">Temukan teman yang cocok untuk momenmu</h1>
-          <p>Geser kanan kalau tertarik, kiri kalau mau lihat profil berikutnya.</p>
-        </div>
-        <span className="discover-intro-count" aria-label={`${partners.length} profil tersedia`}>
-          {loading ? '...' : `${partners.length} profil`}
-        </span>
-      </section>
+    <div className="discover-layout">
+      <DiscoverTrustSidebar />
+      <div className="discover-page">
+        <section className="discover-intro" aria-labelledby="discover-title">
+          <div>
+            <p className="discover-intro-eyebrow">Jelajahi PacaRent</p>
+            <h1 id="discover-title">Temukan mitra untuk date atau acara</h1>
+            <p>Tertarik → booking tanggal &amp; lokasi. Lewati jika belum cocok.</p>
+          </div>
+          <span className="discover-intro-count" aria-label={`${partners.length} profil tersedia`}>
+            {loading ? '...' : `${partners.length} profil`}
+          </span>
+        </section>
 
-      <div className="discover-filters">
-        <FilterMenu
-          label="Kategori"
-          placeholder="Kategori"
-          value={category}
-          options={categoryOptions}
-          onChange={setCategory}
-        />
-        <FilterMenu
-          label="Kota"
-          placeholder="Kota"
-          value={city}
-          options={cityOptions}
-          onChange={setCity}
+        <div className="discover-filters">
+          <FilterMenu
+            label="Kategori"
+            placeholder="Kategori"
+            value={category}
+            options={categoryOptions}
+            onChange={setCategory}
+          />
+          <FilterMenu
+            label="Kota"
+            placeholder="Kota"
+            value={city}
+            options={cityOptions}
+            onChange={setCity}
+          />
+        </div>
+
+        {loadError && (
+          <div className="discover-alert" role="alert">
+            <p>Tidak bisa hubung ke server. Coba lagi atau cek koneksi.</p>
+            <button type="button" className="discover-alert-btn" onClick={load}>
+              Coba lagi
+            </button>
+          </div>
+        )}
+
+        <PartnerCardStack
+          partners={partners}
+          loading={loading}
+          fetchFailed={loadError}
+          hasActiveFilters={Boolean(category || city)}
+          onResetFilters={resetFilters}
+          onReload={load}
         />
       </div>
-
-      {loadError && (
-        <div className="discover-alert" role="alert">
-          <p>Tidak bisa hubung ke server. Coba lagi atau cek koneksi.</p>
-          <button type="button" className="discover-alert-btn" onClick={load}>
-            Coba lagi
-          </button>
-        </div>
-      )}
-
-      <PartnerCardStack
-        partners={partners}
-        loading={loading}
-        fetchFailed={loadError}
-        hasActiveFilters={Boolean(category || city)}
-        onResetFilters={resetFilters}
-        onReload={load}
-      />
     </div>
   );
 }

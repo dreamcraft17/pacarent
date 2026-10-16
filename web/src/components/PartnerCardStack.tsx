@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { trackBookingStarted, trackDiscoveryAction } from '../lib/analytics';
+import { setBookingSource } from '../lib/viewport';
 import { IconClose, IconHeart, IconInfo } from './DatingIcons';
 
 export type StackPartner = {
@@ -49,18 +51,46 @@ export default function PartnerCardStack({
     setIndex((i) => Math.min(i + 1, partners.length));
   }, [partners.length]);
 
-  const skip = () => advance();
+  const skip = useCallback(() => {
+    trackDiscoveryAction('skip', 'card');
+    advance();
+  }, [advance]);
 
-  const interested = () => {
+  const interested = useCallback(() => {
     if (!current) return;
+    setBookingSource('card');
+    trackDiscoveryAction('interested', 'card');
+    trackBookingStarted('card', current.id);
     nav(`/mitra/${current.id}`);
-  };
+  }, [current, nav]);
 
   useEffect(() => {
     setIndex(0);
     setExpanded(false);
     setDragX(0);
   }, [partners]);
+
+  useEffect(() => {
+    if (!current) return;
+    const onKey = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement | null)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || tag === 'BUTTON') return;
+      if (e.key === 'Escape') {
+        setExpanded(false);
+        return;
+      }
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        skip();
+      }
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        interested();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [current, interested, skip]);
 
   const onPointerDown = (e: ReactPointerEvent) => {
     dragging.current = true;
@@ -79,8 +109,13 @@ export default function PartnerCardStack({
     if (!dragging.current) return;
     dragging.current = false;
     const dx = dragXRef.current;
-    if (dx > 80) interested();
-    else if (dx < -80) skip();
+    if (dx > 80) {
+      trackDiscoveryAction('swipe_interested', 'card');
+      interested();
+    } else if (dx < -80) {
+      trackDiscoveryAction('swipe_skip', 'card');
+      advance();
+    }
     else {
       dragXRef.current = 0;
       setDragX(0);
@@ -232,7 +267,8 @@ export default function PartnerCardStack({
           <IconHeart />
         </button>
       </div>
-      <p className="swipe-hint">Geser kartu atau pilih aksi di bawah</p>
+      <p className="swipe-hint swipe-hint--touch">Geser kartu atau pilih aksi di bawah</p>
+      <p className="swipe-hint swipe-hint--keyboard">Tombol di bawah, atau ← lewati · → tertarik</p>
     </div>
   );
 }

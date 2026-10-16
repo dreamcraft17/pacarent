@@ -11,13 +11,15 @@ import ProfilePage from './pages/ProfilePage';
 import RegisterPage from './pages/RegisterPage';
 import TermsPage from './pages/TermsPage';
 import BottomNav from './components/BottomNav';
+import DiscoverModeSwitch from './components/DiscoverModeSwitch';
 import TrustStrip from './components/TrustStrip';
 import './App.css';
 
 function Shell() {
   const { me, logout, loading } = useAuth();
   const { pathname } = useLocation();
-  const isDiscover = pathname === '/' || pathname.startsWith('/mitra/');
+  const isDiscover =
+    pathname === '/' || pathname === '/cari' || pathname.startsWith('/mitra/');
   const hideBottomNav = pathname === '/login' || pathname === '/register' || pathname === '/admin';
 
   return (
@@ -30,9 +32,7 @@ function Shell() {
               PacaRent
             </Link>
             <div className="topbar-discover-actions">
-              <Link to="/cari" className="topbar-text-link">
-                List
-              </Link>
+              <DiscoverModeSwitch />
             </div>
           </>
         ) : (

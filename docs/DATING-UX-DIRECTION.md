@@ -1,11 +1,20 @@
 # Arah UX — Dating app feel, bukan template AI
 
 > **Author:** Dozer  
-> **Date:** 2026-10-13
+> **Date:** 2026-10-16
 
 ## TL;DR
 
-PacaRent terasa seperti **app kencan** (satu kartu, swipe, hati, bottom nav) dengan identitas **teal + coral** dan copy **sewa pacar / booking**, bukan klon Tinder pink atau hero gradient ungu.
+PacaRent MVP adalah **web mobile-first** (buka di browser HP), bukan app native. Pola interaksi **satu kartu + aksi biner + bottom nav** dipinjam dari app discovery populer karena mengurangi friksi browse—**outcome tetap booking mitra terverifikasi**, bukan match/chat kencan. Identitas **teal + coral**, copy **sewa pacar / teman acara**, bukan klon Tinder pink atau hero gradient ungu.
+
+## Web MVP vs app kencan
+
+| | App kencan (referensi) | PacaRent web MVP |
+|--|------------------------|------------------|
+| Channel | Native mobile | SPA Vite, dioptimalkan 4G |
+| Outcome | Match → chat | **Tertarik → halaman booking** |
+| Desktop | Kolom ponsel / web terbatas | **Daftar** (`/cari`) default di layar lebar; **Kartu** (`/`) tetap tersedia via toggle |
+| Trust | Profil + match | Verifikasi, S&amp;K, escrow di sheet/booking |
 
 ## Persona (UX)
 
@@ -39,5 +48,6 @@ PacaRent terasa seperti **app kencan** (satu kartu, swipe, hati, bottom nav) den
 
 ## Validasi berikutnya
 
-- Usability test 5 orang: task “booking date dari swipe” completion >80%
+- Usability test 5 orang: task “booking date dari swipe” completion >80% — protokol: [`guides/USABILITY-DISCOVERY-H1.md`](guides/USABILITY-DISCOVERY-H1.md)
+- Funnel H1 (kartu vs daftar): event `discovery_view` / `discovery_action` / `booking_submitted` — [`guides/ANALYTICS-DISCOVERY.md`](guides/ANALYTICS-DISCOVERY.md)
 - A/B opsional: chip vs filter panel (H1 di `research/dating-ux-adaptation/plan.md`)

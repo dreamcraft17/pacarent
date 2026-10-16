@@ -6,7 +6,7 @@
 
 ## TL;DR
 
-UI PacaRent harus **membangun kepercayaan dua sisi** (pengguna + mitra) dengan sinyal verifikasi, escrow, dan aturan pertemuan yang jelas—bukan tampilan marketplace generik biru/ungu. Positioning produk: **sewa pacar / teman kencan** (PRD v0.2). Warna utama **teal** (#0F766E), copy **Bahasa Indonesia konkret**, mobile-first 4G. North star produk: **booking selesai dengan mitra terverifikasi**, bukan pageview.
+UI PacaRent harus **membangun kepercayaan dua sisi** (pengguna + mitra) dengan sinyal verifikasi, escrow, dan aturan pertemuan yang jelas—bukan tampilan marketplace generik biru/ungu. Positioning produk: **sewa pacar / teman kencan** (PRD v0.2). Channel MVP: **web mobile-first** (bukan native); pola kartu = discovery cepat, outcome **booking**. Warna utama **teal** (#0F766E), copy **Bahasa Indonesia konkret**. North star: **booking selesai dengan mitra terverifikasi**, bukan pageview.
 
 ## Routing (research)
 

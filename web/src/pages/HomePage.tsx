@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../api/client';
+import { trackBookingStarted, trackDiscoveryAction } from '../lib/analytics';
+import { setBookingSource } from '../lib/viewport';
 import { jabodetabekCities } from '../data/jabodetabek-cities';
 
 type Category = { id: number; name: string };
@@ -135,7 +137,15 @@ export default function HomePage() {
               {p.bio.slice(0, 140)}
               {p.bio.length > 140 ? '…' : ''}
             </p>
-            <Link className="partner-card-link" to={`/mitra/${p.id}`}>
+            <Link
+              className="partner-card-link"
+              to={`/mitra/${p.id}`}
+              onClick={() => {
+                setBookingSource('list');
+                trackDiscoveryAction('list_profile_open', 'list');
+                trackBookingStarted('list', p.id);
+              }}
+            >
               Lihat profil &amp; booking →
             </Link>
           </article>
