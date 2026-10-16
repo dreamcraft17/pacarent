@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { trackBookingStarted, trackDiscoveryAction } from '../lib/analytics';
+import { partnerBackdrop } from '../lib/partnerVisual';
 import { setBookingSource } from '../lib/viewport';
 import { IconClose, IconHeart, IconInfo } from './DatingIcons';
 
@@ -271,15 +272,6 @@ export default function PartnerCardStack({
       <p className="swipe-hint swipe-hint--keyboard">Tombol di bawah, atau ← lewati · → tertarik</p>
     </div>
   );
-}
-
-function partnerBackdrop(name: string): string {
-  let hash = 0;
-  for (let i = 0; i < name.length; i += 1) {
-    hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
-  }
-  const hue = hash % 36;
-  return `hsl(${hue + 10} 18% ${38 + (hash % 12)}%)`;
 }
 
 function CardFace({ partner }: { partner: StackPartner }) {
