@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { trackBookingStarted, trackDiscoveryAction } from '../lib/analytics';
 import { partnerBackdrop } from '../lib/partnerVisual';
 import { setBookingSource } from '../lib/viewport';
-import { IconClose, IconHeart, IconInfo } from './DatingIcons';
+import { IconCalendar, IconClose, IconInfo } from './DatingIcons';
 
 export type StackPartner = {
   id: string;
@@ -14,6 +14,7 @@ export type StackPartner = {
   rating: number;
   reviewCount: number;
   categories: string[];
+  verified?: boolean;
   photoUrl?: string | null;
 };
 
@@ -265,7 +266,7 @@ export default function PartnerCardStack({
           <IconInfo />
         </button>
         <button type="button" className="swipe-btn swipe-btn-yes" onClick={interested} aria-label="Tertarik, buat booking">
-          <IconHeart />
+          <IconCalendar />
         </button>
       </div>
       <p className="swipe-hint swipe-hint--touch">Geser kartu atau pilih aksi di bawah</p>
@@ -303,6 +304,7 @@ function CardFace({ partner }: { partner: StackPartner }) {
             </div>
           </div>
           <div className="swipe-card-badges">
+            {partner.verified && <span className="badge badge-verified">✓ Terverifikasi</span>}
             {partner.categories[0] && <span className="badge badge-category">{partner.categories[0]}</span>}
           </div>
           {bioTeaser && <p className="swipe-card-teaser">{bioTeaser}{partner.bio.length > 72 ? '…' : ''}</p>}

@@ -835,6 +835,12 @@ button.ghost {
   gap: 0.35rem;
 }
 
+.browse-tile-verified {
+  align-self: flex-start;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
 .browse-tile-name {
   margin: 0;
   font-family: var(--font-display);
@@ -1284,8 +1290,8 @@ button.ghost {
 .swipe-card-front.stamp-yes::after {
   content: 'TERTARIK';
   right: 16px;
-  color: var(--pr-like);
-  border-color: var(--pr-like);
+  color: var(--pr-booking);
+  border-color: var(--pr-booking);
 }
 
 .swipe-card-front.stamp-no::after {
@@ -1473,8 +1479,8 @@ button.ghost {
 
 .swipe-btn-yes {
   background: #fff;
-  color: var(--pr-like);
-  border: 2px solid #e8bcc5;
+  color: var(--pr-primary);
+  border: 2px solid #a8d8d2;
   width: 64px;
   height: 64px;
   min-height: 64px;

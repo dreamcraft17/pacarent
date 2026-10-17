@@ -58,6 +58,7 @@ export default function PartnerDetailPage() {
   return (
     <div>
       <div className="card">
+        <span className="badge badge-verified">✓ Mitra terverifikasi</span>
         <h2>{partner.profile?.fullName}</h2>
         <p className="muted">{partner.profile?.city}</p>
         <p>{partner.partnerProfile?.bio}</p>

@@ -79,6 +79,7 @@ public class PartnersController(
                 u.Profile.PhotoUrl,
                 u.PartnerProfile!.HourlyRate,
                 u.PartnerProfile.Bio,
+                Verified = u.PartnerProfile.VerificationStatus == VerificationStatus.Approved,
                 Categories = u.PartnerProfile.PartnerCategories.Select(c => c.Category.Name),
                 Rating = r?.Avg ?? 0,
                 ReviewCount = r?.Count ?? 0

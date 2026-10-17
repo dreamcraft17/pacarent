@@ -17,6 +17,7 @@ type Partner = {
   bio: string;
   rating: number;
   reviewCount: number;
+  verified?: boolean;
   categories: string[];
   photoUrl?: string | null;
 };
@@ -141,6 +142,7 @@ export default function BrowseListPage() {
                     )}
                   </div>
                   <div className="browse-tile-body">
+                    {p.verified && <span className="badge badge-verified browse-tile-verified">✓ Terverifikasi</span>}
                     <h2 className="browse-tile-name">
                       {p.fullName}
                       <span className="browse-tile-city">, {p.city}</span>

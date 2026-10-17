@@ -5,7 +5,7 @@ export default function TrustStrip() {
         <span className="trust-icon" aria-hidden>
           ✓
         </span>
-        Profil mitra langsung aktif
+        Mitra terverifikasi
       </li>
       <li>
         <span className="trust-icon" aria-hidden>
