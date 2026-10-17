@@ -14,14 +14,14 @@ export const discoverMarketing = {
     lead: 'Sewa pacar / teman kencan — pilih profil, atur tanggal & lokasi, langsung booking.',
   },
   launchEmpty: {
-    eyebrow: 'Real talk',
-    title: 'Pengen ke kondangan tp gapunya pacar? Sewa aja di PacaRent.',
-    lead: 'Pendamping terverifikasi, 18+, lokasi publik. Bukan cari jodoh—tertarik → booking.',
+    eyebrow: 'Early access',
+    title: 'Belum ada profil live — grid lagi diisi.',
+    lead: 'Daftar sebagai pengguna biar dapat notif, atau ajukan jadi pendamping verified (18+, lokasi publik).',
   },
-  sidebar: {
-    crumb: 'PacaRent / Jelajahi',
-    eyebrow: 'Lowkey aman',
-    title: 'Bukan app match—plus one yang jelas.',
-    lead: 'Setiap langkah menuju jadwal, lokasi, dan pembayaran lewat platform.',
-  },
+  trustRail: [
+    'Pendamping terverifikasi',
+    'Tertarik → booking tanggal & lokasi',
+    'Bukan app match',
+    'Dana ditahan sampai layanan selesai',
+  ],
 } as const;

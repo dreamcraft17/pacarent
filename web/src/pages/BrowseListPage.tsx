@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../api/client';
-import DiscoverTrustSidebar from '../components/DiscoverTrustSidebar';
+import BrowseTrustRail from '../components/BrowseTrustRail';
 import FilterMenu from '../components/FilterMenu';
 import { jabodetabekFilterOptions } from '../data/jabodetabek-cities';
 import LaunchEmptyState from '../components/LaunchEmptyState';
@@ -24,7 +24,6 @@ type Partner = {
   photoUrl?: string | null;
 };
 
-/** Browse discovery — satu identitas: grid profil → booking. */
 export default function BrowseListPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [partners, setPartners] = useState<Partner[]>([]);
@@ -75,22 +74,21 @@ export default function BrowseListPage() {
     setCity('');
   };
 
-  return (
-    <div className="discover-layout browse-list-layout">
-      <DiscoverTrustSidebar />
-      <div className="browse-list-page">
-        <section className="discover-intro" aria-labelledby="browse-title">
-          <div>
-            <p className="discover-intro-eyebrow">{discoverMarketing.discoverIntro.eyebrow}</p>
-            <h1 id="browse-title">{discoverMarketing.discoverIntro.title}</h1>
-            <p>{discoverMarketing.discoverIntro.lead}</p>
-          </div>
-          <span className="discover-intro-count" aria-label={`${partners.length} profil tersedia`}>
-            {loading ? '...' : `${partners.length} profil`}
-          </span>
-        </section>
+  const profileCountLabel = loading ? 'Memuat…' : `${partners.length} profil`;
 
-        <div className="discover-filters browse-list-filters">
+  return (
+    <div className="browse-home v3-page v3-page--wide">
+      <header className="browse-masthead" aria-labelledby="browse-title">
+        <div className="browse-masthead-main">
+          <p className="browse-kicker">{discoverMarketing.discoverIntro.eyebrow}</p>
+          <h1 id="browse-title">{discoverMarketing.discoverIntro.title}</h1>
+          <p className="browse-dek">{discoverMarketing.discoverIntro.lead}</p>
+        </div>
+        <BrowseTrustRail />
+      </header>
+
+      <div className="browse-toolbar">
+        <div className="browse-filters">
           <FilterMenu
             label="Kategori"
             placeholder="Kategori"
@@ -106,96 +104,101 @@ export default function BrowseListPage() {
             onChange={setCity}
           />
         </div>
-
-        {loadError && (
-          <div className="discover-alert" role="alert">
-            <p>Tidak bisa hubung ke server. Coba lagi atau cek koneksi.</p>
-            <button type="button" className="discover-alert-btn" onClick={load}>
-              Coba lagi
-            </button>
-          </div>
-        )}
-
-        {loading && (
-          <div className="browse-grid browse-grid--loading" aria-busy="true">
-            {[0, 1, 2].map((i) => (
-              <div key={i} className="browse-tile browse-tile-skeleton" />
-            ))}
-          </div>
-        )}
-
-        {!loading && !loadError && partners.length > 0 && (
-          <div className="browse-grid">
-            {partners.map((p) => {
-              const initial = p.fullName.charAt(0).toUpperCase();
-              const photoStyle = p.photoUrl
-                ? { backgroundImage: `url(${p.photoUrl})` }
-                : { backgroundColor: partnerBackdrop(p.fullName) };
-
-              return (
-                <article key={p.id} className="browse-tile">
-                  <div
-                    className={`browse-tile-photo${p.photoUrl ? '' : ' browse-tile-photo--placeholder'}`}
-                    style={photoStyle}
-                  >
-                    {!p.photoUrl && <span className="browse-tile-avatar">{initial}</span>}
-                    {p.categories[0] && (
-                      <span className="badge badge-category browse-tile-badge">{p.categories[0]}</span>
-                    )}
-                  </div>
-                  <div className="browse-tile-body">
-                    {p.verified && <span className="badge badge-verified browse-tile-verified">✓ Terverifikasi</span>}
-                    <h2 className="browse-tile-name">
-                      {p.fullName}
-                      <span className="browse-tile-city">, {p.city}</span>
-                    </h2>
-                    <p className="browse-tile-stats">
-                      Rp {p.hourlyRate.toLocaleString('id-ID')}/jam · ★ {p.rating.toFixed(1)}
-                      {p.reviewCount > 0 ? ` (${p.reviewCount})` : ''}
-                    </p>
-                    <p className="browse-tile-bio">
-                      {p.bio.trim().slice(0, 100)}
-                      {p.bio.length > 100 ? '…' : ''}
-                    </p>
-                    <Link
-                      className="browse-tile-cta"
-                      to={`/mitra/${p.id}`}
-                      onClick={() => {
-                        setBookingSource('browse');
-                        trackDiscoveryAction('profile_open');
-                        trackBookingStarted('browse', p.id);
-                      }}
-                    >
-                      Tertarik · booking
-                    </Link>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        )}
-
-        {!loading && !loadError && partners.length === 0 && !category && !city && (
-          <LaunchEmptyState
-            id="browse-launch-title"
-            showUserRegister
-            secondaryHref="/syarat"
-            secondaryLabel="Baca S&K"
-          />
-        )}
-
-        {!loading && !loadError && partners.length === 0 && (category || city) && (
-          <div className="discover-empty-state">
-            <h2>Belum ada pendamping</h2>
-            <p className="discover-empty-copy">Coba filter lain atau reset pilihan.</p>
-            <div className="discover-empty-actions">
-              <button type="button" className="discover-empty-primary" onClick={resetFilters}>
-                Reset filter
-              </button>
-            </div>
-          </div>
-        )}
+        <p className="browse-count" aria-live="polite">
+          {profileCountLabel}
+        </p>
       </div>
+
+      {loadError && (
+        <div className="browse-alert" role="alert">
+          <p>Tidak bisa hubung ke server. Coba lagi atau cek koneksi.</p>
+          <button type="button" className="browse-alert-btn" onClick={load}>
+            Coba lagi
+          </button>
+        </div>
+      )}
+
+      {loading && (
+        <div className="browse-grid browse-grid--loading" aria-busy="true">
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} className="browse-card browse-card--skeleton" />
+          ))}
+        </div>
+      )}
+
+      {!loading && !loadError && partners.length > 0 && (
+        <div className="browse-grid">
+          {partners.map((p) => {
+            const initial = p.fullName.charAt(0).toUpperCase();
+            const photoStyle = p.photoUrl
+              ? { backgroundImage: `url(${p.photoUrl})` }
+              : { backgroundColor: partnerBackdrop(p.fullName) };
+
+            return (
+              <article key={p.id} className="browse-card">
+                <div
+                  className={`browse-card-media${p.photoUrl ? '' : ' browse-card-media--placeholder'}`}
+                  style={photoStyle}
+                >
+                  {!p.photoUrl && <span className="browse-card-initial">{initial}</span>}
+                  <div className="browse-card-media-foot">
+                    {p.verified && <span className="browse-chip browse-chip-verified">Verified</span>}
+                    {p.categories[0] && <span className="browse-chip">{p.categories[0]}</span>}
+                  </div>
+                </div>
+                <div className="browse-card-body">
+                  <h2 className="browse-card-name">
+                    {p.fullName}
+                    <span className="browse-card-city"> · {p.city}</span>
+                  </h2>
+                  <p className="browse-card-rate">
+                    Rp {p.hourlyRate.toLocaleString('id-ID')}
+                    <span>/jam</span>
+                    <span className="browse-card-rating">
+                      ★ {p.rating.toFixed(1)}
+                      {p.reviewCount > 0 ? ` (${p.reviewCount})` : ''}
+                    </span>
+                  </p>
+                  <p className="browse-card-bio">
+                    {p.bio.trim().slice(0, 96)}
+                    {p.bio.length > 96 ? '…' : ''}
+                  </p>
+                  <Link
+                    className="browse-card-cta"
+                    to={`/mitra/${p.id}`}
+                    onClick={() => {
+                      setBookingSource('browse');
+                      trackDiscoveryAction('profile_open');
+                      trackBookingStarted('browse', p.id);
+                    }}
+                  >
+                    Tertarik · booking
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      )}
+
+      {!loading && !loadError && partners.length === 0 && !category && !city && (
+        <LaunchEmptyState
+          id="browse-launch-title"
+          showUserRegister
+          secondaryHref="/syarat"
+          secondaryLabel="Baca S&K"
+        />
+      )}
+
+      {!loading && !loadError && partners.length === 0 && (category || city) && (
+        <section className="browse-empty-filter" aria-labelledby="filter-empty-title">
+          <h2 id="filter-empty-title">Belum ada pendamping</h2>
+          <p>Coba filter lain atau reset pilihan.</p>
+          <button type="button" className="launch-btn launch-btn-secondary" onClick={resetFilters}>
+            Reset filter
+          </button>
+        </section>
+      )}
     </div>
   );
 }

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { api } from '../api/client';
+import PageShell from '../components/layout/PageShell';
+import Panel from '../components/layout/Panel';
 import { useAuth } from '../auth/AuthContext';
 
-// Empat tahap inti booking (lihat docs/DESIGN-PLAN.md § Tahap 3). `InProgress` dianggap
-// masih di tahap "Dibayar" karena pertemuan sedang berlangsung setelah pembayaran diterima.
 const TIMELINE_LABELS = ['Diajukan', 'Diterima', 'Dibayar', 'Selesai'] as const;
 const FLOW_STEP: Record<string, number> = {
   pendingpartner: 0,
@@ -158,36 +158,40 @@ export default function BookingsPage() {
   const isPartner = me?.role === 'Partner';
 
   return (
-    <div>
-      <h2>Booking saya</h2>
-      <p className="muted">
-        {paymentsEnabled ? (
-          <>Tarif pendamping per booking — bayar lewat DOKU setelah fitur pembayaran aktif.</>
-        ) : (
-          <>Early access: pembayaran belum aktif. Setelah pendamping terima, langsung koordinasi &amp; tandai selesai.</>
-        )}
-      </p>
+    <PageShell
+      title="Booking saya"
+      dek={
+        paymentsEnabled
+          ? 'Tarif per booking — bayar lewat DOKU setelah fitur aktif.'
+          : 'Early access: pembayaran belum aktif. Koordinasi setelah pendamping terima.'
+      }
+    >
       {emergency && (
-        <a className="emergency" href={emergency.emergencyHelpUrl}>
+        <a className="v3-emergency" href={emergency.emergencyHelpUrl}>
           {emergency.emergencyHelpLabel}
         </a>
       )}
+
+      {items.length === 0 && <p className="v3-muted">Belum ada booking.</p>}
+
       {items.map((b) => (
-        <div key={b.id} className="card">
-          <p>
-            <span className="badge">{statusLabel(b.status)}</span> ·{' '}
-            {new Date(b.scheduledAt).toLocaleString('id-ID')}
-          </p>
+        <Panel key={b.id}>
+          <div className="v3-booking-card-meta">
+            <span className="badge">{statusLabel(b.status)}</span>
+            <span className="v3-muted">{new Date(b.scheduledAt).toLocaleString('id-ID')}</span>
+          </div>
           <BookingTimeline status={b.status} />
           <p>{b.meetingLocation}</p>
-          <p>Rp {b.totalAmount.toLocaleString('id-ID')}</p>
-          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          <p>
+            <strong>Rp {b.totalAmount.toLocaleString('id-ID')}</strong>
+          </p>
+          <div className="v3-btn-row">
             {isPartner && (b.status === 'PendingPartner' || b.status === 'pendingPartner') && (
               <>
-                <button type="button" onClick={() => act(b.id, 'accept')}>
+                <button type="button" className="v3-btn-primary" style={{ width: 'auto' }} onClick={() => act(b.id, 'accept')}>
                   Terima
                 </button>
-                <button type="button" className="secondary" onClick={() => act(b.id, 'reject')}>
+                <button type="button" className="v3-btn-secondary" onClick={() => act(b.id, 'reject')}>
                   Tolak
                 </button>
               </>
@@ -195,49 +199,66 @@ export default function BookingsPage() {
             {!isPartner &&
               paymentsEnabled &&
               (b.status === 'Accepted' || b.status === 'accepted') && (
-                <button type="button" onClick={() => pay(b.id)}>
+                <button type="button" className="v3-btn-primary" style={{ width: 'auto' }} onClick={() => pay(b.id)}>
                   {paymentUseMock ? 'Bayar (mock DOKU)' : 'Bayar via DOKU'}
                 </button>
               )}
-            {(b.status === 'InProgress' || b.status === 'inProgress' || b.status === 'Paid' || b.status === 'paid') && (
-              <button type="button" onClick={() => act(b.id, 'complete')}>
+            {(b.status === 'InProgress' ||
+              b.status === 'inProgress' ||
+              b.status === 'Paid' ||
+              b.status === 'paid') && (
+              <button type="button" className="v3-btn-secondary" onClick={() => act(b.id, 'complete')}>
                 Tandai selesai
               </button>
             )}
-            <button type="button" className="secondary" onClick={() => act(b.id, 'cancel')}>
+            <button type="button" className="v3-btn-secondary" onClick={() => act(b.id, 'cancel')}>
               Batalkan
             </button>
-            <button type="button" className="danger" onClick={() => report(isPartner ? b.userId : b.partnerId)}>
+            <button
+              type="button"
+              className="v3-btn-secondary v3-btn-danger"
+              onClick={() => report(isPartner ? b.userId : b.partnerId)}
+            >
               Laporkan
             </button>
           </div>
           {(b.status === 'Completed' || b.status === 'completed') && (
-            <div style={{ marginTop: 12 }}>
-              <p className="muted">Beri ulasan (1x per pihak)</p>
+            <div className="v3-form" style={{ marginTop: '1rem' }}>
+              <p className="v3-muted">Beri ulasan (1x per pihak)</p>
+              <label htmlFor={`review-booking-${b.id}`}>Booking ID</label>
               <input
-                placeholder="Booking ID"
+                id={`review-booking-${b.id}`}
                 value={review.bookingId || b.id}
-                onChange={(e) => setReview({ ...review, bookingId: e.target.value, targetId: isPartner ? b.userId : b.partnerId })}
+                onChange={(e) =>
+                  setReview({
+                    ...review,
+                    bookingId: e.target.value,
+                    targetId: isPartner ? b.userId : b.partnerId,
+                  })
+                }
               />
+              <label htmlFor={`review-rating-${b.id}`}>Rating</label>
               <input
+                id={`review-rating-${b.id}`}
                 type="number"
                 min={1}
                 max={5}
                 value={review.rating}
                 onChange={(e) => setReview({ ...review, rating: Number(e.target.value) })}
               />
+              <label htmlFor={`review-comment-${b.id}`}>Komentar</label>
               <input
-                placeholder="Komentar"
+                id={`review-comment-${b.id}`}
                 value={review.comment}
                 onChange={(e) => setReview({ ...review, comment: e.target.value })}
               />
-              <button type="button" onClick={submitReview}>
+              <button type="button" className="v3-btn-secondary" onClick={submitReview}>
                 Kirim ulasan
               </button>
             </div>
           )}
-        </div>
+        </Panel>
       ))}
-    </div>
+    </PageShell>
   );
 }

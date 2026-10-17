@@ -11,63 +11,40 @@ import RegisterPage from './pages/RegisterPage';
 import TermsPage from './pages/TermsPage';
 import BottomNav from './components/BottomNav';
 import { discoverMarketing } from './copy/discover-marketing';
-import TrustStrip from './components/TrustStrip';
-import './App.css';
 
 function Shell() {
   const { me, logout, loading } = useAuth();
   const { pathname } = useLocation();
-  const isDiscover = pathname === '/' || pathname.startsWith('/mitra/');
   const hideBottomNav = pathname === '/login' || pathname === '/register' || pathname === '/admin';
 
   return (
-    <div className={`app app-canvas ${isDiscover ? 'app-discover' : 'app-standard'}`}>
-      <header
-        className={`topbar topbar-compact${isDiscover ? ' topbar-discover' : ''}`}
-      >
-        {isDiscover ? (
-          <>
-            <span className="topbar-discover-spacer" aria-hidden />
-            <Link to="/" className="brand brand-discover">
-              <span className="brand-mark" aria-hidden="true">P</span>
-              <span>PacaRent</span>
-            </Link>
-            <div className="topbar-discover-actions topbar-actions">
-              <Link to="/syarat">S&amp;K</Link>
-              {loading ? (
-                <span className="muted">...</span>
-              ) : me ? (
-                <Link to="/profile">Profil</Link>
-              ) : (
-                <Link to="/login">Masuk</Link>
-              )}
-            </div>
-          </>
-        ) : (
-          <>
-            <Link to="/" className="brand">
-              PacaRent
-              <span className="brand-tag">{discoverMarketing.brandTag}</span>
-            </Link>
-            <div className="topbar-actions">
-              {me?.role === 'Admin' && <Link to="/admin">Admin</Link>}
-              {me && me.role !== 'Partner' && <Link to="/mitra/daftar">Jadi pendamping</Link>}
-              <Link to="/syarat">S&amp;K</Link>
-              {loading ? (
-                <span className="muted">...</span>
-              ) : me ? (
-                <button type="button" className="ghost btn-small" onClick={logout}>
-                  Keluar
-                </button>
-              ) : (
-                <Link to="/login">Masuk</Link>
-              )}
-            </div>
-          </>
-        )}
+    <div className="app app-v3">
+      <header className="v3-topbar">
+        <Link to="/" className="v3-brand">
+          <span className="v3-brand-mark" aria-hidden="true">
+            P
+          </span>
+          <span>PacaRent</span>
+        </Link>
+        <div className="v3-topbar-actions">
+          <Link to="/syarat">S&amp;K</Link>
+          {me?.role === 'Admin' && <Link to="/admin">Admin</Link>}
+          {me && me.role !== 'Partner' && <Link to="/mitra/daftar">Jadi pendamping</Link>}
+          {loading ? (
+            <span className="v3-muted">...</span>
+          ) : me ? (
+            <>
+              <Link to="/profile">Profil</Link>
+              <button type="button" onClick={logout}>
+                Keluar
+              </button>
+            </>
+          ) : (
+            <Link to="/login">Masuk</Link>
+          )}
+        </div>
       </header>
-      {!isDiscover && <TrustStrip />}
-      <main className={`main ${hideBottomNav ? '' : 'main-with-nav'}`}>
+      <main className={`v3-main${hideBottomNav ? '' : ' v3-main--nav'}`}>
         <Routes>
           <Route path="/" element={<BrowseListPage />} />
           <Route path="/cari" element={<Navigate to="/" replace />} />
@@ -82,9 +59,7 @@ function Shell() {
         </Routes>
       </main>
       {!hideBottomNav && <BottomNav />}
-      <footer className="footer footer-minimal">
-        PacaRent · Early access · Sewa pacar · pendamping terverifikasi
-      </footer>
+      <footer className="v3-footer">{discoverMarketing.brandTag} · Early access</footer>
     </div>
   );
 }
@@ -92,7 +67,7 @@ function Shell() {
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { me, loading } = useAuth();
   const location = useLocation();
-  if (loading) return <p>Memuat...</p>;
+  if (loading) return <p className="v3-muted">Memuat...</p>;
   if (!me) {
     return (
       <Navigate
@@ -107,7 +82,7 @@ function RequireAuth({ children }: { children: React.ReactNode }) {
 
 function RequireAdmin({ children }: { children: React.ReactNode }) {
   const { me, loading } = useAuth();
-  if (loading) return <p>Memuat...</p>;
+  if (loading) return <p className="v3-muted">Memuat...</p>;
   if (!me || me.role !== 'Admin') return <Navigate to="/" replace />;
   return children;
 }

@@ -1,5 +1,7 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { api } from '../api/client';
+import PageShell from '../components/layout/PageShell';
+import Panel from '../components/layout/Panel';
 
 export default function PartnerApplyPage() {
   const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
@@ -36,27 +38,27 @@ export default function PartnerApplyPage() {
   };
 
   return (
-    <div className="card" style={{ maxWidth: 560 }}>
-      <h2>Daftar jadi pendamping</h2>
-      <form onSubmit={submit}>
-        <label>Bio</label>
-        <textarea value={bio} onChange={(e) => setBio(e.target.value)} required />
-        <label>Tarif per jam (Rp)</label>
-        <input type="number" value={hourlyRate} onChange={(e) => setHourlyRate(e.target.value)} />
-        <label>Kategori layanan</label>
-        {categories.map((c) => (
-          <label key={c.id}>
-            <input
-              type="checkbox"
-              checked={selected.includes(c.id)}
-              onChange={() => toggle(c.id)}
-            />{' '}
-            {c.name}
-          </label>
-        ))}
-        <button type="submit">Kirim</button>
-      </form>
-      {msg && <p>{msg}</p>}
-    </div>
+    <PageShell
+      title="Daftar jadi pendamping"
+      dek="Verified, 18+, lokasi publik. Kamu atur tarif & kategori layanan."
+      width="narrow"
+    >
+      <Panel>
+        <form className="v3-form" onSubmit={submit}>
+          <label>Bio</label>
+          <textarea value={bio} onChange={(e) => setBio(e.target.value)} required />
+          <label>Tarif per jam (Rp)</label>
+          <input type="number" value={hourlyRate} onChange={(e) => setHourlyRate(e.target.value)} />
+          <label>Kategori layanan</label>
+          {categories.map((c) => (
+            <label key={c.id}>
+              <input type="checkbox" checked={selected.includes(c.id)} onChange={() => toggle(c.id)} /> {c.name}
+            </label>
+          ))}
+          <button type="submit">Kirim</button>
+        </form>
+        {msg && <p className="v3-muted">{msg}</p>}
+      </Panel>
+    </PageShell>
   );
 }

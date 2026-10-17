@@ -8,7 +8,7 @@ type Props = {
   showUserRegister?: boolean;
 };
 
-/** Onboarding empty state — browse launch. */
+/** Empty inventory — complements masthead hook (no duplicate hero copy). */
 export default function LaunchEmptyState({
   id = 'launch-empty-title',
   secondaryHref,
@@ -18,47 +18,49 @@ export default function LaunchEmptyState({
   const showSecondary = Boolean(secondaryHref && secondaryLabel);
 
   return (
-    <section
-      className="discover-empty-state discover-empty-state--launch"
-      aria-labelledby={id}
-    >
-      <div className="empty-state-mark" aria-hidden="true">
-        <span>PR</span>
+    <section className="launch-panel" aria-labelledby={id}>
+      <div className="launch-panel-head">
+        <p className="launch-panel-kicker">{discoverMarketing.launchEmpty.eyebrow}</p>
+        <h2 id={id}>{discoverMarketing.launchEmpty.title}</h2>
+        <p className="launch-panel-lead">{discoverMarketing.launchEmpty.lead}</p>
       </div>
-      <p className="discover-empty-eyebrow">{discoverMarketing.launchEmpty.eyebrow}</p>
-      <h2 id={id} className="discover-empty-hero">
-        {discoverMarketing.launchEmpty.title}
-      </h2>
-      <p className="discover-empty-copy">{discoverMarketing.launchEmpty.lead}</p>
-      <div className="empty-state-steps" aria-label="Cara kerja PacaRent">
-        <div>
-          <span>01</span>
-          <strong>Pilih profil</strong>
-          <small>lihat bio, tarif, dan kota</small>
-        </div>
-        <div>
-          <span>02</span>
-          <strong>Atur jadwal</strong>
-          <small>tanggal, durasi, lokasi</small>
-        </div>
-        <div>
-          <span>03</span>
-          <strong>Booking aman</strong>
-          <small>status tercatat di akunmu</small>
-        </div>
-      </div>
-      <div className="discover-empty-actions discover-empty-actions--stack">
-        <Link className="discover-empty-primary discover-empty-link" to="/mitra/daftar">
+
+      <ol className="launch-flow" aria-label="Cara kerja PacaRent">
+        <li>
+          <span className="launch-flow-n">1</span>
+          <div>
+            <strong>Pilih profil</strong>
+            <span>Bio, tarif, kota</span>
+          </div>
+        </li>
+        <li>
+          <span className="launch-flow-n">2</span>
+          <div>
+            <strong>Atur jadwal</strong>
+            <span>Tanggal, durasi, lokasi</span>
+          </div>
+        </li>
+        <li>
+          <span className="launch-flow-n">3</span>
+          <div>
+            <strong>Booking aman</strong>
+            <span>Status di akunmu</span>
+          </div>
+        </li>
+      </ol>
+
+      <div className="launch-panel-actions">
+        {showUserRegister && (
+          <Link className="launch-btn launch-btn-primary" to="/register">
+            Daftar sebagai pengguna
+          </Link>
+        )}
+        <Link className="launch-btn launch-btn-secondary" to="/mitra/daftar">
           Daftar jadi pendamping
         </Link>
         {showSecondary && (
-          <Link className="discover-empty-secondary discover-empty-link" to={secondaryHref!}>
+          <Link className="launch-btn launch-btn-ghost" to={secondaryHref!}>
             {secondaryLabel}
-          </Link>
-        )}
-        {showUserRegister && (
-          <Link className="discover-empty-tertiary" to="/register">
-            Daftar sebagai pengguna
           </Link>
         )}
       </div>

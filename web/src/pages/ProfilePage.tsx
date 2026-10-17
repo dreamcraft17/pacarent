@@ -1,5 +1,7 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { api } from '../api/client';
+import PageShell from '../components/layout/PageShell';
+import Panel from '../components/layout/Panel';
 import { useAuth } from '../auth/AuthContext';
 
 export default function ProfilePage() {
@@ -37,40 +39,35 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="card" style={{ maxWidth: 520 }}>
-      <h2>Profil</h2>
-      <form onSubmit={save}>
-        <label>Nama</label>
-        <input
-          value={form.fullName}
-          onChange={(e) => setForm({ ...form, fullName: e.target.value })}
-        />
-        <label>Kota</label>
-        <input value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} />
-        <label>Foto URL</label>
-        <input
-          value={form.photoUrl}
-          onChange={(e) => setForm({ ...form, photoUrl: e.target.value })}
-        />
-        <label>Kontak darurat (nama)</label>
-        <input
-          value={form.emergencyContactName}
-          onChange={(e) => setForm({ ...form, emergencyContactName: e.target.value })}
-        />
-        <label>Kontak darurat (HP)</label>
-        <input
-          value={form.emergencyContactPhone}
-          onChange={(e) => setForm({ ...form, emergencyContactPhone: e.target.value })}
-        />
-        <label>Tanggal lahir</label>
-        <input
-          type="date"
-          value={form.birthDate}
-          onChange={(e) => setForm({ ...form, birthDate: e.target.value })}
-        />
-        <button type="submit">Simpan</button>
-      </form>
-      {saved && <p className="muted">Tersimpan.</p>}
-    </div>
+    <PageShell title="Profil" dek="Data akun dan kontak darurat." width="narrow">
+      <Panel>
+        <form className="v3-form" onSubmit={save}>
+          <label>Nama</label>
+          <input value={form.fullName} onChange={(e) => setForm({ ...form, fullName: e.target.value })} />
+          <label>Kota</label>
+          <input value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} />
+          <label>Foto URL</label>
+          <input value={form.photoUrl} onChange={(e) => setForm({ ...form, photoUrl: e.target.value })} />
+          <label>Kontak darurat (nama)</label>
+          <input
+            value={form.emergencyContactName}
+            onChange={(e) => setForm({ ...form, emergencyContactName: e.target.value })}
+          />
+          <label>Kontak darurat (HP)</label>
+          <input
+            value={form.emergencyContactPhone}
+            onChange={(e) => setForm({ ...form, emergencyContactPhone: e.target.value })}
+          />
+          <label>Tanggal lahir</label>
+          <input
+            type="date"
+            value={form.birthDate}
+            onChange={(e) => setForm({ ...form, birthDate: e.target.value })}
+          />
+          <button type="submit">Simpan</button>
+        </form>
+        {saved && <p className="v3-muted">Tersimpan.</p>}
+      </Panel>
+    </PageShell>
   );
 }

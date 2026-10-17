@@ -50,7 +50,7 @@ Copy kekinian untuk PacaRent paling natural pakai **POV + masalah relatable** (k
 
 ## Implementasi web
 
-Copy aktif di UI: `web/src/copy/discover-marketing.ts` (discover intro, empty state, sidebar, meta).
+Copy aktif di UI: `web/src/copy/discover-marketing.ts` (masthead, trust rail, launch panel, meta). Layout: `web/src/styles/browse-shell.css`.
 
 ## Guardrail (wajib)
 
