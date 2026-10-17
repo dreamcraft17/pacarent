@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import AuthLayout from '../components/layout/AuthLayout';
+import { productCopy } from '../copy/productCopy';
 import { api, setTokens } from '../api/client';
 import { useAuth } from '../auth/AuthContext';
 import { getAuthRedirect } from '../auth/authRedirect';
@@ -11,6 +12,7 @@ export default function RegisterPage() {
   const location = useLocation();
   const { refreshMe } = useAuth();
   const from = getAuthRedirect(location.state);
+  const c = productCopy.auth;
   const [form, setForm] = useState({
     email: '',
     phone: '',
@@ -55,16 +57,12 @@ export default function RegisterPage() {
 
   return (
     <AuthLayout
-      kicker="18+"
-      title="Daftar untuk mulai jelajahi"
-      lead="Booking lewat platform—bukan chat anonim."
-      bullets={[
-        'Setujui S&K & kebijakan privasi (UU PDP)',
-        'Langsung masuk setelah daftar (fase testing)',
-        'Kontak darurat opsional di profil',
-      ]}
+      kicker={c.registerAsideKicker}
+      title={c.registerAsideTitle}
+      lead={c.registerAsideLead}
+      bullets={[...c.registerBullets]}
     >
-      <h2>Buat akun</h2>
+      <h2>{c.registerHeading}</h2>
       <form className="v3-form" onSubmit={register}>
         <label htmlFor="email">Email</label>
         <input
@@ -74,7 +72,7 @@ export default function RegisterPage() {
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
-        <label htmlFor="phone">Nomor HP (opsional jika email diisi)</label>
+        <label htmlFor="phone">Nomor HP (opsional kalau email udah diisi)</label>
         <input
           id="phone"
           autoComplete="tel"
@@ -103,9 +101,9 @@ export default function RegisterPage() {
           onChange={(e) => setForm({ ...form, city: e.target.value })}
           required
         >
-          {jabodetabekCities.map((c) => (
-            <option key={c.id} value={c.name}>
-              {c.name}
+          {jabodetabekCities.map((city) => (
+            <option key={city.id} value={city.name}>
+              {city.name}
             </option>
           ))}
         </select>
@@ -131,7 +129,7 @@ export default function RegisterPage() {
         </label>
         {error && <p className="v3-error">{error}</p>}
         <button type="submit" disabled={!form.termsAccepted}>
-          Daftar
+          {c.registerSubmit}
         </button>
       </form>
     </AuthLayout>

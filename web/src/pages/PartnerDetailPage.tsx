@@ -4,6 +4,7 @@ import Panel from '../components/layout/Panel';
 import { api } from '../api/client';
 import { useAuth } from '../auth/AuthContext';
 import { trackBookingSubmitted } from '../lib/analytics';
+import { productCopy } from '../copy/productCopy';
 import { getBookingSource } from '../lib/viewport';
 
 export default function PartnerDetailPage() {
@@ -53,7 +54,7 @@ export default function PartnerDetailPage() {
         }),
       });
       trackBookingSubmitted(id, getBookingSource());
-      setMsg('Booking dibuat. Pendamping akan merespons.');
+      setMsg(productCopy.booking.success);
       nav('/bookings');
     } catch (err) {
       setMsg(err instanceof Error ? err.message : 'Gagal booking');
@@ -66,7 +67,8 @@ export default function PartnerDetailPage() {
   return (
     <div className="v3-booking">
       <aside className="v3-booking-profile">
-        <span className="badge badge-verified">✓ Pendamping terverifikasi</span>
+        <span className="badge badge-verified">✓ {productCopy.booking.profileVerified}</span>
+        {data.pendampingPro && <span className="badge badge-verified">★ Verified+</span>}
         <h1>{partner.profile?.fullName}</h1>
         <p className="v3-muted">{partner.profile?.city}</p>
         <p>{partner.partnerProfile?.bio}</p>
@@ -76,9 +78,9 @@ export default function PartnerDetailPage() {
       </aside>
 
       <div className="v3-booking-form-col">
-        <Panel title="Detail booking">
+        <Panel title={productCopy.booking.detailPanel}>
           <form className="v3-form" onSubmit={book}>
-            <label>Kategori</label>
+            <label>{productCopy.booking.form.category}</label>
             <select
               value={form.categoryId}
               onChange={(e) => setForm({ ...form, categoryId: e.target.value })}
@@ -89,58 +91,55 @@ export default function PartnerDetailPage() {
                 </option>
               ))}
             </select>
-            <label>Waktu</label>
+            <label>{productCopy.booking.form.when}</label>
             <input
               type="datetime-local"
               value={form.scheduledAt}
               onChange={(e) => setForm({ ...form, scheduledAt: e.target.value })}
               required
             />
-            <label>Durasi (jam)</label>
+            <label>{productCopy.booking.form.duration}</label>
             <input
               type="number"
               min={1}
               value={form.durationHours}
               onChange={(e) => setForm({ ...form, durationHours: e.target.value })}
             />
-            <label>Lokasi pertemuan</label>
+            <label>{productCopy.booking.form.location}</label>
             <input
               value={form.meetingLocation}
               onChange={(e) => setForm({ ...form, meetingLocation: e.target.value })}
-              placeholder="Cafe, mall, restoran, atau alamat setuju"
+              placeholder={productCopy.booking.form.locationPlaceholder}
               required
             />
-            <label>Catatan</label>
+            <label>{productCopy.booking.form.notes}</label>
             <textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} />
 
             <div className="cost-summary" aria-live="polite">
-              <p className="cost-summary-title">Ringkasan biaya</p>
+              <p className="cost-summary-title">{productCopy.booking.form.costTitle}</p>
               <div className="cost-summary-row">
-                <span>Tarif pendamping · {durationHours || 0} jam</span>
+                <span>{productCopy.booking.form.costCompanion(durationHours || 0)}</span>
                 <span>{formatRp(subtotal)}</span>
               </div>
               <div className="cost-summary-row">
-                <span>Biaya platform (15%)</span>
+                <span>{productCopy.booking.form.costPlatform}</span>
                 <span>{formatRp(platformFee)}</span>
               </div>
               <div className="cost-summary-row total">
-                <span>Total dibayar</span>
+                <span>{productCopy.booking.form.costTotal}</span>
                 <span>{formatRp(total)}</span>
               </div>
             </div>
 
-            <button type="submit">Buat booking</button>
+            <button type="submit">{productCopy.booking.submit}</button>
 
             <ul className="booking-policy">
+              <li>{productCopy.booking.form.policyCancel}</li>
+              <li>{productCopy.booking.form.policyPublic}</li>
               <li>
-                Pembatalan: refund 100% jika dibatalkan ≥48 jam sebelum jadwal, 75% jika ≥24 jam, 50% jika ≥12
-                jam.
-              </li>
-              <li>Pilih lokasi pertemuan di tempat umum dan ramai — hindari rumah pribadi untuk pertemuan pertama.</li>
-              <li>
-                Dana ditahan platform sampai layanan selesai. Baca{' '}
+                {productCopy.booking.form.policyTermsPrefix}{' '}
                 <Link to="/syarat" className="v3-link">
-                  syarat &amp; ketentuan
+                  {productCopy.booking.form.policyTermsLink}
                 </Link>
                 .
               </li>
@@ -149,8 +148,10 @@ export default function PartnerDetailPage() {
           {msg && <p className="v3-error">{msg}</p>}
         </Panel>
 
-        <Panel title="Ulasan">
-          {(data.reviews as any[]).length === 0 && <p className="v3-muted">Belum ada ulasan.</p>}
+        <Panel title={productCopy.booking.reviewsTitle}>
+          {(data.reviews as any[]).length === 0 && (
+            <p className="v3-muted">{productCopy.booking.reviewsEmpty}</p>
+          )}
           {(data.reviews as any[]).map((r) => (
             <p key={r.id}>
               ★ {r.rating} — {r.comment}

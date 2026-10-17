@@ -18,6 +18,9 @@ public class PacaRentDbContext(DbContextOptions<PacaRentDbContext> options) : Db
     public DbSet<OtpChallenge> OtpChallenges => Set<OtpChallenge>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
     public DbSet<Notification> Notifications => Set<Notification>();
+    public DbSet<Subscription> Subscriptions => Set<Subscription>();
+    public DbSet<BoostActivation> BoostActivations => Set<BoostActivation>();
+    public DbSet<ProfileView> ProfileViews => Set<ProfileView>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -66,6 +69,27 @@ public class PacaRentDbContext(DbContextOptions<PacaRentDbContext> options) : Db
         {
             e.HasKey(x => x.Id);
             e.HasIndex(x => new { x.BookingId, x.ReviewerId }).IsUnique();
+        });
+
+        modelBuilder.Entity<Subscription>(e =>
+        {
+            e.HasKey(x => x.Id);
+            e.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
+            e.HasIndex(x => new { x.UserId, x.Status });
+        });
+
+        modelBuilder.Entity<BoostActivation>(e =>
+        {
+            e.HasKey(x => x.Id);
+            e.HasOne(x => x.Partner).WithMany().HasForeignKey(x => x.PartnerId).OnDelete(DeleteBehavior.Cascade);
+            e.HasIndex(x => new { x.PartnerId, x.ExpiresAt });
+        });
+
+        modelBuilder.Entity<ProfileView>(e =>
+        {
+            e.HasKey(x => x.Id);
+            e.HasOne(x => x.Partner).WithMany().HasForeignKey(x => x.PartnerId).OnDelete(DeleteBehavior.Cascade);
+            e.HasIndex(x => x.PartnerId);
         });
     }
 }

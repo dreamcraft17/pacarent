@@ -74,6 +74,9 @@ namespace PacaRent.Infra.Data.Migrations
                     b.Property<int>("DurationHours")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("IsPriorityBooking")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("MeetingLocation")
                         .IsRequired()
                         .HasColumnType("text");
@@ -109,6 +112,31 @@ namespace PacaRent.Infra.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Bookings");
+                });
+
+            modelBuilder.Entity("PacaRent.Core.Entities.BoostActivation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("ActivatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("PartnerId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PartnerId", "ExpiresAt");
+
+                    b.ToTable("BoostActivations");
                 });
 
             modelBuilder.Entity("PacaRent.Core.Entities.Category", b =>
@@ -280,6 +308,28 @@ namespace PacaRent.Infra.Data.Migrations
                     b.ToTable("Payments");
                 });
 
+            modelBuilder.Entity("PacaRent.Core.Entities.ProfileView", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("PartnerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("ViewerId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PartnerId");
+
+                    b.ToTable("ProfileViews");
+                });
+
             modelBuilder.Entity("PacaRent.Core.Entities.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
@@ -380,6 +430,46 @@ namespace PacaRent.Infra.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("PacaRent.Core.Entities.Subscription", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("BoostUsedThisPeriod")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("CancelledAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("CurrentPeriodEnd")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("GatewayRef")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("StartedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Tier")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId", "Status");
+
+                    b.ToTable("Subscriptions");
                 });
 
             modelBuilder.Entity("PacaRent.Core.Entities.User", b =>
@@ -489,6 +579,17 @@ namespace PacaRent.Infra.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("PacaRent.Core.Entities.BoostActivation", b =>
+                {
+                    b.HasOne("PacaRent.Core.Entities.User", "Partner")
+                        .WithMany()
+                        .HasForeignKey("PartnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Partner");
+                });
+
             modelBuilder.Entity("PacaRent.Core.Entities.Notification", b =>
                 {
                     b.HasOne("PacaRent.Core.Entities.User", "User")
@@ -541,6 +642,17 @@ namespace PacaRent.Infra.Data.Migrations
                     b.Navigation("Booking");
                 });
 
+            modelBuilder.Entity("PacaRent.Core.Entities.ProfileView", b =>
+                {
+                    b.HasOne("PacaRent.Core.Entities.User", "Partner")
+                        .WithMany()
+                        .HasForeignKey("PartnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Partner");
+                });
+
             modelBuilder.Entity("PacaRent.Core.Entities.RefreshToken", b =>
                 {
                     b.HasOne("PacaRent.Core.Entities.User", "User")
@@ -580,6 +692,17 @@ namespace PacaRent.Infra.Data.Migrations
                     b.Navigation("Booking");
 
                     b.Navigation("Reviewer");
+                });
+
+            modelBuilder.Entity("PacaRent.Core.Entities.Subscription", b =>
+                {
+                    b.HasOne("PacaRent.Core.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PacaRent.Core.Entities.UserProfile", b =>

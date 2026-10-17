@@ -6,7 +6,7 @@ import FilterMenu from '../components/FilterMenu';
 import { jabodetabekFilterOptions } from '../data/jabodetabek-cities';
 import LaunchEmptyState from '../components/LaunchEmptyState';
 import { trackBookingStarted, trackDiscoveryAction, trackDiscoveryView } from '../lib/analytics';
-import { discoverMarketing } from '../copy/discover-marketing';
+import { productCopy } from '../copy/productCopy';
 import { partnerBackdrop } from '../lib/partnerVisual';
 import { setBookingSource } from '../lib/viewport';
 
@@ -22,6 +22,8 @@ type Partner = {
   verified?: boolean;
   categories: string[];
   photoUrl?: string | null;
+  boosted?: boolean;
+  pendampingPro?: boolean;
 };
 
 export default function BrowseListPage() {
@@ -74,15 +76,17 @@ export default function BrowseListPage() {
     setCity('');
   };
 
-  const profileCountLabel = loading ? 'Memuat…' : `${partners.length} profil`;
+  const profileCountLabel = loading
+    ? 'Memuat…'
+    : productCopy.discover.profileCount(partners.length);
 
   return (
     <div className="browse-home v3-page v3-page--wide">
       <header className="browse-masthead" aria-labelledby="browse-title">
         <div className="browse-masthead-main">
-          <p className="browse-kicker">{discoverMarketing.discoverIntro.eyebrow}</p>
-          <h1 id="browse-title">{discoverMarketing.discoverIntro.title}</h1>
-          <p className="browse-dek">{discoverMarketing.discoverIntro.lead}</p>
+          <p className="browse-kicker">{productCopy.discover.eyebrow}</p>
+          <h1 id="browse-title">{productCopy.discover.title}</h1>
+          <p className="browse-dek">{productCopy.discover.lead}</p>
         </div>
         <BrowseTrustRail />
       </header>
@@ -143,6 +147,8 @@ export default function BrowseListPage() {
                   {!p.photoUrl && <span className="browse-card-initial">{initial}</span>}
                   <div className="browse-card-media-foot">
                     {p.verified && <span className="browse-chip browse-chip-verified">Verified</span>}
+                    {p.pendampingPro && <span className="browse-chip browse-chip-verified">Verified+</span>}
+                    {p.boosted && <span className="browse-chip">Boost</span>}
                     {p.categories[0] && <span className="browse-chip">{p.categories[0]}</span>}
                   </div>
                 </div>
@@ -172,7 +178,7 @@ export default function BrowseListPage() {
                       trackBookingStarted('browse', p.id);
                     }}
                   >
-                    Tertarik · booking
+                      {productCopy.discover.ctaProfile}
                   </Link>
                 </div>
               </article>
@@ -186,16 +192,16 @@ export default function BrowseListPage() {
           id="browse-launch-title"
           showUserRegister
           secondaryHref="/syarat"
-          secondaryLabel="Baca S&K"
+            secondaryLabel={productCopy.launchEmpty.ctaTerms}
         />
       )}
 
       {!loading && !loadError && partners.length === 0 && (category || city) && (
         <section className="browse-empty-filter" aria-labelledby="filter-empty-title">
-          <h2 id="filter-empty-title">Belum ada pendamping</h2>
-          <p>Coba filter lain atau reset pilihan.</p>
+          <h2 id="filter-empty-title">{productCopy.discover.filterEmptyTitle}</h2>
+          <p>{productCopy.discover.filterEmptyLead}</p>
           <button type="button" className="launch-btn launch-btn-secondary" onClick={resetFilters}>
-            Reset filter
+            {productCopy.discover.filterReset}
           </button>
         </section>
       )}

@@ -68,6 +68,23 @@ public class PartnersController(
             .Select(g => new { PartnerId = g.Key, Avg = g.Average(x => x.Rating), Count = g.Count() })
             .ToDictionaryAsync(x => x.PartnerId, ct);
 
+        var now = DateTime.UtcNow;
+        var boostedIds = (await db.BoostActivations.AsNoTracking()
+                .Where(b => partnerIds.Contains(b.PartnerId) && b.ExpiresAt > now)
+                .Select(b => b.PartnerId)
+                .Distinct()
+                .ToListAsync(ct))
+            .ToHashSet();
+        var pendampingProIds = (await db.Subscriptions.AsNoTracking()
+                .Where(s => partnerIds.Contains(s.UserId)
+                            && s.Tier == SubscriptionTier.PendampingPro
+                            && (s.Status == SubscriptionStatus.Active || s.Status == SubscriptionStatus.Cancelled)
+                            && s.CurrentPeriodEnd > now)
+                .Select(s => s.UserId)
+                .Distinct()
+                .ToListAsync(ct))
+            .ToHashSet();
+
         var result = partners.Select(u =>
         {
             ratings.TryGetValue(u.Id, out var r);
@@ -82,9 +99,11 @@ public class PartnersController(
                 Verified = u.PartnerProfile.VerificationStatus == VerificationStatus.Approved,
                 Categories = u.PartnerProfile.PartnerCategories.Select(c => c.Category.Name),
                 Rating = r?.Avg ?? 0,
-                ReviewCount = r?.Count ?? 0
+                ReviewCount = r?.Count ?? 0,
+                Boosted = boostedIds.Contains(u.Id),
+                PendampingPro = pendampingProIds.Contains(u.Id),
             };
-        });
+        }).OrderByDescending(p => p.Boosted);
 
         return Ok(result);
     }
@@ -108,7 +127,21 @@ public class PartnersController(
             .Take(20)
             .ToListAsync(ct);
 
-        return Ok(new { partner = u, reviews });
+        var now = DateTime.UtcNow;
+        var pendampingPro = await db.Subscriptions.AsNoTracking().AnyAsync(s =>
+            s.UserId == id
+            && s.Tier == SubscriptionTier.PendampingPro
+            && (s.Status == SubscriptionStatus.Active || s.Status == SubscriptionStatus.Cancelled)
+            && s.CurrentPeriodEnd > now, ct);
+
+        var viewerId = HttpContext.GetUserId();
+        if (viewerId != id)
+        {
+            db.ProfileViews.Add(new ProfileView { Id = Guid.NewGuid(), PartnerId = id, ViewerId = viewerId });
+            await db.SaveChangesAsync(ct);
+        }
+
+        return Ok(new { partner = u, reviews, pendampingPro });
     }
 
     [HttpPost("apply")]

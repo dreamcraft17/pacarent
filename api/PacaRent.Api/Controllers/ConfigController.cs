@@ -26,6 +26,8 @@ public class ConfigController(
             paymentUseMock = dokuCfg.UseSandboxMock,
             paymentProvider = "doku",
             dokuConfigured = doku.IsConfigured || dokuCfg.UseSandboxMock,
+            membershipEnabled = true,
+            membershipUseMock = dokuCfg.UseSandboxMock,
         });
     }
 }

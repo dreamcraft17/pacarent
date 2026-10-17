@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from 'react';
 import { api } from '../api/client';
 import PageShell from '../components/layout/PageShell';
 import Panel from '../components/layout/Panel';
+import { productCopy } from '../copy/productCopy';
 import { useAuth } from '../auth/AuthContext';
 
 export default function ProfilePage() {
@@ -39,7 +40,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <PageShell title="Profil" dek="Data akun dan kontak darurat." width="narrow">
+    <PageShell title={productCopy.profile.title} dek={productCopy.profile.dek} width="narrow">
       <Panel>
         <form className="v3-form" onSubmit={save}>
           <label>Nama</label>
@@ -66,7 +67,7 @@ export default function ProfilePage() {
           />
           <button type="submit">Simpan</button>
         </form>
-        {saved && <p className="v3-muted">Tersimpan.</p>}
+        {saved && <p className="v3-muted">{productCopy.profile.saved}</p>}
       </Panel>
     </PageShell>
   );

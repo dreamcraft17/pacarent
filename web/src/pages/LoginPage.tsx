@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import AuthLayout from '../components/layout/AuthLayout';
+import { productCopy } from '../copy/productCopy';
 import { useAuth } from '../auth/AuthContext';
 import { getAuthRedirect } from '../auth/authRedirect';
 
@@ -12,6 +13,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const from = getAuthRedirect(location.state);
+  const c = productCopy.auth;
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -26,16 +28,12 @@ export default function LoginPage() {
 
   return (
     <AuthLayout
-      kicker="Akun"
-      title="Lanjutkan booking kamu"
-      lead="Masuk untuk mengonfirmasi jadwal, kelola booking, dan ulasan setelah pertemuan."
-      bullets={[
-        'Jelajahi profil pendamping → tertarik → pilih tanggal & lokasi',
-        'Gratis — early access, pembayaran online menyusul',
-        'Tombol darurat saat pertemuan aktif',
-      ]}
+      kicker={c.loginAsideKicker}
+      title={c.loginAsideTitle}
+      lead={c.loginAsideLead}
+      bullets={[...c.loginBullets]}
     >
-      <h2>Masuk</h2>
+      <h2>{c.loginHeading}</h2>
       <form className="v3-form" onSubmit={onSubmit}>
         <label htmlFor="login">Email atau nomor HP</label>
         <input
@@ -55,14 +53,14 @@ export default function LoginPage() {
           required
         />
         {error && <p className="v3-error">{error}</p>}
-        <button type="submit">Masuk</button>
+        <button type="submit">{c.loginSubmit}</button>
       </form>
       <p className="v3-muted" style={{ marginTop: '1rem' }}>
         Dev: admin@pacarent.local / Admin123!
       </p>
       <p style={{ marginTop: '0.75rem' }}>
         <Link className="v3-link" to="/register" state={from !== '/bookings' ? { from } : undefined}>
-          Belum punya akun? Daftar
+          {c.loginRegister}
         </Link>
       </p>
     </AuthLayout>

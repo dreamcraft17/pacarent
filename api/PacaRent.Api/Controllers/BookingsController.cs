@@ -55,6 +55,21 @@ public class BookingsController(
             return BadRequest(new ApiError("partner_unavailable", "Mitra tidak tersedia."));
         }
 
+        var subscription = await db.Subscriptions
+            .Where(s => s.UserId == userId && s.Status != SubscriptionStatus.Expired)
+            .OrderByDescending(s => s.CreatedAt)
+            .FirstOrDefaultAsync(ct);
+        var tier = BusinessRules.EffectiveTier(subscription);
+        var activeStatuses = new[] { BookingStatus.PendingPartner, BookingStatus.Accepted, BookingStatus.Paid, BookingStatus.InProgress };
+        var activeCount = await db.Bookings.CountAsync(b => b.UserId == userId && activeStatuses.Contains(b.Status), ct);
+        var cap = BusinessRules.GetActiveBookingCap(tier);
+        if (activeCount >= cap)
+        {
+            return Conflict(new ApiError(
+                "booking_cap_reached",
+                $"Kamu sudah punya {cap} booking aktif di paket Gratis. Upgrade ke Plus di halaman Membership untuk booking unlimited."));
+        }
+
         var total = BusinessRules.CalculateTotal(partner.PartnerProfile.HourlyRate, req.DurationHours);
         var booking = new Booking
         {
@@ -68,7 +83,8 @@ public class BookingsController(
             Notes = req.Notes,
             Status = BookingStatus.PendingPartner,
             PartnerRespondBy = DateTime.UtcNow.AddHours(BusinessRules.PartnerResponseHours),
-            TotalAmount = total
+            TotalAmount = total,
+            IsPriorityBooking = tier == SubscriptionTier.Pro
         };
         db.Bookings.Add(booking);
         await db.SaveChangesAsync(ct);

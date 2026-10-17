@@ -63,3 +63,21 @@ public enum NotificationType
     Report = 3,
     System = 4
 }
+
+/// <summary>Ladder membership ala Bumble/Tinder/TanTan — lihat docs/research/dating-app-membership-patterns-2026-10-17.md.
+/// Plus/Pro berlaku untuk customer; PendampingPro khusus mitra (partner).</summary>
+public enum SubscriptionTier
+{
+    Free = 0,
+    Plus = 1,
+    Pro = 2,
+    PendampingPro = 3
+}
+
+public enum SubscriptionStatus
+{
+    Pending = 0,
+    Active = 1,
+    Cancelled = 2,
+    Expired = 3
+}

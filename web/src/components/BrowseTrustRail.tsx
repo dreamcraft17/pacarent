@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import { discoverMarketing } from '../copy/discover-marketing';
+import { productCopy } from '../copy/productCopy';
 
 export default function BrowseTrustRail() {
   return (
     <div className="browse-trust-rail" aria-label="Keamanan booking">
       <ul className="browse-trust-list">
-        {discoverMarketing.trustRail.map((item) => (
+        {productCopy.trustRail.map((item) => (
           <li key={item}>{item}</li>
         ))}
         <li>

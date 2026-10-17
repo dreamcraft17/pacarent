@@ -4,13 +4,14 @@ import AdminPage from './pages/AdminPage';
 import BookingsPage from './pages/BookingsPage';
 import BrowseListPage from './pages/BrowseListPage';
 import LoginPage from './pages/LoginPage';
+import MembershipPage from './pages/MembershipPage';
 import PartnerApplyPage from './pages/PartnerApplyPage';
 import PartnerDetailPage from './pages/PartnerDetailPage';
 import ProfilePage from './pages/ProfilePage';
 import RegisterPage from './pages/RegisterPage';
 import TermsPage from './pages/TermsPage';
 import BottomNav from './components/BottomNav';
-import { discoverMarketing } from './copy/discover-marketing';
+import { productCopy } from './copy/productCopy';
 
 function Shell() {
   const { me, logout, loading } = useAuth();
@@ -30,6 +31,7 @@ function Shell() {
           <Link to="/syarat">S&amp;K</Link>
           {me?.role === 'Admin' && <Link to="/admin">Admin</Link>}
           {me && me.role !== 'Partner' && <Link to="/mitra/daftar">Jadi pendamping</Link>}
+          {me && <Link to="/membership">{productCopy.membership.navLabel}</Link>}
           {loading ? (
             <span className="v3-muted">...</span>
           ) : me ? (
@@ -54,12 +56,13 @@ function Shell() {
           <Route path="/mitra/:id" element={<PartnerDetailPage />} />
           <Route path="/mitra/daftar" element={<RequireAuth><PartnerApplyPage /></RequireAuth>} />
           <Route path="/profile" element={<RequireAuth><ProfilePage /></RequireAuth>} />
+          <Route path="/membership" element={<RequireAuth><MembershipPage /></RequireAuth>} />
           <Route path="/bookings" element={<RequireAuth><BookingsPage /></RequireAuth>} />
           <Route path="/admin" element={<RequireAdmin><AdminPage /></RequireAdmin>} />
         </Routes>
       </main>
       {!hideBottomNav && <BottomNav />}
-      <footer className="v3-footer">{discoverMarketing.brandTag} · Early access</footer>
+      <footer className="v3-footer">{productCopy.brandTag} · Early access</footer>
     </div>
   );
 }

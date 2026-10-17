@@ -50,7 +50,7 @@ Copy kekinian untuk PacaRent paling natural pakai **POV + masalah relatable** (k
 
 ## Implementasi web
 
-Copy aktif di UI: `web/src/copy/discover-marketing.ts` (masthead, trust rail, launch panel, meta). Layout: `web/src/styles/browse-shell.css`.
+Copy aktif di UI: `web/src/copy/productCopy.ts` (voice Bumble/Tinder/Tantan-style, outcome booking). Marketing context: `.claude/product-marketing-context.md`.
 
 ## Guardrail (wajib)
 

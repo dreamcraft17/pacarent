@@ -84,6 +84,9 @@ public class Booking
     public DateTime? ClaimDeadline { get; set; }
     public decimal TotalAmount { get; set; }
 
+    /// <summary>Booking dari customer dengan langganan Pro — ditandai prioritas ke mitra (Tahap membership).</summary>
+    public bool IsPriorityBooking { get; set; }
+
     public Payment? Payment { get; set; }
     public ICollection<Review> Reviews { get; set; } = new List<Review>();
 }
@@ -170,5 +173,43 @@ public class Notification
     public string Title { get; set; } = "";
     public string Body { get; set; } = "";
     public bool IsRead { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+}
+
+/// <summary>Membership langganan (Plus/Pro untuk customer, PendampingPro untuk mitra).
+/// Lihat docs/MONETIZATION-SUBSCRIPTION.md dan docs/research/dating-app-membership-patterns-2026-10-17.md.</summary>
+public class Subscription
+{
+    public Guid Id { get; set; }
+    public Guid UserId { get; set; }
+    public User User { get; set; } = null!;
+    public SubscriptionTier Tier { get; set; }
+    public SubscriptionStatus Status { get; set; } = SubscriptionStatus.Pending;
+    public DateTime StartedAt { get; set; } = DateTime.UtcNow;
+    public DateTime CurrentPeriodEnd { get; set; }
+    public DateTime? CancelledAt { get; set; }
+    public bool BoostUsedThisPeriod { get; set; }
+    public string? GatewayRef { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+}
+
+/// <summary>Consumable: boost listing mitra 24 jam di grid browse (perk bulanan PendampingPro).</summary>
+public class BoostActivation
+{
+    public Guid Id { get; set; }
+    public Guid PartnerId { get; set; }
+    public User Partner { get; set; } = null!;
+    public DateTime ActivatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime ExpiresAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+}
+
+/// <summary>View profil mitra — dipakai untuk stats agregat PendampingPro (bukan daftar identitas, demi privasi).</summary>
+public class ProfileView
+{
+    public Guid Id { get; set; }
+    public Guid PartnerId { get; set; }
+    public User Partner { get; set; } = null!;
+    public Guid? ViewerId { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

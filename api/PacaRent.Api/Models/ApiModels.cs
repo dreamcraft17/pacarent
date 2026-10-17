@@ -67,3 +67,22 @@ public record CreateReportRequest(
 public record RejectPartnerRequest(string Reason);
 
 public record PaymentWebhookPayload(string BookingId, string Status, string? GatewayRef);
+
+public record SubscriptionPlanDto(
+    string Tier,
+    string Name,
+    string Positioning,
+    string[] Features,
+    decimal PriceIdr,
+    string PriceNote,
+    string AppliesToRole);
+
+public record SubscribeRequest(string Tier);
+
+public record SubscriptionMeResponse(
+    string Tier,
+    string Status,
+    DateTime? CurrentPeriodEnd,
+    bool BoostUsedThisPeriod,
+    int ActiveBookingCount,
+    int ActiveBookingCap);

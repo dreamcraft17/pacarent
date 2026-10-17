@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { api } from '../api/client';
 import PageShell from '../components/layout/PageShell';
 import Panel from '../components/layout/Panel';
+import { productCopy } from '../copy/productCopy';
 import { useAuth } from '../auth/AuthContext';
 
 const TIMELINE_LABELS = ['Diajukan', 'Diterima', 'Dibayar', 'Selesai'] as const;
@@ -55,6 +56,7 @@ type Booking = {
   totalAmount: number;
   partnerId: string;
   userId: string;
+  isPriorityBooking?: boolean;
 };
 
 export default function BookingsPage() {
@@ -159,12 +161,8 @@ export default function BookingsPage() {
 
   return (
     <PageShell
-      title="Booking saya"
-      dek={
-        paymentsEnabled
-          ? 'Tarif per booking — bayar lewat DOKU setelah fitur aktif.'
-          : 'Early access: pembayaran belum aktif. Koordinasi setelah pendamping terima.'
-      }
+      title={productCopy.booking.pageTitle}
+      dek={paymentsEnabled ? productCopy.booking.pageDekPay : productCopy.booking.pageDekEarly}
     >
       {emergency && (
         <a className="v3-emergency" href={emergency.emergencyHelpUrl}>
@@ -172,12 +170,13 @@ export default function BookingsPage() {
         </a>
       )}
 
-      {items.length === 0 && <p className="v3-muted">Belum ada booking.</p>}
+      {items.length === 0 && <p className="v3-muted">{productCopy.booking.empty}</p>}
 
       {items.map((b) => (
         <Panel key={b.id}>
           <div className="v3-booking-card-meta">
             <span className="badge">{statusLabel(b.status)}</span>
+            {b.isPriorityBooking && <span className="badge badge-verified">Prioritas</span>}
             <span className="v3-muted">{new Date(b.scheduledAt).toLocaleString('id-ID')}</span>
           </div>
           <BookingTimeline status={b.status} />

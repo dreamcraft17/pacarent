@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from 'react';
 import { api } from '../api/client';
 import PageShell from '../components/layout/PageShell';
 import Panel from '../components/layout/Panel';
+import { productCopy } from '../copy/productCopy';
 
 export default function PartnerApplyPage() {
   const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
@@ -34,13 +35,13 @@ export default function PartnerApplyPage() {
       setMsg('Gagal mengirim');
       return;
     }
-    setMsg('Profil pendamping aktif. Kamu sudah bisa menerima booking.');
+    setMsg(productCopy.companionApply.success);
   };
 
   return (
     <PageShell
-      title="Daftar jadi pendamping"
-      dek="Verified, 18+, lokasi publik. Kamu atur tarif & kategori layanan."
+      title={productCopy.companionApply.title}
+      dek={productCopy.companionApply.dek}
       width="narrow"
     >
       <Panel>

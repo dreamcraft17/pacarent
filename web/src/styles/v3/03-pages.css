@@ -184,6 +184,38 @@
   gap: 1rem;
 }
 
+.membership-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.membership-card--active {
+  border-color: var(--pr-primary) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--pr-primary) 25%, transparent);
+}
+
+.membership-price {
+  margin: 0.5rem 0 0;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--pr-ink);
+}
+
+.membership-price-note {
+  margin: 0.15rem 0 0;
+  font-size: 0.75rem;
+}
+
+.membership-stats {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--pr-line-warm);
+  display: grid;
+  gap: 0.3rem;
+}
+
 .terms-page {
   max-width: 980px;
   margin: 0 auto;
