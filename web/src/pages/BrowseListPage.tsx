@@ -178,13 +178,33 @@ export default function BrowseListPage() {
             className="discover-empty-state discover-empty-state--launch"
             aria-labelledby="browse-launch-title"
           >
-            <p className="discover-empty-eyebrow">PacaRent baru dibuka</p>
+            <div className="empty-state-mark" aria-hidden="true">
+              <span>PR</span>
+            </div>
+            <p className="discover-empty-eyebrow">Mulai dari momenmu</p>
             <h2 id="browse-launch-title" className="discover-empty-hero">
-              Belum ada mitra di daftar—mulai dari sini
+              Temukan teman untuk momen yang kamu rencanakan.
             </h2>
             <p className="discover-empty-copy">
-              Ajukan sebagai mitra atau coba mode kartu di HP. Filter kota/kategori siap saat profil masuk.
+              Pilih profil yang cocok, tentukan tanggal dan lokasi, lalu booking dengan alur yang jelas.
             </p>
+            <div className="empty-state-steps" aria-label="Cara kerja PacaRent">
+              <div>
+                <span>01</span>
+                <strong>Pilih profil</strong>
+                <small>lihat bio, tarif, dan kota</small>
+              </div>
+              <div>
+                <span>02</span>
+                <strong>Atur jadwal</strong>
+                <small>tanggal, durasi, lokasi</small>
+              </div>
+              <div>
+                <span>03</span>
+                <strong>Booking aman</strong>
+                <small>status tercatat di akunmu</small>
+              </div>
+            </div>
             <div className="discover-empty-actions discover-empty-actions--stack">
               <Link className="discover-empty-primary discover-empty-link" to="/mitra/daftar">
                 Ajukan jadi mitra
