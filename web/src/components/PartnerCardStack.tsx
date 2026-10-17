@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { trackBookingStarted, trackDiscoveryAction } from '../lib/analytics';
 import { partnerBackdrop } from '../lib/partnerVisual';
 import { setBookingSource } from '../lib/viewport';
