@@ -26,6 +26,13 @@ export default function PartnerDetailPage() {
     api<{ id: number; name: string }[]>('/api/categories').then(setCategories);
   }, [id]);
 
+  const hourlyRate: number = data?.partner?.partnerProfile?.hourlyRate ?? 0;
+  const durationHours = Number(form.durationHours) || 0;
+  const subtotal = hourlyRate * durationHours;
+  const platformFee = Math.round(subtotal * 0.15);
+  const total = subtotal + platformFee;
+  const formatRp = (n: number) => `Rp ${n.toLocaleString('id-ID')}`;
+
   const book = async (e: FormEvent) => {
     e.preventDefault();
     if (!me) {
@@ -104,7 +111,41 @@ export default function PartnerDetailPage() {
             value={form.notes}
             onChange={(e) => setForm({ ...form, notes: e.target.value })}
           />
+
+          <div className="cost-summary" aria-live="polite">
+            <p className="cost-summary-title">Ringkasan biaya</p>
+            <div className="cost-summary-row">
+              <span>
+                Tarif mitra · {durationHours || 0} jam
+              </span>
+              <span>{formatRp(subtotal)}</span>
+            </div>
+            <div className="cost-summary-row">
+              <span>Biaya platform (15%)</span>
+              <span>{formatRp(platformFee)}</span>
+            </div>
+            <div className="cost-summary-row total">
+              <span>Total dibayar</span>
+              <span>{formatRp(total)}</span>
+            </div>
+          </div>
+
           <button type="submit">Buat booking</button>
+
+          <ul className="booking-policy">
+            <li>
+              Pembatalan: refund 100% jika dibatalkan ≥48 jam sebelum jadwal, 75% jika ≥24 jam,
+              50% jika ≥12 jam, dan tidak ada refund jika lebih dekat dari itu.
+            </li>
+            <li>
+              Pilih lokasi pertemuan di tempat umum dan ramai (cafe, mall, restoran) — hindari
+              alamat rumah pribadi untuk pertemuan pertama.
+            </li>
+            <li>
+              Dana booking ditahan platform dan baru diteruskan ke mitra setelah layanan selesai.
+              Baca <a href="/syarat">syarat &amp; ketentuan</a> lengkapnya.
+            </li>
+          </ul>
         </form>
         {msg && <p>{msg}</p>}
       </div>

@@ -29,7 +29,8 @@ function Shell() {
           <>
             <span className="topbar-discover-spacer" aria-hidden />
             <Link to="/" className="brand brand-discover">
-              PacaRent
+              <span className="brand-mark" aria-hidden="true">P</span>
+              <span>PacaRent</span>
             </Link>
             <div className="topbar-discover-actions">
               <DiscoverModeSwitch />

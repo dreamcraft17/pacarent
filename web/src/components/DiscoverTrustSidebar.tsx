@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export default function DiscoverTrustSidebar() {
   return (
     <aside className="discover-sidebar" aria-label="Keamanan dan cara booking">
-      <p className="discover-sidebar-eyebrow">Mobile-first web</p>
+      <p className="discover-sidebar-eyebrow">Momen, diatur dengan aman</p>
       <h2 className="discover-sidebar-title">Booking mitra terverifikasi</h2>
       <p className="discover-sidebar-lead">
         Bukan app match—setiap langkah menuju jadwal, lokasi, dan pembayaran lewat platform.

@@ -3,20 +3,42 @@ import { useSearchParams } from 'react-router-dom';
 import { api } from '../api/client';
 import { useAuth } from '../auth/AuthContext';
 
-const FLOW = ['PendingPartner', 'Accepted', 'Paid', 'InProgress', 'Completed'] as const;
+// Empat tahap inti booking (lihat docs/DESIGN-PLAN.md § Tahap 3). `InProgress` dianggap
+// masih di tahap "Dibayar" karena pertemuan sedang berlangsung setelah pembayaran diterima.
+const TIMELINE_LABELS = ['Diajukan', 'Diterima', 'Dibayar', 'Selesai'] as const;
+const FLOW_STEP: Record<string, number> = {
+  pendingpartner: 0,
+  accepted: 1,
+  paid: 2,
+  inprogress: 2,
+  completed: 3,
+};
+
+const STATUS_LABELS: Record<string, string> = {
+  pendingpartner: 'Diajukan',
+  accepted: 'Diterima',
+  paid: 'Dibayar',
+  inprogress: 'Berlangsung',
+  completed: 'Selesai',
+  cancelled: 'Dibatalkan',
+  refunded: 'Direfund',
+  disputed: 'Dalam peninjauan',
+};
 
 function statusIndex(status: string) {
-  const norm = status.charAt(0).toUpperCase() + status.slice(1);
-  const idx = FLOW.findIndex((s) => s.toLowerCase() === norm.toLowerCase() || s === norm);
-  return idx >= 0 ? idx : -1;
+  const key = status.toLowerCase();
+  return key in FLOW_STEP ? FLOW_STEP[key] : -1;
+}
+
+function statusLabel(status: string) {
+  return STATUS_LABELS[status.toLowerCase()] ?? status;
 }
 
 function BookingTimeline({ status }: { status: string }) {
   const active = statusIndex(status);
-  const labels = ['Menunggu mitra', 'Diterima', 'Dibayar', 'Berlangsung', 'Selesai'];
   return (
     <ul className="timeline" aria-label="Progress booking">
-      {labels.map((label, i) => (
+      {TIMELINE_LABELS.map((label, i) => (
         <li key={label} className={i <= active ? 'active' : undefined}>
           {label}
         </li>
@@ -153,7 +175,8 @@ export default function BookingsPage() {
       {items.map((b) => (
         <div key={b.id} className="card">
           <p>
-            <strong>{b.status}</strong> · {new Date(b.scheduledAt).toLocaleString('id-ID')}
+            <span className="badge">{statusLabel(b.status)}</span> ·{' '}
+            {new Date(b.scheduledAt).toLocaleString('id-ID')}
           </p>
           <BookingTimeline status={b.status} />
           <p>{b.meetingLocation}</p>

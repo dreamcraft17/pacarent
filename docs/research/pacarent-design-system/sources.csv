@@ -1,0 +1,5 @@
+id,title,type,credibility,recency,bias,url
+01,W3C WCAG 2.2,primary,high,current,standards-oriented,https://www.w3.org/TR/wcag/
+02,Nielsen Norman Group empty states,secondary,high,2021,general UX practice,https://www.nngroup.com/articles/empty-state-interface-design/
+03,Material Design 3 app bars,primary,high,current,Material ecosystem,https://m3.material.io/components/app-bars/
+04,PacaRent internal UX research,primary,high,2026-10-13,product-team framing,internal

@@ -5,12 +5,12 @@
   --pr-primary: var(--colors-primary-DEFAULT);
   --pr-primary-hover: var(--colors-primary-700);
   --pr-primary-soft: #e6f4f2;
-  --pr-heading: var(--colors-neutral-900);
-  --pr-text: var(--colors-neutral-700);
+  --pr-heading: var(--pr-ink);
+  --pr-text: var(--pr-ink-soft);
   --pr-muted: var(--colors-neutral-500);
-  --pr-border: var(--colors-neutral-200);
-  --pr-surface: #ffffff;
-  --pr-bg: #f3f7f6;
+  --pr-border: var(--pr-line-warm);
+  --pr-surface: var(--pr-paper);
+  --pr-bg: var(--pr-canvas);
   --pr-danger: var(--colors-semantic-error-base, #dc2626);
   --pr-success: var(--colors-semantic-success-dark);
   --pr-radius: var(--borders-radius-default, 8px);
@@ -18,6 +18,13 @@
 
   /* Booking accent stays teal so discovery does not imply a romantic match mechanic. */
   --pr-booking: var(--pr-primary);
+  /* PacaRent editorial marketplace semantic tokens */
+  --pr-ink: #102f31;
+  --pr-ink-soft: #4f5c5f;
+  --pr-canvas: #f1eee9;
+  --pr-paper: #ffffff;
+  --pr-line-warm: #ded9d2;
+  --pr-mint: #edf6f2;
   --pr-discover-bg: #faf7f5;
   --pr-card-radius: 22px;
 
