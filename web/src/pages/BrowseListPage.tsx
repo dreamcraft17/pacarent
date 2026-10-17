@@ -6,6 +6,7 @@ import FilterMenu from '../components/FilterMenu';
 import { jabodetabekFilterOptions } from '../data/jabodetabek-cities';
 import LaunchEmptyState from '../components/LaunchEmptyState';
 import { trackBookingStarted, trackDiscoveryAction, trackDiscoveryView } from '../lib/analytics';
+import { discoverMarketing } from '../copy/discover-marketing';
 import { partnerBackdrop } from '../lib/partnerVisual';
 import { setBookingSource } from '../lib/viewport';
 
@@ -80,9 +81,9 @@ export default function BrowseListPage() {
       <div className="browse-list-page">
         <section className="discover-intro" aria-labelledby="browse-title">
           <div>
-            <p className="discover-intro-eyebrow">Mode daftar</p>
-            <h1 id="browse-title">Bandingkan mitra sekaligus</h1>
-            <p>Pilih profil → isi tanggal &amp; lokasi booking. Cocok di layar lebar.</p>
+            <p className="discover-intro-eyebrow">{discoverMarketing.listIntro.eyebrow}</p>
+            <h1 id="browse-title">{discoverMarketing.listIntro.title}</h1>
+            <p>{discoverMarketing.listIntro.lead}</p>
           </div>
           <span className="discover-intro-count" aria-label={`${partners.length} profil tersedia`}>
             {loading ? '...' : `${partners.length} profil`}
@@ -180,7 +181,7 @@ export default function BrowseListPage() {
 
         {!loading && !loadError && partners.length === 0 && (category || city) && (
           <div className="discover-empty-state">
-            <h2>Belum ada mitra</h2>
+            <h2>Belum ada pendamping</h2>
             <p className="discover-empty-copy">Coba filter lain atau reset pilihan.</p>
             <div className="discover-empty-actions">
               <button type="button" className="discover-empty-primary" onClick={resetFilters}>

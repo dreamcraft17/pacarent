@@ -52,7 +52,7 @@ export default function PartnerDetailPage() {
         }),
       });
       trackBookingSubmitted(id, getBookingSource());
-      setMsg('Booking dibuat. Mitra akan merespons.');
+      setMsg('Booking dibuat. Pendamping akan merespons.');
       nav('/bookings');
     } catch (err) {
       setMsg(err instanceof Error ? err.message : 'Gagal booking');
@@ -65,7 +65,7 @@ export default function PartnerDetailPage() {
   return (
     <div className="booking-layout">
       <header className="booking-hero">
-        <span className="badge badge-verified">✓ Mitra terverifikasi</span>
+        <span className="badge badge-verified">✓ Pendamping terverifikasi</span>
         <h1>{partner.profile?.fullName}</h1>
         <p className="muted">{partner.profile?.city}</p>
         <p>{partner.partnerProfile?.bio}</p>
@@ -118,7 +118,7 @@ export default function PartnerDetailPage() {
             <p className="cost-summary-title">Ringkasan biaya</p>
             <div className="cost-summary-row">
               <span>
-                Tarif mitra · {durationHours || 0} jam
+                Tarif pendamping · {durationHours || 0} jam
               </span>
               <span>{formatRp(subtotal)}</span>
             </div>
@@ -144,7 +144,7 @@ export default function PartnerDetailPage() {
               alamat rumah pribadi untuk pertemuan pertama.
             </li>
             <li>
-              Dana booking ditahan platform dan baru diteruskan ke mitra setelah layanan selesai.
+              Dana booking ditahan platform dan baru diteruskan ke pendamping setelah layanan selesai.
               Baca <a href="/syarat">syarat &amp; ketentuan</a> lengkapnya.
             </li>
           </ul>

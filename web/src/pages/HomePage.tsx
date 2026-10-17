@@ -52,22 +52,22 @@ export default function HomePage() {
         <div>
           <h1>Sewa pacar, teman kencan, dan teman acara</h1>
           <p className="hero-lead">
-            Booking mitra untuk date, nongkrong, atau damping acara. Early access: belum wajib bayar
+            Sewa pacar, teman kencan, atau pendamping acara. Early access: belum wajib bayar
             online.
           </p>
         </div>
         <div className="card card-highlight">
           <h2>Cara kerja</h2>
           <ol className="hero-steps">
-            <li>Cari mitra berdasarkan kota &amp; kategori (Jabodetabek)</li>
-            <li>Booking → mitra terima → koordinasi jadwal (bayar online menyusul)</li>
+            <li>Cari pendamping berdasarkan kota &amp; kategori (Jabodetabek)</li>
+            <li>Booking → pendamping terima → koordinasi jadwal (bayar online menyusul)</li>
             <li>Bertemu sesuai lokasi booking → selesai → ulasan</li>
           </ol>
         </div>
       </section>
 
       <div className="card">
-        <h2>Filter mitra</h2>
+        <h2>Filter pendamping</h2>
         <div className="filters">
           <div>
             <label htmlFor="cat">Kategori</label>
@@ -111,14 +111,14 @@ export default function HomePage() {
           </div>
           <div className="filters-actions">
             <button type="button" onClick={search}>
-              Tampilkan mitra
+              Tampilkan profil
             </button>
           </div>
         </div>
       </div>
 
       {loadError && (
-        <p className="card muted">Tidak bisa memuat data mitra. Coba lagi sebentar.</p>
+        <p className="card muted">Tidak bisa memuat profil pendamping. Coba lagi sebentar.</p>
       )}
 
       <div className="grid">
@@ -154,7 +154,7 @@ export default function HomePage() {
 
       {!loadError && partners.length === 0 && (
         <div className="card empty-state">
-          Belum ada mitra di filter ini. Coba kota lain atau daftar sebagai mitra.
+          Belum ada pendamping di filter ini. Coba kota lain atau daftar jadi pendamping.
         </div>
       )}
     </div>

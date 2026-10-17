@@ -22,7 +22,7 @@ export default function AdminPage() {
     <div>
       <h2>Panel Admin</h2>
       <section className="card">
-        <h3>Verifikasi mitra</h3>
+        <h3>Verifikasi pendamping</h3>
         {pending.map((p) => (
           <div key={p.userId} style={{ marginBottom: 12 }}>
             <p>{p.user?.profile?.fullName}</p>

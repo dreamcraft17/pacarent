@@ -12,6 +12,7 @@ import RegisterPage from './pages/RegisterPage';
 import TermsPage from './pages/TermsPage';
 import BottomNav from './components/BottomNav';
 import DiscoverModeSwitch from './components/DiscoverModeSwitch';
+import { discoverMarketing } from './copy/discover-marketing';
 import TrustStrip from './components/TrustStrip';
 import './App.css';
 
@@ -42,11 +43,11 @@ function Shell() {
           <>
             <Link to="/" className="brand">
               PacaRent
-              <span className="brand-tag">Sewa pacar · teman kencan</span>
+              <span className="brand-tag">{discoverMarketing.brandTag}</span>
             </Link>
             <div className="topbar-actions">
               {me?.role === 'Admin' && <Link to="/admin">Admin</Link>}
-              {me && me.role !== 'Partner' && <Link to="/mitra/daftar">Jadi mitra</Link>}
+              {me && me.role !== 'Partner' && <Link to="/mitra/daftar">Jadi pendamping</Link>}
               <Link to="/syarat">S&amp;K</Link>
               {loading ? (
                 <span className="muted">...</span>
@@ -78,7 +79,7 @@ function Shell() {
       </main>
       {!hideBottomNav && <BottomNav />}
       <footer className="footer footer-minimal">
-        PacaRent · Early access · Profil mitra terverifikasi
+        PacaRent · Early access · Sewa pacar · pendamping terverifikasi
       </footer>
     </div>
   );

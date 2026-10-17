@@ -6,6 +6,7 @@ import FilterMenu from '../components/FilterMenu';
 import PartnerCardStack, { type StackPartner } from '../components/PartnerCardStack';
 import { jabodetabekFilterOptions } from '../data/jabodetabek-cities';
 import { trackDiscoveryView } from '../lib/analytics';
+import { discoverMarketing } from '../copy/discover-marketing';
 import { getStoredDiscoveryMode, prefersDesktopBrowse } from '../lib/viewport';
 
 type Category = { id: number; name: string };
@@ -75,9 +76,9 @@ export default function DiscoverPage() {
       <div className="discover-page">
         <section className="discover-intro" aria-labelledby="discover-title">
           <div>
-            <p className="discover-intro-eyebrow">Mode kartu</p>
-            <h1 id="discover-title">Satu profil, satu keputusan</h1>
-            <p>Tertarik → booking. Lewati untuk lihat profil berikutnya.</p>
+            <p className="discover-intro-eyebrow">{discoverMarketing.cardIntro.eyebrow}</p>
+            <h1 id="discover-title">{discoverMarketing.cardIntro.title}</h1>
+            <p>{discoverMarketing.cardIntro.lead}</p>
           </div>
           <span className="discover-intro-count" aria-label={`${partners.length} profil tersedia`}>
             {loading ? '...' : `${partners.length} profil`}

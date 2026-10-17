@@ -3,6 +3,7 @@ import type { ComponentProps } from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
+import { discoverMarketing } from '../copy/discover-marketing';
 import PartnerCardStack from './PartnerCardStack';
 
 function renderStack(props: Partial<ComponentProps<typeof PartnerCardStack>> = {}) {
@@ -18,9 +19,9 @@ describe('PartnerCardStack launch state', () => {
     renderStack();
 
     expect(
-      screen.getByRole('heading', { name: 'Temukan teman untuk momen yang kamu rencanakan.' }),
+      screen.getByRole('heading', { name: discoverMarketing.launchEmpty.title }),
     ).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Ajukan jadi mitra' })).toHaveAttribute('href', '/mitra/daftar');
+    expect(screen.getByRole('link', { name: 'Daftar jadi pendamping' })).toHaveAttribute('href', '/mitra/daftar');
     expect(screen.getByRole('link', { name: 'Mode daftar' })).toHaveAttribute('href', '/cari');
     expect(screen.getByRole('link', { name: 'Daftar sebagai pengguna' })).toHaveAttribute('href', '/register');
   });
@@ -28,9 +29,9 @@ describe('PartnerCardStack launch state', () => {
   it('keeps filtered empty state separate from launch state', () => {
     renderStack({ hasActiveFilters: true, onResetFilters: () => undefined });
 
-    expect(screen.getByRole('heading', { name: 'Belum ada mitra' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Belum ada pendamping' })).toBeInTheDocument();
     expect(
-      screen.queryByRole('heading', { name: 'Temukan teman untuk momen yang kamu rencanakan.' }),
+      screen.queryByRole('heading', { name: discoverMarketing.launchEmpty.title }),
     ).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Reset filter' })).toBeInTheDocument();
   });

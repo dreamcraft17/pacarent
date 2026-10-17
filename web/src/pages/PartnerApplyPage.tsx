@@ -32,12 +32,12 @@ export default function PartnerApplyPage() {
       setMsg('Gagal mengirim');
       return;
     }
-    setMsg('Profil mitra aktif. Kamu sudah bisa menerima booking.');
+    setMsg('Profil pendamping aktif. Kamu sudah bisa menerima booking.');
   };
 
   return (
     <div className="card" style={{ maxWidth: 560 }}>
-      <h2>Daftar sebagai mitra</h2>
+      <h2>Daftar jadi pendamping</h2>
       <form onSubmit={submit}>
         <label>Bio</label>
         <textarea value={bio} onChange={(e) => setBio(e.target.value)} required />

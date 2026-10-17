@@ -162,9 +162,9 @@ export default function BookingsPage() {
       <h2>Booking saya</h2>
       <p className="muted">
         {paymentsEnabled ? (
-          <>Tarif mitra per booking — bayar lewat DOKU setelah fitur pembayaran aktif.</>
+          <>Tarif pendamping per booking — bayar lewat DOKU setelah fitur pembayaran aktif.</>
         ) : (
-          <>Early access: pembayaran belum aktif. Setelah mitra terima, langsung koordinasi &amp; tandai selesai.</>
+          <>Early access: pembayaran belum aktif. Setelah pendamping terima, langsung koordinasi &amp; tandai selesai.</>
         )}
       </p>
       {emergency && (

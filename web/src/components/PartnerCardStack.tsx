@@ -4,6 +4,7 @@ import { trackBookingStarted, trackDiscoveryAction } from '../lib/analytics';
 import { partnerBackdrop } from '../lib/partnerVisual';
 import { setBookingSource } from '../lib/viewport';
 import { IconCalendar, IconClose, IconInfo } from './DatingIcons';
+import { discoverMarketing } from '../copy/discover-marketing';
 import LaunchEmptyState from './LaunchEmptyState';
 
 export type StackPartner = {
@@ -165,10 +166,10 @@ export default function PartnerCardStack({
 
     return (
       <div className="discover-empty-state">
-        <h2>{exhausted ? 'Profil habis' : 'Belum ada mitra'}</h2>
+        <h2>{exhausted ? discoverMarketing.exhaustedStack.title : 'Belum ada pendamping'}</h2>
         <p className="discover-empty-copy">
           {exhausted
-            ? 'Ganti filter atau balik lagi nanti.'
+            ? discoverMarketing.exhaustedStack.copy
             : 'Filter kepanjangan—coba semua kategori/kota.'}
         </p>
         <div className="discover-empty-actions">
@@ -191,7 +192,7 @@ export default function PartnerCardStack({
   const stamp = dragX > 40 ? 'stamp-yes' : dragX < -40 ? 'stamp-no' : '';
 
   return (
-    <div className="discover-stage" aria-label="Kartu profil mitra">
+    <div className="discover-stage" aria-label="Kartu profil pendamping">
       {next && (
         <div className="swipe-card swipe-card-back" aria-hidden>
           <CardFace partner={next} />

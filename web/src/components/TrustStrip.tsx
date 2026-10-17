@@ -5,13 +5,13 @@ export default function TrustStrip() {
         <span className="trust-icon" aria-hidden>
           ✓
         </span>
-        Mitra terverifikasi
+        Pendamping terverifikasi
       </li>
       <li>
         <span className="trust-icon" aria-hidden>
           ✓
         </span>
-        Sewa pacar &amp; teman kencan
+        Plus one verified, bukan drama
       </li>
       <li>
         <span className="trust-icon" aria-hidden>

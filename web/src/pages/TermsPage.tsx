@@ -5,7 +5,7 @@ export default function TermsPage() {
         <p className="terms-eyebrow">Sebelum mulai</p>
         <h1>Syarat &amp; Ketentuan</h1>
         <p className="terms-lead">
-          Ringkasan aturan PacaRent supaya pengguna dan mitra tahu apa yang boleh, apa yang menjadi tanggung jawab
+          Ringkasan aturan PacaRent supaya pengguna dan pendamping tahu apa yang boleh, apa yang menjadi tanggung jawab
           masing-masing, dan bagaimana menggunakan platform dengan aman.
         </p>
         <p className="terms-updated">Ringkasan · Diperbarui 14 Oktober 2026</p>
@@ -21,7 +21,7 @@ export default function TermsPage() {
           </span>
           <div>
             <strong>Untuk orang dewasa</strong>
-            <span>Pengguna dan mitra wajib berusia minimal 18 tahun.</span>
+            <span>Pengguna dan pendamping wajib berusia minimal 18 tahun.</span>
           </div>
         </div>
         <div className="terms-summary-item">
@@ -62,8 +62,8 @@ export default function TermsPage() {
             </div>
             <p>
               PacaRent menyediakan platform digital yang mempertemukan <strong>pengguna</strong> dengan{' '}
-              <strong>mitra</strong> untuk sewa pacar, teman kencan, nongkrong, dan pendamping acara. PacaRent{' '}
-              <strong>bukan</strong> pihak dalam perjanjian layanan antara pengguna dan mitra, tidak mengawasi
+              <strong>pendamping</strong> untuk sewa pacar, teman kencan, nongkrong, dan temani acara. PacaRent{' '}
+              <strong>bukan</strong> pihak dalam perjanjian layanan antara pengguna dan pendamping, tidak mengawasi
               pertemuan secara langsung, dan tidak menjamin hasil atau kepuasan dari interaksi di lapangan.
             </p>
           </section>
@@ -74,7 +74,7 @@ export default function TermsPage() {
               <h2>Syarat umum</h2>
             </div>
             <ul>
-              <li>Pengguna dan mitra wajib berusia minimal 18 tahun dan memberikan data yang benar.</li>
+              <li>Pengguna dan pendamping wajib berusia minimal 18 tahun dan memberikan data yang benar.</li>
               <li>Semua pihak wajib saling hormat; pelecehan, ancaman, penipuan, atau pelanggaran hukum dapat berujung pemblokiran dan laporan ke pihak berwenang.</li>
               <li>Lokasi, waktu, dan bentuk pertemuan disepakati saat booking; pilih tempat umum yang aman bila memungkinkan.</li>
               <li>Data pribadi diproses sesuai kebijakan privasi dan peraturan perlindungan data pribadi yang berlaku di Indonesia.</li>
@@ -92,7 +92,7 @@ export default function TermsPage() {
                 Segala <strong>perilaku, komunikasi, transaksi, atau perjanjian</strong> yang terjadi saat atau setelah
                 pertemuan fisik maupun di luar fitur resmi aplikasi (misalnya chat/transfer di luar PacaRent,
                 perpanjangan waktu, imbalan tambahan, atau hubungan pribadi) adalah{' '}
-                <strong>sepenuhnya tanggung jawab pengguna dan mitra</strong> yang bersangkutan.
+                <strong>sepenuhnya tanggung jawab pengguna dan pendamping</strong> yang bersangkutan.
               </li>
               <li>
                 PacaRent <strong>tidak bertanggung jawab</strong> atas cedera, kerugian materiil atau immateriil,
@@ -105,7 +105,7 @@ export default function TermsPage() {
                 ganti rugi atau penyelesaian sengketa di luar lingkup layanan platform.
               </li>
               <li>
-                Apabila terjadi perselisihan, pengguna dan mitra diminta menyelesaikannya secara damai terlebih dahulu;
+                Apabila terjadi perselisihan, pengguna dan pendamping diminta menyelesaikannya secara damai terlebih dahulu;
                 PacaRent dapat, tanpa kewajiban, membantu mediasi administratif sejauh kebijakan internal mengizinkan.
               </li>
             </ul>
@@ -118,7 +118,7 @@ export default function TermsPage() {
             </div>
             <p>
               Pada fase <strong>early access</strong>, pembayaran online melalui platform dapat belum aktif. Tarif atau
-              imbalan yang disepakati antara pengguna dan mitra di luar fitur bayar resmi menjadi tanggung jawab para
+              imbalan yang disepakati antara pengguna dan pendamping di luar fitur bayar resmi menjadi tanggung jawab para
               pihak. Apabila pembayaran melalui gateway (misalnya DOKU) diaktifkan di kemudian hari, ketentuan biaya
               dan refund akan diumumkan di aplikasi.
             </p>

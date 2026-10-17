@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { discoverMarketing } from '../copy/discover-marketing';
 
 type Props = {
   id?: string;
@@ -22,13 +23,11 @@ export default function LaunchEmptyState({
       <div className="empty-state-mark" aria-hidden="true">
         <span>PR</span>
       </div>
-      <p className="discover-empty-eyebrow">Mulai dari momenmu</p>
+      <p className="discover-empty-eyebrow">{discoverMarketing.launchEmpty.eyebrow}</p>
       <h2 id={id} className="discover-empty-hero">
-        Temukan teman untuk momen yang kamu rencanakan.
+        {discoverMarketing.launchEmpty.title}
       </h2>
-      <p className="discover-empty-copy">
-        Pilih profil yang cocok, tentukan tanggal dan lokasi, lalu booking dengan alur yang jelas.
-      </p>
+      <p className="discover-empty-copy">{discoverMarketing.launchEmpty.lead}</p>
       <div className="empty-state-steps" aria-label="Cara kerja PacaRent">
         <div>
           <span>01</span>
@@ -48,7 +47,7 @@ export default function LaunchEmptyState({
       </div>
       <div className="discover-empty-actions discover-empty-actions--stack">
         <Link className="discover-empty-primary discover-empty-link" to="/mitra/daftar">
-          Ajukan jadi mitra
+          Daftar jadi pendamping
         </Link>
         <Link className="discover-empty-secondary discover-empty-link" to={secondaryHref}>
           {secondaryLabel}
