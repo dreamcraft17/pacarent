@@ -3,15 +3,15 @@
 > **Author:** Dozer  
 > **Date:** 2026-10-16
 
-Event ringan di browser untuk membandingkan **mode kartu** (`/`) vs **mode daftar** (`/cari`) sebelum redesign besar. Implementasi: [`web/src/lib/analytics.ts`](../../web/src/lib/analytics.ts).
+Event ringan di browser untuk funnel **Jelajahi** (`/`) → booking. Implementasi: [`web/src/lib/analytics.ts`](../../web/src/lib/analytics.ts).
 
 ## Event
 
 | Name | Payload | Kapan |
 |------|---------|--------|
-| `discovery_view` | `discovery_mode`: `card` \| `list` | Mount halaman Jelajahi / Daftar |
-| `discovery_action` | `action`, `discovery_mode` | Lewati, tertarik, swipe, buka profil dari grid |
-| `booking_started` | `source`: `card` \| `list` \| `detail`, `partnerId` | Navigasi ke `/mitra/:id` |
+| `discovery_view` | `discovery_mode`: `browse` | Mount halaman Jelajahi |
+| `discovery_action` | `action`: `profile_open`, `discovery_mode`: `browse` | Buka profil dari grid |
+| `booking_started` | `source`: `browse` \| `detail`, `partnerId` | Navigasi ke `/mitra/:id` |
 | `booking_submitted` | `partnerId`, `source` (dari session) | POST booking sukses |
 
 ## Membaca buffer (dev / pre-GA)
@@ -35,6 +35,6 @@ console.table({ views: views.length, submitted: submitted.length });
 
 Dengarkan `window` event `pacarent-analytics` dan forward ke Plausible/GA4/posthog. Env tambahan tidak wajib untuk MVP.
 
-## Preferensi desktop
+## Booking source
 
-`sessionStorage.pacarent_discovery_mode` = `card` \| `list` — set via toggle topbar. Desktop `(min-width: 768px)` + `(pointer: fine)` default redirect `/` → `/cari` kecuali user memilih **Kartu**.
+`sessionStorage.pacarent_last_booking_source` = `browse` \| `detail` — diset saat user buka profil dari grid vs langsung ke detail.

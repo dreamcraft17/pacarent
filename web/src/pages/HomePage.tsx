@@ -141,9 +141,9 @@ export default function HomePage() {
               className="partner-card-link"
               to={`/mitra/${p.id}`}
               onClick={() => {
-                setBookingSource('list');
-                trackDiscoveryAction('list_profile_open', 'list');
-                trackBookingStarted('list', p.id);
+                setBookingSource('browse');
+                trackDiscoveryAction('profile_open');
+                trackBookingStarted('browse', p.id);
               }}
             >
               Lihat profil &amp; booking →

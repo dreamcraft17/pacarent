@@ -26,9 +26,9 @@ describe('analytics', () => {
     expect(buf[0].ts).toBeTruthy();
   });
 
-  it('records discovery_view with mode', () => {
-    trackDiscoveryView('list');
+  it('records discovery_view as browse', () => {
+    trackDiscoveryView();
     const buf = readAnalyticsBuffer();
-    expect(buf[0].payload.discovery_mode).toBe('list');
+    expect(buf[0].payload.discovery_mode).toBe('browse');
   });
 });

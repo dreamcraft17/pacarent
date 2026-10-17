@@ -29,7 +29,7 @@ export default function LoginPage() {
         <h2>Lanjutkan booking kamu</h2>
         <p>Masuk untuk mengonfirmasi jadwal, kelola booking, dan ulasan setelah pertemuan.</p>
         <ul>
-          <li>Jelajahi profil (kartu atau daftar) → tertarik → pilih tanggal &amp; lokasi</li>
+          <li>Jelajahi profil pendamping → tertarik → pilih tanggal &amp; lokasi</li>
           <li>Gratis — early access, pembayaran online menyusul</li>
           <li>Tombol darurat saat pertemuan aktif</li>
         </ul>

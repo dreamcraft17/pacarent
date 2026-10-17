@@ -3,7 +3,6 @@ import { AuthProvider, useAuth } from './auth/AuthContext';
 import AdminPage from './pages/AdminPage';
 import BookingsPage from './pages/BookingsPage';
 import BrowseListPage from './pages/BrowseListPage';
-import DiscoverPage from './pages/DiscoverPage';
 import LoginPage from './pages/LoginPage';
 import PartnerApplyPage from './pages/PartnerApplyPage';
 import PartnerDetailPage from './pages/PartnerDetailPage';
@@ -11,7 +10,6 @@ import ProfilePage from './pages/ProfilePage';
 import RegisterPage from './pages/RegisterPage';
 import TermsPage from './pages/TermsPage';
 import BottomNav from './components/BottomNav';
-import DiscoverModeSwitch from './components/DiscoverModeSwitch';
 import { discoverMarketing } from './copy/discover-marketing';
 import TrustStrip from './components/TrustStrip';
 import './App.css';
@@ -19,8 +17,7 @@ import './App.css';
 function Shell() {
   const { me, logout, loading } = useAuth();
   const { pathname } = useLocation();
-  const isDiscover =
-    pathname === '/' || pathname === '/cari' || pathname.startsWith('/mitra/');
+  const isDiscover = pathname === '/' || pathname.startsWith('/mitra/');
   const hideBottomNav = pathname === '/login' || pathname === '/register' || pathname === '/admin';
 
   return (
@@ -35,8 +32,15 @@ function Shell() {
               <span className="brand-mark" aria-hidden="true">P</span>
               <span>PacaRent</span>
             </Link>
-            <div className="topbar-discover-actions">
-              <DiscoverModeSwitch />
+            <div className="topbar-discover-actions topbar-actions">
+              <Link to="/syarat">S&amp;K</Link>
+              {loading ? (
+                <span className="muted">...</span>
+              ) : me ? (
+                <Link to="/profile">Profil</Link>
+              ) : (
+                <Link to="/login">Masuk</Link>
+              )}
             </div>
           </>
         ) : (
@@ -65,8 +69,8 @@ function Shell() {
       {!isDiscover && <TrustStrip />}
       <main className={`main ${hideBottomNav ? '' : 'main-with-nav'}`}>
         <Routes>
-          <Route path="/" element={<DiscoverPage />} />
-          <Route path="/cari" element={<BrowseListPage />} />
+          <Route path="/" element={<BrowseListPage />} />
+          <Route path="/cari" element={<Navigate to="/" replace />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/syarat" element={<TermsPage />} />

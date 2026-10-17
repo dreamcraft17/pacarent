@@ -41,18 +41,15 @@ export function readAnalyticsBuffer(): StoredAnalyticsEvent[] {
   }
 }
 
-export function trackDiscoveryView(mode: 'card' | 'list') {
-  trackEvent('discovery_view', { discovery_mode: mode });
+export function trackDiscoveryView() {
+  trackEvent('discovery_view', { discovery_mode: 'browse' });
 }
 
-export function trackDiscoveryAction(
-  action: 'skip' | 'interested' | 'swipe_skip' | 'swipe_interested' | 'list_profile_open',
-  mode: 'card' | 'list',
-) {
-  trackEvent('discovery_action', { action, discovery_mode: mode });
+export function trackDiscoveryAction(action: 'profile_open') {
+  trackEvent('discovery_action', { action, discovery_mode: 'browse' });
 }
 
-export function trackBookingStarted(source: 'card' | 'list' | 'detail', partnerId?: string) {
+export function trackBookingStarted(source: 'browse' | 'detail', partnerId?: string) {
   trackEvent('booking_started', { source, partnerId });
 }
 

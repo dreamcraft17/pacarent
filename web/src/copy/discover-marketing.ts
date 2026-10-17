@@ -8,15 +8,10 @@ export const discoverMarketing = {
       'Pengen ke kondangan tp gapunya pacar? PacaRent — sewa teman kencan verified. Tertarik → booking, bukan app match.',
   },
   brandTag: 'Plus one verified · bukan swipe',
-  cardIntro: {
-    eyebrow: 'POV · mode kartu',
-    title: 'Gandengan masih null? Satu profil, satu keputusan.',
-    lead: 'Tertarik → booking tanggal & lokasi. Lewati buat lihat profil berikutnya.',
-  },
-  listIntro: {
+  discoverIntro: {
     eyebrow: 'Kondangan season',
     title: 'Bandingkan pendamping, fix plus one error 404.',
-    lead: 'Sewa pacar / teman kencan — langsung atur tanggal & lokasi. Cocok di layar lebar.',
+    lead: 'Sewa pacar / teman kencan — pilih profil, atur tanggal & lokasi, langsung booking.',
   },
   launchEmpty: {
     eyebrow: 'Real talk',
@@ -24,13 +19,9 @@ export const discoverMarketing = {
     lead: 'Pendamping terverifikasi, 18+, lokasi publik. Bukan cari jodoh—tertarik → booking.',
   },
   sidebar: {
-    crumb: 'PacaRent / Discover',
+    crumb: 'PacaRent / Jelajahi',
     eyebrow: 'Lowkey aman',
     title: 'Bukan app match—plus one yang jelas.',
     lead: 'Setiap langkah menuju jadwal, lokasi, dan pembayaran lewat platform.',
-  },
-  exhaustedStack: {
-    title: 'Profil habis',
-    copy: 'Ganti filter atau balik lagi nanti—kondangan season panjang.',
   },
 } as const;

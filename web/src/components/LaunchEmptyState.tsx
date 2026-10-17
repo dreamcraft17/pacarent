@@ -8,13 +8,15 @@ type Props = {
   showUserRegister?: boolean;
 };
 
-/** Onboarding empty state — shared browse + card discover. */
+/** Onboarding empty state — browse launch. */
 export default function LaunchEmptyState({
   id = 'launch-empty-title',
-  secondaryHref = '/',
-  secondaryLabel = 'Mode kartu',
+  secondaryHref,
+  secondaryLabel,
   showUserRegister = false,
 }: Props) {
+  const showSecondary = Boolean(secondaryHref && secondaryLabel);
+
   return (
     <section
       className="discover-empty-state discover-empty-state--launch"
@@ -49,9 +51,11 @@ export default function LaunchEmptyState({
         <Link className="discover-empty-primary discover-empty-link" to="/mitra/daftar">
           Daftar jadi pendamping
         </Link>
-        <Link className="discover-empty-secondary discover-empty-link" to={secondaryHref}>
-          {secondaryLabel}
-        </Link>
+        {showSecondary && (
+          <Link className="discover-empty-secondary discover-empty-link" to={secondaryHref!}>
+            {secondaryLabel}
+          </Link>
+        )}
         {showUserRegister && (
           <Link className="discover-empty-tertiary" to="/register">
             Daftar sebagai pengguna

@@ -5,7 +5,7 @@
 
 ## TL;DR
 
-PacaRent MVP adalah **web mobile-first** (buka di browser HP), bukan app native. Pola interaksi **satu kartu + aksi biner + bottom nav** dipinjam dari app discovery populer karena mengurangi friksi browse—**outcome tetap booking mitra terverifikasi**, bukan match/chat kencan. Identitas **teal + coral**, copy **sewa pacar / teman acara**, bukan klon Tinder pink atau hero gradient ungu.
+PacaRent MVP adalah **web mobile-first** (buka di browser HP), bukan app native. Discovery = **grid profil pendamping + bottom nav**—**outcome booking terverifikasi**, bukan match/chat kencan. Identitas editorial + copy **sewa pacar / teman kencan**, bukan klon Tinder atau swipe stack.
 
 ## Web MVP vs app kencan
 
@@ -13,7 +13,7 @@ PacaRent MVP adalah **web mobile-first** (buka di browser HP), bukan app native.
 |--|------------------------|------------------|
 | Channel | Native mobile | SPA Vite, dioptimalkan 4G |
 | Outcome | Match → chat | **Tertarik → halaman booking** |
-| Desktop | Kolom ponsel / web terbatas | **Daftar** (`/cari`) default di layar lebar; **Kartu** (`/`) tetap tersedia via toggle |
+| Desktop | Kolom ponsel / web terbatas | **Grid Jelajahi** (`/`) responsif; `/cari` redirect ke `/` |
 | Trust | Profil + match | Verifikasi, S&amp;K, escrow di sheet/booking |
 
 ## Persona (UX)

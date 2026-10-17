@@ -1,13 +1,20 @@
 import { describe, expect, it } from 'vitest';
-import { DISCOVERY_MODE_KEY, getStoredDiscoveryMode, setStoredDiscoveryMode } from './viewport';
+import { BOOKING_SOURCE_KEY, getBookingSource, setBookingSource } from './viewport';
 
-describe('viewport storage', () => {
-  it('round-trips discovery mode in sessionStorage', () => {
-    sessionStorage.removeItem(DISCOVERY_MODE_KEY);
-    expect(getStoredDiscoveryMode()).toBeNull();
-    setStoredDiscoveryMode('card');
-    expect(getStoredDiscoveryMode()).toBe('card');
-    setStoredDiscoveryMode('list');
-    expect(getStoredDiscoveryMode()).toBe('list');
+describe('booking source storage', () => {
+  it('round-trips browse and detail in sessionStorage', () => {
+    sessionStorage.removeItem(BOOKING_SOURCE_KEY);
+    expect(getBookingSource()).toBe('detail');
+    setBookingSource('browse');
+    expect(getBookingSource()).toBe('browse');
+    setBookingSource('detail');
+    expect(getBookingSource()).toBe('detail');
+  });
+
+  it('maps legacy list/card to browse', () => {
+    sessionStorage.setItem(BOOKING_SOURCE_KEY, 'list');
+    expect(getBookingSource()).toBe('browse');
+    sessionStorage.setItem(BOOKING_SOURCE_KEY, 'card');
+    expect(getBookingSource()).toBe('browse');
   });
 });

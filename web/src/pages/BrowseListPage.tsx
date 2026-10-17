@@ -24,7 +24,7 @@ type Partner = {
   photoUrl?: string | null;
 };
 
-/** Grid discovery — default on desktop; visual parity with card mode. */
+/** Browse discovery — satu identitas: grid profil → booking. */
 export default function BrowseListPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [partners, setPartners] = useState<Partner[]>([]);
@@ -34,7 +34,7 @@ export default function BrowseListPage() {
   const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
-    trackDiscoveryView('list');
+    trackDiscoveryView();
   }, []);
 
   useEffect(() => {
@@ -81,9 +81,9 @@ export default function BrowseListPage() {
       <div className="browse-list-page">
         <section className="discover-intro" aria-labelledby="browse-title">
           <div>
-            <p className="discover-intro-eyebrow">{discoverMarketing.listIntro.eyebrow}</p>
-            <h1 id="browse-title">{discoverMarketing.listIntro.title}</h1>
-            <p>{discoverMarketing.listIntro.lead}</p>
+            <p className="discover-intro-eyebrow">{discoverMarketing.discoverIntro.eyebrow}</p>
+            <h1 id="browse-title">{discoverMarketing.discoverIntro.title}</h1>
+            <p>{discoverMarketing.discoverIntro.lead}</p>
           </div>
           <span className="discover-intro-count" aria-label={`${partners.length} profil tersedia`}>
             {loading ? '...' : `${partners.length} profil`}
@@ -161,9 +161,9 @@ export default function BrowseListPage() {
                       className="browse-tile-cta"
                       to={`/mitra/${p.id}`}
                       onClick={() => {
-                        setBookingSource('list');
-                        trackDiscoveryAction('list_profile_open', 'list');
-                        trackBookingStarted('list', p.id);
+                        setBookingSource('browse');
+                        trackDiscoveryAction('profile_open');
+                        trackBookingStarted('browse', p.id);
                       }}
                     >
                       Tertarik · booking
@@ -176,7 +176,12 @@ export default function BrowseListPage() {
         )}
 
         {!loading && !loadError && partners.length === 0 && !category && !city && (
-          <LaunchEmptyState id="browse-launch-title" secondaryHref="/" secondaryLabel="Mode kartu" />
+          <LaunchEmptyState
+            id="browse-launch-title"
+            showUserRegister
+            secondaryHref="/syarat"
+            secondaryLabel="Baca S&K"
+          />
         )}
 
         {!loading && !loadError && partners.length === 0 && (category || city) && (
