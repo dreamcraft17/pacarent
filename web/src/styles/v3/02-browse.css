@@ -317,38 +317,40 @@
 .launch-flow {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.65rem;
-  margin: 1.35rem 0 1.5rem;
+  gap: 0.85rem;
+  margin: 1.5rem 0 1.65rem;
   padding: 0;
   list-style: none;
 }
 
 .launch-flow li {
   display: flex;
-  gap: 0.65rem;
-  align-items: flex-start;
-  padding: 0.75rem 0.85rem;
-  border: 1px solid #d4e5e0;
-  border-radius: 14px;
-  background: rgb(255 255 255 / 72%);
+  gap: 0.8rem;
+  align-items: center;
+  padding: 0.95rem 1rem;
+  border: 1px solid var(--pr-line-warm);
+  border-radius: 16px;
+  background: var(--pr-paper);
+  box-shadow: 0 1px 2px rgb(16 47 49 / 5%), 0 6px 16px rgb(16 47 49 / 5%);
 }
 
 .launch-flow-n {
   flex-shrink: 0;
   display: grid;
   place-items: center;
-  width: 1.65rem;
-  height: 1.65rem;
+  width: 2.1rem;
+  height: 2.1rem;
   border-radius: 999px;
-  background: var(--pr-ink);
-  color: #c5eee4;
-  font-size: 0.75rem;
+  background: var(--pr-mint);
+  border: 1.5px solid var(--pr-primary);
+  color: var(--pr-primary);
+  font-size: 0.9rem;
   font-weight: 800;
 }
 
 .launch-flow strong {
   display: block;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   color: var(--pr-ink);
 }
 
