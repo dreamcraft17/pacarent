@@ -1,6 +1,6 @@
 :root {
-  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
-  --font-body: 'Source Sans 3', system-ui, sans-serif;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
 
   --pr-primary: var(--colors-primary-DEFAULT);
   --pr-primary-hover: var(--colors-primary-700);

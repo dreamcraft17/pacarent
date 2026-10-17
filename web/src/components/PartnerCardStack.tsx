@@ -4,6 +4,7 @@ import { trackBookingStarted, trackDiscoveryAction } from '../lib/analytics';
 import { partnerBackdrop } from '../lib/partnerVisual';
 import { setBookingSource } from '../lib/viewport';
 import { IconCalendar, IconClose, IconInfo } from './DatingIcons';
+import LaunchEmptyState from './LaunchEmptyState';
 
 export type StackPartner = {
   id: string;
@@ -153,49 +154,12 @@ export default function PartnerCardStack({
 
     if (!exhausted && !hasActiveFilters) {
       return (
-        <section
-          className="discover-empty-state discover-empty-state--launch"
-          aria-labelledby="discover-launch-title"
-        >
-          <p className="discover-empty-eyebrow">PacaRent baru dibuka</p>
-          <h2 id="discover-launch-title" className="discover-empty-hero">
-            Jadilah salah satu mitra pertama PacaRent
-          </h2>
-          <p className="discover-empty-copy">
-            Belum ada profil mitra di area ini. Ajukan profilmu sekarang dan langsung mulai menerima booking.
-          </p>
-          <ul className="discover-launch-trust" aria-label="Keamanan PacaRent">
-            <li>
-              <span className="discover-launch-trust-icon" aria-hidden>
-                ✓
-              </span>
-              <span>Profil langsung aktif setelah daftar</span>
-            </li>
-            <li>
-              <span className="discover-launch-trust-icon" aria-hidden>
-                ✓
-              </span>
-              <span>Gratis untuk daftar &amp; booking</span>
-            </li>
-            <li>
-              <span className="discover-launch-trust-icon" aria-hidden>
-                ✓
-              </span>
-              <span>Laporan dan bantuan tersedia</span>
-            </li>
-          </ul>
-          <div className="discover-empty-actions discover-empty-actions--stack">
-            <Link className="discover-empty-primary discover-empty-link" to="/mitra/daftar">
-              Ajukan jadi mitra
-            </Link>
-            <Link className="discover-empty-secondary discover-empty-link" to="/register">
-              Daftar sebagai pengguna
-            </Link>
-            <Link className="discover-empty-tertiary" to="/login">
-              Sudah punya akun? Masuk
-            </Link>
-          </div>
-        </section>
+        <LaunchEmptyState
+          id="discover-launch-title"
+          secondaryHref="/cari"
+          secondaryLabel="Mode daftar"
+          showUserRegister
+        />
       );
     }
 

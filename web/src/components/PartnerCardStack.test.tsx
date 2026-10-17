@@ -14,21 +14,24 @@ function renderStack(props: Partial<ComponentProps<typeof PartnerCardStack>> = {
 }
 
 describe('PartnerCardStack launch state', () => {
-  it('prioritizes partner recruitment while retaining the customer path', () => {
+  it('shows shared launch empty state with partner and user paths', () => {
     renderStack();
 
-    expect(screen.getByRole('heading', { name: 'Jadilah salah satu mitra pertama PacaRent' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'Temukan teman untuk momen yang kamu rencanakan.' }),
+    ).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Ajukan jadi mitra' })).toHaveAttribute('href', '/mitra/daftar');
+    expect(screen.getByRole('link', { name: 'Mode daftar' })).toHaveAttribute('href', '/cari');
     expect(screen.getByRole('link', { name: 'Daftar sebagai pengguna' })).toHaveAttribute('href', '/register');
-    expect(screen.getByRole('link', { name: 'Sudah punya akun? Masuk' })).toHaveAttribute('href', '/login');
-    expect(screen.getByRole('list', { name: 'Keamanan PacaRent' })).toBeInTheDocument();
   });
 
   it('keeps filtered empty state separate from launch state', () => {
     renderStack({ hasActiveFilters: true, onResetFilters: () => undefined });
 
     expect(screen.getByRole('heading', { name: 'Belum ada mitra' })).toBeInTheDocument();
-    expect(screen.queryByRole('heading', { name: 'Jadilah salah satu mitra pertama PacaRent' })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('heading', { name: 'Temukan teman untuk momen yang kamu rencanakan.' }),
+    ).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Reset filter' })).toBeInTheDocument();
   });
 

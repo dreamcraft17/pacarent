@@ -63,16 +63,18 @@ export default function PartnerDetailPage() {
   const partner = data.partner;
 
   return (
-    <div>
-      <div className="card">
+    <div className="booking-layout">
+      <header className="booking-hero">
         <span className="badge badge-verified">✓ Mitra terverifikasi</span>
-        <h2>{partner.profile?.fullName}</h2>
+        <h1>{partner.profile?.fullName}</h1>
         <p className="muted">{partner.profile?.city}</p>
         <p>{partner.partnerProfile?.bio}</p>
-        <p>Rp {partner.partnerProfile?.hourlyRate?.toLocaleString('id-ID')}/jam</p>
-      </div>
+        <p className="booking-rate">
+          Rp {partner.partnerProfile?.hourlyRate?.toLocaleString('id-ID')}/jam
+        </p>
+      </header>
       <div className="card">
-        <h3>Booking</h3>
+        <h2>Detail booking</h2>
         <form onSubmit={book}>
           <label>Kategori</label>
           <select

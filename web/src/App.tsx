@@ -23,8 +23,10 @@ function Shell() {
   const hideBottomNav = pathname === '/login' || pathname === '/register' || pathname === '/admin';
 
   return (
-    <div className={`app ${isDiscover ? 'app-discover' : ''}`}>
-      <header className={`topbar topbar-compact${isDiscover ? ' topbar-discover' : ''}`}>
+    <div className={`app app-canvas ${isDiscover ? 'app-discover' : 'app-standard'}`}>
+      <header
+        className={`topbar topbar-compact${isDiscover ? ' topbar-discover' : ''}`}
+      >
         {isDiscover ? (
           <>
             <span className="topbar-discover-spacer" aria-hidden />

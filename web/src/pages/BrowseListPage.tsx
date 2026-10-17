@@ -4,6 +4,7 @@ import { api } from '../api/client';
 import DiscoverTrustSidebar from '../components/DiscoverTrustSidebar';
 import FilterMenu from '../components/FilterMenu';
 import { jabodetabekFilterOptions } from '../data/jabodetabek-cities';
+import LaunchEmptyState from '../components/LaunchEmptyState';
 import { trackBookingStarted, trackDiscoveryAction, trackDiscoveryView } from '../lib/analytics';
 import { partnerBackdrop } from '../lib/partnerVisual';
 import { setBookingSource } from '../lib/viewport';
@@ -174,46 +175,7 @@ export default function BrowseListPage() {
         )}
 
         {!loading && !loadError && partners.length === 0 && !category && !city && (
-          <section
-            className="discover-empty-state discover-empty-state--launch"
-            aria-labelledby="browse-launch-title"
-          >
-            <div className="empty-state-mark" aria-hidden="true">
-              <span>PR</span>
-            </div>
-            <p className="discover-empty-eyebrow">Mulai dari momenmu</p>
-            <h2 id="browse-launch-title" className="discover-empty-hero">
-              Temukan teman untuk momen yang kamu rencanakan.
-            </h2>
-            <p className="discover-empty-copy">
-              Pilih profil yang cocok, tentukan tanggal dan lokasi, lalu booking dengan alur yang jelas.
-            </p>
-            <div className="empty-state-steps" aria-label="Cara kerja PacaRent">
-              <div>
-                <span>01</span>
-                <strong>Pilih profil</strong>
-                <small>lihat bio, tarif, dan kota</small>
-              </div>
-              <div>
-                <span>02</span>
-                <strong>Atur jadwal</strong>
-                <small>tanggal, durasi, lokasi</small>
-              </div>
-              <div>
-                <span>03</span>
-                <strong>Booking aman</strong>
-                <small>status tercatat di akunmu</small>
-              </div>
-            </div>
-            <div className="discover-empty-actions discover-empty-actions--stack">
-              <Link className="discover-empty-primary discover-empty-link" to="/mitra/daftar">
-                Ajukan jadi mitra
-              </Link>
-              <Link className="discover-empty-secondary discover-empty-link" to="/">
-                Mode kartu
-              </Link>
-            </div>
-          </section>
+          <LaunchEmptyState id="browse-launch-title" secondaryHref="/" secondaryLabel="Mode kartu" />
         )}
 
         {!loading && !loadError && partners.length === 0 && (category || city) && (

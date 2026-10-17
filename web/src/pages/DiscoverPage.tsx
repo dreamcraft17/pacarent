@@ -75,9 +75,9 @@ export default function DiscoverPage() {
       <div className="discover-page">
         <section className="discover-intro" aria-labelledby="discover-title">
           <div>
-            <p className="discover-intro-eyebrow">Jelajahi PacaRent</p>
-            <h1 id="discover-title">Temukan mitra untuk date atau acara</h1>
-            <p>Tertarik → booking tanggal &amp; lokasi. Lewati jika belum cocok.</p>
+            <p className="discover-intro-eyebrow">Mode kartu</p>
+            <h1 id="discover-title">Satu profil, satu keputusan</h1>
+            <p>Tertarik → booking. Lewati untuk lihat profil berikutnya.</p>
           </div>
           <span className="discover-intro-count" aria-label={`${partners.length} profil tersedia`}>
             {loading ? '...' : `${partners.length} profil`}
