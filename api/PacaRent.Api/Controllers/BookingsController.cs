@@ -20,7 +20,7 @@ public class BookingsController(
     PacaRentDbContext db,
     INotificationService notify,
     IAuditService audit,
-    IOptions<PacaRentSettings> settings) : ControllerBase
+    IOptionsMonitor<PacaRentSettings> settings) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> List(CancellationToken ct)
@@ -106,13 +106,13 @@ public class BookingsController(
         }
 
         booking.Status = BookingStatus.Accepted;
-        if (settings.Value.SkipBookingPayment)
+        if (settings.CurrentValue.SkipBookingPayment)
         {
             booking.Status = BookingStatus.Paid;
         }
 
         await db.SaveChangesAsync(ct);
-        var userMsg = settings.Value.SkipBookingPayment
+        var userMsg = settings.CurrentValue.SkipBookingPayment
             ? "Mitra menerima booking Anda. Pembayaran belum aktif (early access)—silakan koordinasi jadwal."
             : "Mitra menerima booking Anda. Silakan bayar.";
         await notify.NotifyAsync(booking.UserId, NotificationType.Booking, "Booking diterima", userMsg, ct);
@@ -140,7 +140,7 @@ public class BookingsController(
         var booking = await db.Bookings.Include(b => b.Payment).FirstOrDefaultAsync(b => b.Id == id, ct);
         if (booking is null) return NotFound();
         if (booking.UserId != userId && booking.PartnerId != userId) return Forbid();
-        if (settings.Value.SkipBookingPayment && booking.Status == BookingStatus.Accepted)
+        if (settings.CurrentValue.SkipBookingPayment && booking.Status == BookingStatus.Accepted)
         {
             booking.Status = BookingStatus.Paid;
         }
@@ -162,7 +162,7 @@ public class BookingsController(
         await notify.NotifyAsync(booking.PartnerId, NotificationType.Booking, "Layanan selesai", "Booking ditandai selesai.", ct);
         await notify.NotifyAsync(booking.UserId, NotificationType.Booking, "Layanan selesai", "Terima kasih. Silakan beri ulasan.", ct);
         await audit.LogAsync(userId, "complete_booking", "booking", id.ToString(), null, ct);
-        return Ok(new { booking, emergency = new { settings.Value.EmergencyHelpUrl, settings.Value.EmergencyHelpLabel } });
+        return Ok(new { booking, emergency = new { settings.CurrentValue.EmergencyHelpUrl, settings.CurrentValue.EmergencyHelpLabel } });
     }
 
     [HttpPost("{id:guid}/cancel")]

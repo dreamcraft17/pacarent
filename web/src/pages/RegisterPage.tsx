@@ -2,7 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import AuthLayout from '../components/layout/AuthLayout';
 import { productCopy } from '../copy/productCopy';
-import { api, setTokens } from '../api/client';
+import { api } from '../api/client';
 import { useAuth } from '../auth/AuthContext';
 import { getAuthRedirect } from '../auth/authRedirect';
 import { jabodetabekCities } from '../data/jabodetabek-cities';
@@ -38,7 +38,8 @@ export default function RegisterPage() {
       });
 
       if (data.accessToken && data.refreshToken) {
-        setTokens(data.accessToken, data.refreshToken);
+        // Tokens arrive in the body too, but the API already set them as an
+        // httpOnly cookie — refreshMe() picks up the session from that.
         await refreshMe();
         nav(from);
         return;

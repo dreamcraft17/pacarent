@@ -7,7 +7,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { api, clearTokens, setTokens } from '../api/client';
+import { api } from '../api/client';
 
 type Me = {
   id: string;
@@ -37,7 +37,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setMe(data);
     } catch {
       setMe(null);
-      clearTokens();
     }
   }, []);
 
@@ -46,19 +45,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [refreshMe]);
 
   const login = useCallback(async (loginId: string, password: string) => {
-    const data = await api<{
-      accessToken: string;
-      refreshToken: string;
-    }>('/api/auth/login', {
+    // Login response still includes the tokens in the JSON body for
+    // backward-compat callers, but the API also sets them as an httpOnly
+    // cookie — that cookie is what every subsequent request actually relies on.
+    await api('/api/auth/login', {
       method: 'POST',
       body: JSON.stringify({ login: loginId, password }),
     });
-    setTokens(data.accessToken, data.refreshToken);
     await refreshMe();
   }, [refreshMe]);
 
   const logout = useCallback(() => {
-    clearTokens();
+    api('/api/auth/logout', { method: 'POST' }).catch(() => undefined);
     setMe(null);
   }, []);
 

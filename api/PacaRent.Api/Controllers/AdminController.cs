@@ -16,8 +16,25 @@ public class AdminController(
     PacaRentDbContext db,
     IDocumentStorageService documents,
     INotificationService notify,
-    IAuditService audit) : ControllerBase
+    IAuditService audit,
+    IPlatformSettingsService platformSettings) : ControllerBase
 {
+    [HttpGet("settings")]
+    public IActionResult GetSettings()
+    {
+        return Ok(platformSettings.GetCurrent());
+    }
+
+    [HttpPut("settings")]
+    public async Task<IActionResult> UpdateSettings([FromBody] PlatformSettingsDto req, CancellationToken ct)
+    {
+        var actorId = HttpContext.GetUserId();
+        var updated = await platformSettings.UpdateAsync(req, ct);
+        await audit.LogAsync(actorId, "update_platform_settings", "platform_settings", null, updated, ct);
+        return Ok(updated);
+    }
+
+
     [HttpGet("partners/pending")]
     public async Task<IActionResult> PendingPartners(CancellationToken ct)
     {

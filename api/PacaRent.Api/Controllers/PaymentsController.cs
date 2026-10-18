@@ -20,7 +20,7 @@ public class PaymentsController(
     IPaymentGatewayService gateway,
     INotificationService notify,
     IAuditService audit,
-    IOptions<PacaRentSettings> settings,
+    IOptionsMonitor<PacaRentSettings> settings,
     IOptions<DokuSettings> dokuOptions) : ControllerBase
 {
     [HttpPost("checkout/{bookingId:guid}")]
@@ -34,7 +34,7 @@ public class PaymentsController(
             .FirstOrDefaultAsync(b => b.Id == bookingId, ct);
         if (booking is null) return NotFound();
         if (booking.UserId != userId) return Forbid();
-        if (settings.Value.SkipBookingPayment)
+        if (settings.CurrentValue.SkipBookingPayment)
         {
             return BadRequest(new ApiError("payments_disabled", "Pembayaran belum aktif (early release)."));
         }
@@ -44,7 +44,7 @@ public class PaymentsController(
             return BadRequest(new ApiError("not_accepted", "Booking harus diterima mitra sebelum bayar."));
         }
 
-        var fee = BusinessRules.CalculatePlatformFee(booking.TotalAmount, settings.Value.PlatformFeePercent);
+        var fee = BusinessRules.CalculatePlatformFee(booking.TotalAmount, settings.CurrentValue.PlatformFeePercent);
         var doku = dokuOptions.Value;
         var callback = doku.WebCallbackUrl.TrimEnd('/');
         var sep = callback.Contains('?', StringComparison.Ordinal) ? '&' : '?';
@@ -188,7 +188,7 @@ public class PaymentsController(
         }
 
         booking.Status = BookingStatus.Paid;
-        var fee = BusinessRules.CalculatePlatformFee(booking.TotalAmount, settings.Value.PlatformFeePercent);
+        var fee = BusinessRules.CalculatePlatformFee(booking.TotalAmount, settings.CurrentValue.PlatformFeePercent);
         if (booking.Payment is null)
         {
             booking.Payment = new Payment

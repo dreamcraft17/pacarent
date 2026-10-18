@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PacaRent.Api.Extensions;
+using PacaRent.Core.Auth;
 using PacaRent.Core.Options;
 using PacaRent.Api.Models;
 using PacaRent.Core.Entities;
@@ -21,8 +22,29 @@ public class AuthController(
     ITokenService tokens,
     IAuditService audit,
     IOptions<JwtSettings> jwtOptions,
-    IOptions<PacaRentSettings> pacaRentOptions) : ControllerBase
+    IOptionsMonitor<PacaRentSettings> pacaRentOptions,
+    IWebHostEnvironment env) : ControllerBase
 {
+    private void SetAccessCookie(string token, DateTimeOffset expires)
+    {
+        Response.Cookies.Append(AuthCookies.AccessToken, token, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = !env.IsDevelopment(),
+            // Cross-origin in production (SPA and API are different domains) needs
+            // SameSite=None; the Vite dev proxy makes it same-origin locally, where
+            // None without Secure would be rejected by the browser, so use Lax there.
+            SameSite = env.IsDevelopment() ? SameSiteMode.Lax : SameSiteMode.None,
+            Expires = expires,
+            Path = "/",
+        });
+    }
+
+    private void ClearAccessCookie()
+    {
+        Response.Cookies.Delete(AuthCookies.AccessToken, new CookieOptions { Path = "/" });
+    }
+
     [HttpPost("register")]
     [EnableRateLimiting("auth")]
     public async Task<IActionResult> Register([FromBody] AuthRegisterRequest req, CancellationToken ct)
@@ -70,7 +92,7 @@ public class AuthController(
         await db.SaveChangesAsync(ct);
         await audit.LogAsync(userId, "register", "user", userId.ToString(), null, ct);
 
-        if (pacaRentOptions.Value.SkipRegistrationOtp)
+        if (pacaRentOptions.CurrentValue.SkipRegistrationOtp)
         {
             var tokenResponse = await IssueTokensAsync(user, ct);
             await audit.LogAsync(userId, "login", "user", userId.ToString(), null, ct);
@@ -149,6 +171,7 @@ public class AuthController(
             ExpiresAt = DateTime.UtcNow.AddDays(jwtOptions.Value.RefreshTokenDays)
         });
         await db.SaveChangesAsync(ct);
+        SetAccessCookie(access, expires);
         return new TokenResponse(access, expires, refreshPlain, user.Id, user.Role.ToString());
     }
 
@@ -165,7 +188,15 @@ public class AuthController(
         }
 
         var (access, expires) = tokens.CreateAccessToken(stored.User);
+        SetAccessCookie(access, expires);
         return Ok(new TokenResponse(access, expires, req.RefreshToken, stored.UserId, stored.User.Role.ToString()));
+    }
+
+    [HttpPost("logout")]
+    public IActionResult Logout()
+    {
+        ClearAccessCookie();
+        return Ok(new { loggedOut = true });
     }
 
     [HttpGet("me")]

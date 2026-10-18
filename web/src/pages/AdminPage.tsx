@@ -3,17 +3,42 @@ import { api } from '../api/client';
 import PageShell from '../components/layout/PageShell';
 import Panel from '../components/layout/Panel';
 
+interface PlatformSettings {
+  skipRegistrationOtp: boolean;
+  skipBookingPayment: boolean;
+}
+
 export default function AdminPage() {
   const [pending, setPending] = useState<any[]>([]);
   const [reports, setReports] = useState<any[]>([]);
   const [payments, setPayments] = useState<any[]>([]);
   const [logs, setLogs] = useState<any[]>([]);
+  const [settings, setSettings] = useState<PlatformSettings | null>(null);
+  const [savingSettings, setSavingSettings] = useState(false);
 
   const refresh = () => {
     api<any[]>('/api/admin/partners/pending').then(setPending).catch(console.error);
     api<any[]>('/api/admin/reports').then(setReports).catch(console.error);
     api<any[]>('/api/admin/payments/pending-release').then(setPayments).catch(console.error);
     api<any[]>('/api/admin/audit-logs').then(setLogs).catch(console.error);
+    api<PlatformSettings>('/api/admin/settings').then(setSettings).catch(console.error);
+  };
+
+  const updateSetting = (patch: Partial<PlatformSettings>) => {
+    if (!settings) return;
+    const next = { ...settings, ...patch };
+    setSettings(next);
+    setSavingSettings(true);
+    api<PlatformSettings>('/api/admin/settings', {
+      method: 'PUT',
+      body: JSON.stringify(next),
+    })
+      .then(setSettings)
+      .catch((err) => {
+        console.error(err);
+        setSettings(settings);
+      })
+      .finally(() => setSavingSettings(false));
   };
 
   useEffect(() => {
@@ -23,6 +48,41 @@ export default function AdminPage() {
   return (
     <PageShell title="Panel admin" dek="Verifikasi pendamping, laporan, dan pencairan.">
       <div className="v3-admin-stack">
+        <Panel title="Pengaturan platform">
+          {!settings && <p className="v3-muted">Memuat…</p>}
+          {settings && (
+            <>
+              <label style={{ display: 'block', marginBottom: '0.75rem' }}>
+                <input
+                  type="checkbox"
+                  checked={settings.skipRegistrationOtp}
+                  disabled={savingSettings}
+                  onChange={(e) => updateSetting({ skipRegistrationOtp: e.target.checked })}
+                />{' '}
+                Lewati verifikasi OTP saat registrasi
+                <br />
+                <span className="v3-muted">
+                  Aktif = user bisa daftar tanpa verifikasi nomor/email. Matikan begitu SMS/email OTP siap dipakai.
+                </span>
+              </label>
+              <label style={{ display: 'block' }}>
+                <input
+                  type="checkbox"
+                  checked={settings.skipBookingPayment}
+                  disabled={savingSettings}
+                  onChange={(e) => updateSetting({ skipBookingPayment: e.target.checked })}
+                />{' '}
+                Lewati pembayaran saat booking
+                <br />
+                <span className="v3-muted">
+                  Aktif = booking jalan tanpa bayar dulu (mode rilis awal). Matikan untuk mewajibkan bayar via DOKU sebelum booking diproses.
+                </span>
+              </label>
+              {savingSettings && <p className="v3-muted">Menyimpan…</p>}
+            </>
+          )}
+        </Panel>
+
         <Panel title="Verifikasi pendamping">
           {pending.length === 0 && <p className="v3-muted">Tidak ada antrian.</p>}
           {pending.map((p) => (
