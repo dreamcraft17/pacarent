@@ -282,11 +282,19 @@
 
 .launch-panel {
   margin-top: 0.5rem;
-  padding: clamp(1.25rem, 4vw, 2rem);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
   border: 1px solid #c5ddd8;
-  border-radius: 22px;
-  background: linear-gradient(165deg, var(--pr-paper) 0%, var(--pr-mint) 100%);
+  border-radius: 24px;
+  background: var(--pr-paper);
   box-shadow: var(--pr-shadow-soft);
+  overflow: hidden;
+}
+
+.launch-panel-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(9rem, 20vw, 13rem);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
 }
 
 .launch-panel-kicker {
@@ -301,9 +309,10 @@
 .launch-panel h2 {
   margin: 0;
   max-width: 28rem;
-  font-size: clamp(1.35rem, 3vw, 1.85rem);
-  line-height: 1.12;
-  letter-spacing: -0.03em;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.2vw, 2.1rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 .launch-panel-lead {
@@ -314,38 +323,56 @@
   line-height: 1.5;
 }
 
+/* Connected stepper, not three identical cards — a line runs behind the
+   icons to read as one process instead of three unrelated tiles. */
 .launch-flow {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.85rem;
-  margin: 1.5rem 0 1.65rem;
+  position: relative;
+  display: flex;
+  margin: 1.75rem 0 1.85rem;
   padding: 0;
   list-style: none;
 }
 
+.launch-flow::before {
+  content: '';
+  position: absolute;
+  top: 1.05rem;
+  left: 1.05rem;
+  right: 1.05rem;
+  height: 1px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--pr-line-warm) 0 6px,
+    transparent 6px 11px
+  );
+}
+
 .launch-flow li {
+  position: relative;
+  flex: 1;
   display: flex;
-  gap: 0.8rem;
-  align-items: center;
-  padding: 0.95rem 1rem;
-  border: 1px solid var(--pr-line-warm);
-  border-radius: 16px;
-  background: var(--pr-paper);
-  box-shadow: 0 1px 2px rgb(16 47 49 / 5%), 0 6px 16px rgb(16 47 49 / 5%);
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-right: 0.5rem;
 }
 
 .launch-flow-n {
+  position: relative;
+  z-index: 1;
   flex-shrink: 0;
   display: grid;
   place-items: center;
   width: 2.1rem;
   height: 2.1rem;
   border-radius: 999px;
-  background: var(--pr-mint);
+  background: var(--pr-paper);
   border: 1.5px solid var(--pr-primary);
   color: var(--pr-primary);
-  font-size: 0.9rem;
-  font-weight: 800;
+}
+
+.launch-flow-icon {
+  width: 1.1rem;
+  height: 1.1rem;
 }
 
 .launch-flow strong {
@@ -366,6 +393,62 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.55rem;
+}
+
+/* The one memorable element: "you + plus one" rendered as two overlapping
+   name-tag circles meeting at a heart — the product's actual pitch, not
+   decoration. Mint/teal only, no new colors. */
+.launch-panel-mark {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(7rem, 14vw, 9.5rem);
+}
+
+.launch-mark-avatar {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: clamp(5rem, 11vw, 6.5rem);
+  height: clamp(5rem, 11vw, 6.5rem);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.launch-mark-avatar--you {
+  left: 0;
+  background: var(--pr-mint);
+  color: var(--pr-primary);
+  border: 1.5px solid var(--pr-primary);
+}
+
+.launch-mark-avatar--plus-one {
+  right: 0;
+  background: var(--pr-ink);
+  color: var(--pr-paper);
+}
+
+.launch-mark-plus {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  background: var(--pr-paper);
+  border: 1.5px solid var(--pr-line-warm);
+  box-shadow: 0 4px 12px rgb(16 47 49 / 10%);
+}
+
+.launch-mark-heart {
+  width: 1.1rem;
+  height: 1.1rem;
+  color: var(--pr-primary);
 }
 
 .launch-btn {
@@ -445,8 +528,40 @@
     font-size: clamp(1.85rem, 9vw, 2.45rem);
   }
 
-  .launch-flow {
+  .launch-panel-grid {
     grid-template-columns: 1fr;
+  }
+
+  .launch-panel-mark {
+    display: none;
+  }
+
+  .launch-flow {
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .launch-flow::before {
+    top: 0;
+    bottom: 0;
+    left: 1.05rem;
+    right: auto;
+    width: 1px;
+    height: auto;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--pr-line-warm) 0 6px,
+      transparent 6px 11px
+    );
+  }
+
+  .launch-flow li {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .launch-flow-copy {
+    padding-top: 0.2rem;
   }
 
   .launch-panel-actions {

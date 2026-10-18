@@ -505,6 +505,16 @@ h3 {
 }
 
 @media (max-width: 767px) {
+  /* The bottom nav is fixed and floats over content on mobile — reserve
+     space under it (pill height + its own bottom offset + safe-area inset)
+     so the last section on a page (e.g. the empty-state panel) isn't hidden
+     behind it. */
+  .v3-main--nav {
+    padding-bottom: calc(5.25rem + env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 767px) {
   .v3-topbar {
     width: calc(100% - 1rem);
   }
