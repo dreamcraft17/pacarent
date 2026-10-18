@@ -9,3 +9,5 @@ web/dist/
 *.user
 .env
 appsettings.*.local.json
+
+docs/
