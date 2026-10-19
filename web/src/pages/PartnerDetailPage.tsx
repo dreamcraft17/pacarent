@@ -66,7 +66,6 @@ export default function PartnerDetailPage() {
         <h1>{partner.profile?.fullName}</h1>
         <p className="v3-muted">{partner.profile?.city}</p>
         <p>{partner.partnerProfile?.bio}</p>
-        <p className="v3-deal-pill">Tarif dibahas di chat</p>
       </aside>
 
       <div className="v3-booking-form-col">
@@ -107,12 +106,9 @@ export default function PartnerDetailPage() {
             <label>{productCopy.booking.form.notes}</label>
             <textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} />
 
-            <div className="v3-deal-note">
-              <strong>Request dulu, ngobrol kemudian</strong>
-              <p>Setelah request dikirim, kamu dan pendamping bisa menyepakati tarif serta detail lainnya lewat chat booking.</p>
-            </div>
-
             <button type="submit">{productCopy.booking.submit}</button>
+
+            <p className="v3-muted booking-chat-hint">Chat langsung tersedia setelah request terkirim.</p>
 
             <ul className="booking-policy">
               <li>{productCopy.booking.form.policyCancel}</li>

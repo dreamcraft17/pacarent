@@ -47,8 +47,8 @@ export default function PartnerApplyPage() {
           <label>Bio</label>
           <textarea value={bio} onChange={(e) => setBio(e.target.value)} required />
           <div className="v3-deal-note">
-            <strong>Deal dibahas di chat</strong>
-            <p>Tarif dan detail lain tidak perlu dipasang di profil. Bahas langsung setelah ada booking request.</p>
+            <strong>Bikin orang gampang merasa cocok</strong>
+            <p>Tulis bio yang jujur dan pilih kategori yang paling menggambarkan vibe kamu.</p>
           </div>
           <label>Kategori layanan</label>
           {categories.map((c) => (

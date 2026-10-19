@@ -55,7 +55,7 @@ export default function HomePage() {
           <h2>Cara kerja</h2>
           <ol className="hero-steps">
             <li>Cari pendamping berdasarkan kota &amp; kategori (Jabodetabek)</li>
-            <li>Booking → pendamping terima → chat untuk deal dan koordinasi jadwal</li>
+            <li>Request → pendamping terima → cocok, lalu ngobrol dan atur rencana</li>
             <li>Bertemu sesuai lokasi booking → selesai → ulasan</li>
           </ol>
         </div>
@@ -103,7 +103,7 @@ export default function HomePage() {
           <article key={p.id} className="card partner-card">
             <div className="partner-card-meta">
               <span className="muted">
-                {p.city} · Tarif dibahas di chat
+                {p.city} · Cocok? Mulai ngobrol
               </span>
             </div>
             <h3>{p.fullName}</h3>

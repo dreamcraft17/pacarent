@@ -7,7 +7,7 @@ import { productCopy } from '../copy/productCopy';
 import { useAuth } from '../auth/AuthContext';
 import { waShareLink } from '../lib/whatsapp';
 
-const TIMELINE_LABELS = ['Diajukan', 'Diterima', 'Deal di chat', 'Selesai'] as const;
+const TIMELINE_LABELS = ['Diajukan', 'Diterima', 'Cocok', 'Selesai'] as const;
 const FLOW_STEP: Record<string, number> = {
   pendingpartner: 0,
   accepted: 1,
@@ -19,7 +19,7 @@ const FLOW_STEP: Record<string, number> = {
 const STATUS_LABELS: Record<string, string> = {
   pendingpartner: 'Diajukan',
   accepted: 'Diterima',
-  paid: 'Deal di chat',
+  paid: 'Cocok',
   inprogress: 'Berlangsung',
   completed: 'Selesai',
   cancelled: 'Dibatalkan',
@@ -240,7 +240,7 @@ export default function BookingsPage() {
           </div>
           <BookingTimeline status={b.status} />
           <p>{b.meetingLocation}</p>
-          <p className="v3-muted">Tarif dan detail akhir disepakati di chat.</p>
+          <p className="v3-muted">Chat terbuka sejak request dikirim. Lanjut ngobrol dari sini.</p>
           <div className="v3-btn-row">
             {isPartner && (b.status === 'PendingPartner' || b.status === 'pendingPartner') && (
               <>
@@ -253,7 +253,7 @@ export default function BookingsPage() {
               </>
             )}
             <button type="button" className="v3-btn-secondary" onClick={() => toggleChat(b.id)}>
-              {chatOpen[b.id] ? 'Tutup chat' : 'Buka chat'}
+              {chatOpen[b.id] ? 'Tutup chat' : 'Mulai ngobrol'}
             </button>
             {(b.status === 'InProgress' ||
               b.status === 'inProgress' ||
@@ -285,7 +285,7 @@ export default function BookingsPage() {
               <div className="booking-chat-head">
                 <div>
                   <strong>Chat booking</strong>
-                  <p>Sepakati tarif, jam, dan detail lain di sini.</p>
+                  <p>Ngobrol santai dan atur rencana ketemuan di sini.</p>
                 </div>
                 <span className="badge">Tersimpan</span>
               </div>

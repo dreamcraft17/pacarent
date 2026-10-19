@@ -170,10 +170,7 @@ public class BookingsController(
         }
 
         await db.SaveChangesAsync(ct);
-        var userMsg = settings.CurrentValue.SkipBookingPayment
-            ? "Mitra menerima booking Anda. Pembayaran belum aktif (early access)—silakan koordinasi jadwal."
-            : "Mitra menerima booking Anda. Silakan bayar.";
-        await notify.NotifyAsync(booking.UserId, NotificationType.Booking, "Booking diterima", userMsg, ct);
+        await notify.NotifyAsync(booking.UserId, NotificationType.Booking, "Cocok! 🎉", "Pendamping menerima request kamu. Chat sekarang terbuka.", ct);
         await audit.LogAsync(userId, "accept_booking", "booking", id.ToString(), null, ct);
         return Ok(booking);
     }
