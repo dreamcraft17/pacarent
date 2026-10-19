@@ -8,7 +8,7 @@ export default function TermsPage() {
           Ringkasan aturan PacaRent supaya pengguna dan pendamping tahu apa yang boleh, apa yang menjadi tanggung jawab
           masing-masing, dan bagaimana menggunakan platform dengan aman.
         </p>
-        <p className="terms-updated">Ringkasan · Diperbarui 14 Oktober 2026</p>
+        <p className="terms-updated">Ringkasan · Diperbarui 19 Oktober 2026</p>
       </header>
 
       <section className="terms-summary" aria-labelledby="terms-summary-title">
@@ -30,7 +30,7 @@ export default function TermsPage() {
           </span>
           <div>
             <strong>Saling menghormati</strong>
-            <span>Pelecehan, ancaman, dan penipuan diluar tanggung jawab Platform (PacaRent).</span>
+              <span>Pelecehan, ancaman, penipuan, dan spam dilarang di PacaRent.</span>
           </div>
         </div>
         <div className="terms-summary-item">
@@ -49,8 +49,8 @@ export default function TermsPage() {
           <p className="terms-nav-title">Di halaman ini</p>
           <a href="#peran">Peran PacaRent</a>
           <a href="#syarat-umum">Syarat umum</a>
-          <a href="#pertemuan">Pertemuan &amp; tanggung jawab</a>
-          <a href="#pembayaran">Pembayaran</a>
+          <a href="#interaksi">Request, chat &amp; pertemuan</a>
+          <a href="#kesepakatan">Kesepakatan &amp; pembayaran</a>
           <a href="#penerimaan">Penerimaan</a>
         </nav>
 
@@ -63,8 +63,9 @@ export default function TermsPage() {
             <p>
               PacaRent menyediakan platform digital yang mempertemukan <strong>pengguna</strong> dengan{' '}
               <strong>pendamping</strong> untuk sewa pacar, teman kencan, nongkrong, dan temani acara. PacaRent{' '}
-              <strong>bukan</strong> pihak dalam perjanjian layanan antara pengguna dan pendamping, tidak mengawasi
-              pertemuan secara langsung, dan tidak menjamin hasil atau kepuasan dari interaksi di lapangan.
+              <strong>bukan</strong> pihak dalam kesepakatan pribadi antara pengguna dan pendamping, tidak mengawasi
+              pertemuan secara langsung, dan tidak menjamin hasil, kecocokan, ketersediaan, atau kepuasan dari interaksi
+              di lapangan.
             </p>
           </section>
 
@@ -76,51 +77,49 @@ export default function TermsPage() {
             <ul>
               <li>Pengguna dan pendamping wajib berusia minimal 18 tahun dan memberikan data yang benar.</li>
               <li>Semua pihak wajib saling hormat; pelecehan, ancaman, penipuan, atau pelanggaran hukum dapat berujung pemblokiran dan laporan ke pihak berwenang.</li>
-              <li>Lokasi, waktu, dan bentuk pertemuan disepakati saat booking; pilih tempat umum yang aman bila memungkinkan.</li>
+              <li>Gunakan fitur request dan chat PacaRent untuk memulai komunikasi serta menyusun rencana dengan jelas.</li>
+              <li>Lokasi, waktu, dan bentuk pertemuan perlu disepakati bersama; pilih tempat umum yang aman bila memungkinkan.</li>
               <li>Data pribadi diproses sesuai kebijakan privasi dan peraturan perlindungan data pribadi yang berlaku di Indonesia.</li>
             </ul>
           </section>
 
-          <section id="pertemuan" className="terms-section terms-section-callout">
+          <section id="interaksi" className="terms-section terms-section-callout">
             <div className="terms-section-heading">
               <span className="terms-section-number">03</span>
-              <h2>Pertemuan &amp; tanggung jawab</h2>
+              <h2>Request, chat &amp; pertemuan</h2>
             </div>
-            <p className="terms-callout-lead">Baca bagian ini sebelum menyepakati booking.</p>
+            <p className="terms-callout-lead">Baca bagian ini sebelum mengirim request atau bertemu.</p>
             <ul>
               <li>
-                Segala <strong>perilaku, komunikasi, transaksi, atau perjanjian</strong> yang terjadi saat atau setelah
-                pertemuan fisik maupun di luar fitur resmi aplikasi (misalnya chat/transfer di luar PacaRent,
-                perpanjangan waktu, imbalan tambahan, atau hubungan pribadi) adalah{' '}
-                <strong>sepenuhnya tanggung jawab pengguna dan pendamping</strong> yang bersangkutan.
+                Pengguna dapat mengirim request dan memulai chat tanpa menunggu persetujuan awal. Pendamping dapat
+                membalas, menerima, atau menolak request sesuai ketersediaan dan kenyamanannya.
               </li>
               <li>
-                PacaRent <strong>tidak bertanggung jawab</strong> atas cedera, kerugian materiil atau immateriil,
-                sengketa, penipuan, pelanggaran hukum, atau kerusakan yang timbul dari interaksi antar pengguna,
-                termasuk kejadian setelah booking ditandai selesai atau setelah pengguna berhenti menggunakan platform.
+                Chat, request, atau status diterima <strong>bukan jaminan</strong> bahwa pertemuan akan terjadi atau
+                bahwa kedua pihak cocok. Komunikasikan perubahan, pembatalan, dan batasan dengan jelas.
+              </li>
+              <li>
+                Bertemu di tempat umum, beri tahu orang tepercaya tentang rencana, gunakan fitur bagikan rencana bila
+                tersedia, dan hentikan interaksi bila merasa tidak aman. Untuk keadaan darurat, hubungi layanan darurat.
               </li>
               <li>
                 Fitur laporan dan moderasi PacaRent membantu menindak pelanggaran aturan platform, tetapi{' '}
                 <strong>tidak menggantikan</strong> tanggung jawab pribadi masing-masing pihak dan tidak menjamin
                 ganti rugi atau penyelesaian sengketa di luar lingkup layanan platform.
               </li>
-              <li>
-                Apabila terjadi perselisihan, pengguna dan pendamping diminta menyelesaikannya secara damai terlebih dahulu;
-                PacaRent dapat, tanpa kewajiban, membantu mediasi administratif sejauh kebijakan internal mengizinkan.
-              </li>
             </ul>
           </section>
 
-          <section id="pembayaran" className="terms-section">
+          <section id="kesepakatan" className="terms-section">
             <div className="terms-section-heading">
               <span className="terms-section-number">04</span>
-              <h2>Pembayaran</h2>
+              <h2>Kesepakatan &amp; pembayaran</h2>
             </div>
             <p>
-              Pada fase <strong>early access</strong>, pembayaran online melalui platform dapat belum aktif. Tarif atau
-              imbalan yang disepakati antara pengguna dan pendamping di luar fitur bayar resmi menjadi tanggung jawab para
-              pihak. Apabila pembayaran melalui gateway (misalnya DOKU) diaktifkan di kemudian hari, ketentuan biaya
-              dan refund akan diumumkan di aplikasi.
+              PacaRent tidak menetapkan, menjamin, atau menampilkan nominal kesepakatan pribadi antara pengguna dan
+              pendamping. Detail kesepakatan, bila ada, harus dipahami dan disetujui kedua pihak sebelum pertemuan.
+              PacaRent saat ini berada dalam fase early access; fitur pembayaran resmi dapat belum aktif. Jika fitur
+              pembayaran melalui platform diaktifkan, ketentuan biaya, refund, dan prosesnya akan diumumkan di aplikasi.
             </p>
           </section>
 
