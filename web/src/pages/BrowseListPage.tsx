@@ -87,6 +87,11 @@ export default function BrowseListPage() {
           <p className="browse-kicker">{productCopy.discover.eyebrow}</p>
           <h1 id="browse-title">{productCopy.discover.title}</h1>
           <p className="browse-dek">{productCopy.discover.lead}</p>
+          <div className="browse-masthead-proof" aria-label="Komitmen PacaRent">
+            <span>18+ only</span>
+            <span>verified profiles</span>
+            <span>ketemu di tempat publik</span>
+          </div>
         </div>
         <BrowseTrustRail />
       </header>
@@ -153,6 +158,10 @@ export default function BrowseListPage() {
                   </div>
                 </div>
                 <div className="browse-card-body">
+                  <div className="browse-card-topline">
+                    <span className="browse-card-vibe">{p.categories[0] ?? 'Teman acara'}</span>
+                    {p.verified && <span className="browse-card-verified">✓ verified</span>}
+                  </div>
                   <h2 className="browse-card-name">
                     {p.fullName}
                     <span className="browse-card-city"> · {p.city}</span>
