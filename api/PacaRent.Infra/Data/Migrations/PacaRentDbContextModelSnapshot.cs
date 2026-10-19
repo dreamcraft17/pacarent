@@ -544,6 +544,12 @@ namespace PacaRent.Infra.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<byte[]>("PhotoBlob")
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("PhotoContentType")
+                        .HasColumnType("text");
+
                     b.Property<string>("PhotoUrl")
                         .HasColumnType("text");
 

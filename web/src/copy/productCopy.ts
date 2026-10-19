@@ -107,6 +107,15 @@ export const productCopy = {
     title: 'Profil kamu',
     dek: 'Data akun & kontak darurat (opsional).',
     saved: 'Ke-save.',
+    sectionBasics: 'Dasar',
+    sectionSafety: 'Keamanan',
+    sectionOther: 'Lainnya',
+    photoUpload: 'Unggah foto',
+    photoChange: 'Ganti foto',
+    photoUploading: 'Mengunggah…',
+    photoHint: 'JPEG, PNG, atau WebP. Maks 5MB.',
+    safetyHint:
+      'Dipakai untuk fitur "bagikan rencana" saat booking, biar orang terdekatmu tau rencana ketemuanmu. PacaRent bukan layanan darurat — untuk keadaan darurat, hubungi 112.',
   },
   companionApply: {
     title: 'Jadi pendamping',

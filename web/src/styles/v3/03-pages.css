@@ -798,3 +798,83 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+.v3-photo-field {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Tap the avatar itself to upload, same affordance as Bumble/Tinder/Tantan's
+   photo grid — empty slot reads as "add", filled slot reads as "edit". */
+.v3-photo-slot {
+  position: relative;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 999px;
+  cursor: pointer;
+  overflow: visible;
+}
+
+.v3-photo-slot.is-empty {
+  border: 2px dashed var(--pr-line-warm);
+  background: var(--pr-mint);
+}
+
+.v3-photo-slot.is-filled {
+  border: 1.5px solid var(--pr-ink);
+}
+
+.v3-photo-slot-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.v3-photo-slot-empty {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--pr-ink-soft);
+}
+
+.v3-photo-slot-badge {
+  position: absolute;
+  right: -0.15rem;
+  bottom: -0.15rem;
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--pr-ink);
+  background: var(--pr-accent);
+  color: var(--pr-ink);
+  font-size: 0.8rem;
+  font-weight: 800;
+  box-shadow: 1.5px 1.5px 0 var(--pr-ink);
+}
+
+.v3-photo-meta p {
+  margin: 0;
+  font-weight: 700;
+}
+
+/* Deliberately calmer register than the vanity fields above (no lime, no
+   hard shadow) — this data exists for the share-plan safety feature, not
+   self-presentation, and should read that way. */
+.v3-panel--safety {
+  background: var(--pr-mint);
+  border-color: var(--pr-primary);
+}
+
+.v3-safety-hint {
+  margin-top: -0.3rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}

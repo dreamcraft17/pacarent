@@ -30,6 +30,8 @@ public class UserProfile
     public DateOnly BirthDate { get; set; }
     public string City { get; set; } = "";
     public string? PhotoUrl { get; set; }
+    public byte[]? PhotoBlob { get; set; }
+    public string? PhotoContentType { get; set; }
     public string? EmergencyContactName { get; set; }
     public string? EmergencyContactPhone { get; set; }
 }
