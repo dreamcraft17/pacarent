@@ -64,9 +64,13 @@ public class AuthController(
             return BadRequest(new ApiError("underage", "Usia minimal 18 tahun."));
         }
 
-        var destination = (req.Email ?? req.Phone)!.Trim().ToLowerInvariant();
+        var normalizedEmail = string.IsNullOrWhiteSpace(req.Email) ? null : req.Email.Trim().ToLowerInvariant();
+        var normalizedPhone = string.IsNullOrWhiteSpace(req.Phone) ? null : req.Phone.Trim();
+
+        var destination = (normalizedEmail ?? normalizedPhone)!;
         if (await db.Users.AnyAsync(u =>
-                (req.Email != null && u.Email == req.Email) || (req.Phone != null && u.Phone == req.Phone), ct))
+                (normalizedEmail != null && u.Email == normalizedEmail) ||
+                (normalizedPhone != null && u.Phone == normalizedPhone), ct))
         {
             return Conflict(new ApiError("exists", "Akun sudah terdaftar."));
         }
@@ -75,8 +79,8 @@ public class AuthController(
         var user = new User
         {
             Id = userId,
-            Email = req.Email?.Trim().ToLowerInvariant(),
-            Phone = req.Phone?.Trim(),
+            Email = normalizedEmail,
+            Phone = normalizedPhone,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(req.Password),
             Role = UserRole.User,
             TermsAccepted = true,
