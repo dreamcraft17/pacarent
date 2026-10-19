@@ -1,11 +1,11 @@
 # PacaRent
 
 > **Author:** Dozer  
-> **Last updated:** 2026-10-13
+> **Last updated:** 2026-10-18
 
-Platform web **sewa pacar & teman kencan**: daftar → jelajahi mitra → booking → bayar (escrow) → selesai → ulasan. MVP monorepo: API ASP.NET Core + SPA React.
+Platform web **plus one / teman kencan**: daftar → jelajahi pendamping → booking → bayar tarif (DOKU mock) → selesai → ulasan. **Membership** Plus/Pro (ala dating-app ladder, mock billing): [`docs/MONETIZATION-SUBSCRIPTION.md`](docs/MONETIZATION-SUBSCRIPTION.md). MVP monorepo: API ASP.NET Core + SPA React.
 
-Dokumen produk: [`docs/PRD.md`](docs/PRD.md) · [`docs/SRS.md`](docs/SRS.md) · [`docs/SDD.md`](docs/SDD.md) · status implementasi: [`docs/IMPLEMENTATION-STATUS.md`](docs/IMPLEMENTATION-STATUS.md)
+Dokumen produk: [`docs/PRD.md`](docs/PRD.md) · [`docs/SRS.md`](docs/SRS.md) · [`docs/SDD.md`](docs/SDD.md) · status: [`docs/IMPLEMENTATION-STATUS.md`](docs/IMPLEMENTATION-STATUS.md) · UI v3: [`docs/DESIGN-V3.md`](docs/DESIGN-V3.md)
 
 ## Tech stack
 
