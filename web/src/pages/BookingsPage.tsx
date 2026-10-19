@@ -5,6 +5,7 @@ import PageShell from '../components/layout/PageShell';
 import Panel from '../components/layout/Panel';
 import { productCopy } from '../copy/productCopy';
 import { useAuth } from '../auth/AuthContext';
+import { waShareLink } from '../lib/whatsapp';
 
 const TIMELINE_LABELS = ['Diajukan', 'Diterima', 'Dibayar', 'Selesai'] as const;
 const FLOW_STEP: Record<string, number> = {
@@ -66,6 +67,7 @@ export default function BookingsPage() {
     null,
   );
   const [review, setReview] = useState({ bookingId: '', targetId: '', rating: 5, comment: '' });
+  const [partnerNames, setPartnerNames] = useState<Record<string, string>>({});
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [paymentUseMock, setPaymentUseMock] = useState(true);
@@ -104,6 +106,38 @@ export default function BookingsPage() {
         setSearchParams(next, { replace: true });
       });
   }, [paymentsEnabled, searchParams, setSearchParams]);
+
+  useEffect(() => {
+    if (me?.role === 'Partner') return;
+    const missing = [...new Set(items.map((b) => b.partnerId))].filter((id) => !(id in partnerNames));
+    if (missing.length === 0) return;
+    Promise.all(
+      missing.map((id) =>
+        api<{ partner: { profile?: { fullName: string } } }>(`/api/partners/${id}`)
+          .then((res) => [id, res.partner.profile?.fullName ?? ''] as const)
+          .catch(() => [id, ''] as const),
+      ),
+    ).then((pairs) => {
+      setPartnerNames((prev) => ({ ...prev, ...Object.fromEntries(pairs) }));
+    });
+  }, [items, me?.role, partnerNames]);
+
+  const shareBooking = (b: Booking) => {
+    const phone = me?.profile?.emergencyContactPhone;
+    if (!phone) {
+      alert(productCopy.booking.shareNoContact);
+      return;
+    }
+    const partnerName = partnerNames[b.partnerId] || 'pendamping';
+    const when = new Date(b.scheduledAt).toLocaleString('id-ID');
+    const message = productCopy.booking.shareMessage(partnerName, when, b.meetingLocation);
+    const link = waShareLink(phone, message);
+    if (!link) {
+      alert(productCopy.booking.shareNoContact);
+      return;
+    }
+    window.open(link, '_blank', 'noopener,noreferrer');
+  };
 
   const act = async (id: string, action: string) => {
     await api(`/api/bookings/${id}/${action}`, { method: 'POST' });
@@ -210,6 +244,12 @@ export default function BookingsPage() {
                 Tandai selesai
               </button>
             )}
+            {!isPartner &&
+              ['accepted', 'paid', 'inprogress'].includes(b.status.toLowerCase()) && (
+                <button type="button" className="v3-btn-secondary" onClick={() => shareBooking(b)}>
+                  {productCopy.booking.shareCta}
+                </button>
+              )}
             <button type="button" className="v3-btn-secondary" onClick={() => act(b.id, 'cancel')}>
               Batalkan
             </button>

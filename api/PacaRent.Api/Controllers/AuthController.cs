@@ -215,7 +215,11 @@ public class AuthController(
 
         AuthMeProfileDto? profile = user.Profile is null
             ? null
-            : new AuthMeProfileDto(user.Profile.FullName, user.Profile.City);
+            : new AuthMeProfileDto(
+                user.Profile.FullName,
+                user.Profile.City,
+                user.Profile.EmergencyContactName,
+                user.Profile.EmergencyContactPhone);
 
         return Ok(new AuthMeResponse(user.Id, user.Email, user.Phone, user.Role.ToString(), profile));
     }

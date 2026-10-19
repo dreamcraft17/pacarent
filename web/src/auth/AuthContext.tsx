@@ -14,7 +14,12 @@ type Me = {
   email?: string;
   phone?: string;
   role: string;
-  profile?: { fullName: string; city: string };
+  profile?: {
+    fullName: string;
+    city: string;
+    emergencyContactName?: string | null;
+    emergencyContactPhone?: string | null;
+  };
 };
 
 type AuthContextValue = {

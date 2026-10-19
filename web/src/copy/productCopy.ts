@@ -96,6 +96,10 @@ export const productCopy = {
     },
     reviewsTitle: 'Yang lain bilang apa',
     reviewsEmpty: 'Belum ada review — kamu bisa jadi yang pertama.',
+    shareCta: 'Bagikan rencana',
+    shareNoContact: 'Isi kontak darurat dulu di profil',
+    shareMessage: (partnerName: string, when: string, location: string) =>
+      `Halo, aku ada rencana ketemu ${partnerName} lewat PacaRent pada ${when} di ${location}. Share ini biar kamu tau rencanaku ya 🙏`,
   },
   profile: {
     title: 'Profil kamu',
