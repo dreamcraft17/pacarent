@@ -65,7 +65,8 @@ public class AuthController(
         }
 
         var destination = (req.Email ?? req.Phone)!.Trim().ToLowerInvariant();
-        if (await db.Users.AnyAsync(u => u.Email == req.Email || u.Phone == req.Phone, ct))
+        if (await db.Users.AnyAsync(u =>
+                (req.Email != null && u.Email == req.Email) || (req.Phone != null && u.Phone == req.Phone), ct))
         {
             return Conflict(new ApiError("exists", "Akun sudah terdaftar."));
         }
