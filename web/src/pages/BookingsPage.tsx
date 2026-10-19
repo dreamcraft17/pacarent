@@ -7,7 +7,7 @@ import { productCopy } from '../copy/productCopy';
 import { useAuth } from '../auth/AuthContext';
 import { waShareLink } from '../lib/whatsapp';
 
-const TIMELINE_LABELS = ['Diajukan', 'Diterima', 'Dibayar', 'Selesai'] as const;
+const TIMELINE_LABELS = ['Diajukan', 'Diterima', 'Deal di chat', 'Selesai'] as const;
 const FLOW_STEP: Record<string, number> = {
   pendingpartner: 0,
   accepted: 1,
@@ -19,7 +19,7 @@ const FLOW_STEP: Record<string, number> = {
 const STATUS_LABELS: Record<string, string> = {
   pendingpartner: 'Diajukan',
   accepted: 'Diterima',
-  paid: 'Dibayar',
+  paid: 'Deal di chat',
   inprogress: 'Berlangsung',
   completed: 'Selesai',
   cancelled: 'Dibatalkan',
@@ -54,10 +54,16 @@ type Booking = {
   status: string;
   scheduledAt: string;
   meetingLocation: string;
-  totalAmount: number;
   partnerId: string;
   userId: string;
   isPriorityBooking?: boolean;
+};
+
+type ChatMessage = {
+  id: string;
+  senderId: string;
+  text: string;
+  sentAt: string;
 };
 
 export default function BookingsPage() {
@@ -68,9 +74,12 @@ export default function BookingsPage() {
   );
   const [review, setReview] = useState({ bookingId: '', targetId: '', rating: 5, comment: '' });
   const [partnerNames, setPartnerNames] = useState<Record<string, string>>({});
+  const [chatOpen, setChatOpen] = useState<Record<string, boolean>>({});
+  const [chatItems, setChatItems] = useState<Record<string, ChatMessage[]>>({});
+  const [chatDrafts, setChatDrafts] = useState<Record<string, string>>({});
+  const [chatSending, setChatSending] = useState<Record<string, boolean>>({});
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const [paymentUseMock, setPaymentUseMock] = useState(true);
   const [paymentsEnabled, setPaymentsEnabled] = useState(false);
 
   const load = () => api<Booking[]>('/api/bookings').then(setItems).catch(console.error);
@@ -80,14 +89,12 @@ export default function BookingsPage() {
     api<{
       emergencyHelpUrl: string;
       emergencyHelpLabel: string;
-      paymentUseMock?: boolean;
       paymentsEnabled?: boolean;
     }>('/api/config/public').then((cfg) => {
       setEmergency({
         emergencyHelpUrl: cfg.emergencyHelpUrl,
         emergencyHelpLabel: cfg.emergencyHelpLabel,
       });
-      setPaymentUseMock(cfg.paymentUseMock !== false);
       setPaymentsEnabled(cfg.paymentsEnabled === true);
     });
   }, []);
@@ -144,22 +151,31 @@ export default function BookingsPage() {
     load();
   };
 
-  const pay = async (id: string) => {
-    const checkout = await api<{ checkoutUrl: string; useMock?: boolean }>(`/api/payments/checkout/${id}`, {
-      method: 'POST',
-    });
-    const mock = checkout.useMock ?? paymentUseMock;
-    if (mock) {
-      await api(`/api/payments/mock/complete/${id}`, { method: 'POST' });
-      alert('Pembayaran mock selesai (dev).');
-      load();
-      return;
+  const toggleChat = async (bookingId: string) => {
+    const nextOpen = !chatOpen[bookingId];
+    setChatOpen((prev) => ({ ...prev, [bookingId]: nextOpen }));
+    if (nextOpen && !(bookingId in chatItems)) {
+      const messages = await api<ChatMessage[]>(`/api/bookings/${bookingId}/chat`);
+      setChatItems((prev) => ({ ...prev, [bookingId]: messages }));
     }
-    if (checkout.checkoutUrl.startsWith('http')) {
-      window.location.href = checkout.checkoutUrl;
-      return;
+  };
+
+  const sendChat = async (bookingId: string) => {
+    const text = chatDrafts[bookingId]?.trim();
+    if (!text || chatSending[bookingId]) return;
+    setChatSending((prev) => ({ ...prev, [bookingId]: true }));
+    try {
+      const message = await api<ChatMessage>(`/api/bookings/${bookingId}/chat`, {
+        method: 'POST',
+        body: JSON.stringify({ text }),
+      });
+      setChatItems((prev) => ({ ...prev, [bookingId]: [...(prev[bookingId] ?? []), message] }));
+      setChatDrafts((prev) => ({ ...prev, [bookingId]: '' }));
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Pesan gagal dikirim');
+    } finally {
+      setChatSending((prev) => ({ ...prev, [bookingId]: false }));
     }
-    alert('URL checkout DOKU tidak valid. Cek konfigurasi API.');
   };
 
   const submitReview = async () => {
@@ -224,9 +240,7 @@ export default function BookingsPage() {
           </div>
           <BookingTimeline status={b.status} />
           <p>{b.meetingLocation}</p>
-          <p>
-            <strong>Rp {b.totalAmount.toLocaleString('id-ID')}</strong>
-          </p>
+          <p className="v3-muted">Tarif dan detail akhir disepakati di chat.</p>
           <div className="v3-btn-row">
             {isPartner && (b.status === 'PendingPartner' || b.status === 'pendingPartner') && (
               <>
@@ -238,13 +252,9 @@ export default function BookingsPage() {
                 </button>
               </>
             )}
-            {!isPartner &&
-              paymentsEnabled &&
-              (b.status === 'Accepted' || b.status === 'accepted') && (
-                <button type="button" className="v3-btn-primary" style={{ width: 'auto' }} onClick={() => pay(b.id)}>
-                  {paymentUseMock ? 'Bayar (mock DOKU)' : 'Bayar via DOKU'}
-                </button>
-              )}
+            <button type="button" className="v3-btn-secondary" onClick={() => toggleChat(b.id)}>
+              {chatOpen[b.id] ? 'Tutup chat' : 'Buka chat'}
+            </button>
             {(b.status === 'InProgress' ||
               b.status === 'inProgress' ||
               b.status === 'Paid' ||
@@ -270,6 +280,43 @@ export default function BookingsPage() {
               Laporkan
             </button>
           </div>
+          {chatOpen[b.id] && (
+            <div className="booking-chat" aria-label={`Chat booking ${b.id}`}>
+              <div className="booking-chat-head">
+                <div>
+                  <strong>Chat booking</strong>
+                  <p>Sepakati tarif, jam, dan detail lain di sini.</p>
+                </div>
+                <span className="badge">Tersimpan</span>
+              </div>
+              <div className="booking-chat-messages" aria-live="polite">
+                {(chatItems[b.id] ?? []).length === 0 && <p className="v3-muted">Belum ada pesan. Mulai ngobrol duluan.</p>}
+                {(chatItems[b.id] ?? []).map((message) => (
+                  <div key={message.id} className={`booking-chat-message ${message.senderId === me?.id ? 'is-mine' : ''}`}>
+                    <p>{message.text}</p>
+                    <time dateTime={message.sentAt}>{new Date(message.sentAt).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' })}</time>
+                  </div>
+                ))}
+              </div>
+              <div className="booking-chat-compose">
+                <input
+                  value={chatDrafts[b.id] ?? ''}
+                  maxLength={2000}
+                  placeholder="Tulis pesan…"
+                  onChange={(e) => setChatDrafts((prev) => ({ ...prev, [b.id]: e.target.value }))}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault();
+                      sendChat(b.id);
+                    }
+                  }}
+                />
+                <button type="button" className="v3-btn-primary" onClick={() => sendChat(b.id)} disabled={chatSending[b.id]}>
+                  {chatSending[b.id] ? '…' : 'Kirim'}
+                </button>
+              </div>
+            </div>
+          )}
           {(b.status === 'Completed' || b.status === 'completed') && (
             <div className="v3-form" style={{ marginTop: '1rem' }}>
               <p className="v3-muted">Beri ulasan (1x per pihak)</p>

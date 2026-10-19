@@ -10,6 +10,7 @@ using PacaRent.Core.Options;
 using PacaRent.Core.Rules;
 using PacaRent.Infra.Data;
 using PacaRent.Infra.Services;
+using System.Text.Json;
 
 namespace PacaRent.Api.Controllers;
 
@@ -22,6 +23,8 @@ public class BookingsController(
     IAuditService audit,
     IOptionsMonitor<PacaRentSettings> settings) : ControllerBase
 {
+    private static readonly JsonSerializerOptions ChatJsonOptions = new(JsonSerializerDefaults.Web);
+
     [HttpGet]
     public async Task<IActionResult> List(CancellationToken ct)
     {
@@ -70,7 +73,6 @@ public class BookingsController(
                 $"Kamu sudah punya {cap} booking aktif di paket Gratis. Upgrade ke Plus di halaman Membership untuk booking unlimited."));
         }
 
-        var total = BusinessRules.CalculateTotal(partner.PartnerProfile.HourlyRate, req.DurationHours);
         var booking = new Booking
         {
             Id = Guid.NewGuid(),
@@ -83,7 +85,8 @@ public class BookingsController(
             Notes = req.Notes,
             Status = BookingStatus.PendingPartner,
             PartnerRespondBy = DateTime.UtcNow.AddHours(BusinessRules.PartnerResponseHours),
-            TotalAmount = total,
+            TotalAmount = 0m,
+            ChatJson = "[]",
             IsPriorityBooking = tier == SubscriptionTier.Pro
         };
         db.Bookings.Add(booking);
@@ -91,6 +94,61 @@ public class BookingsController(
         await notify.NotifyAsync(req.PartnerId, NotificationType.Booking, "Booking baru", "Anda menerima permintaan booking baru.", ct);
         await audit.LogAsync(userId, "create_booking", "booking", booking.Id.ToString(), null, ct);
         return Ok(booking);
+    }
+
+    [HttpGet("{id:guid}/chat")]
+    public async Task<IActionResult> Chat(Guid id, CancellationToken ct)
+    {
+        var userId = HttpContext.GetUserId();
+        var booking = await db.Bookings.AsNoTracking().FirstOrDefaultAsync(b => b.Id == id, ct);
+        if (booking is null) return NotFound();
+        if (booking.UserId != userId && booking.PartnerId != userId) return Forbid();
+
+        return Ok(ReadChat(booking.ChatJson));
+    }
+
+    [HttpPost("{id:guid}/chat")]
+    public async Task<IActionResult> SendChat(Guid id, [FromBody] SendChatMessageRequest req, CancellationToken ct)
+    {
+        var userId = HttpContext.GetUserId();
+        if (userId is null) return Unauthorized();
+        var text = req.Text?.Trim();
+        if (string.IsNullOrWhiteSpace(text) || text.Length > 2000)
+        {
+            return BadRequest(new ApiError("invalid_message", "Pesan wajib diisi dan maksimal 2.000 karakter."));
+        }
+
+        var booking = await db.Bookings.FirstOrDefaultAsync(b => b.Id == id, ct);
+        if (booking is null) return NotFound();
+        if (booking.UserId != userId && booking.PartnerId != userId) return Forbid();
+        if (booking.Status is BookingStatus.Cancelled or BookingStatus.Refunded)
+        {
+            return BadRequest(new ApiError("chat_closed", "Chat ditutup karena booking sudah dibatalkan."));
+        }
+
+        var messages = ReadChat(booking.ChatJson).ToList();
+        var message = new ChatMessageDto(Guid.NewGuid(), userId.Value, text, DateTime.UtcNow);
+        messages.Add(message);
+        booking.ChatJson = JsonSerializer.Serialize(messages, ChatJsonOptions);
+        await db.SaveChangesAsync(ct);
+
+        var recipientId = booking.UserId == userId ? booking.PartnerId : booking.UserId;
+        await notify.NotifyAsync(recipientId, NotificationType.Booking, "Pesan baru", "Ada pesan baru di chat booking kamu.", ct);
+        await audit.LogAsync(userId, "send_booking_chat", "booking", id.ToString(), new { messageId = message.Id }, ct);
+        return Ok(message);
+    }
+
+    private static IReadOnlyList<ChatMessageDto> ReadChat(string? raw)
+    {
+        if (string.IsNullOrWhiteSpace(raw)) return Array.Empty<ChatMessageDto>();
+        try
+        {
+            return JsonSerializer.Deserialize<List<ChatMessageDto>>(raw, ChatJsonOptions) ?? [];
+        }
+        catch (JsonException)
+        {
+            return Array.Empty<ChatMessageDto>();
+        }
     }
 
     [HttpPost("{id:guid}/accept")]

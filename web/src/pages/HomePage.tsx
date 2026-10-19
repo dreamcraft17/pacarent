@@ -10,7 +10,6 @@ type Partner = {
   id: string;
   fullName: string;
   city: string;
-  hourlyRate: number;
   bio: string;
   rating: number;
   reviewCount: number;
@@ -22,8 +21,6 @@ export default function HomePage() {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [category, setCategory] = useState('');
   const [city, setCity] = useState('');
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
   const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
@@ -35,12 +32,10 @@ export default function HomePage() {
     const q = new URLSearchParams();
     if (category) q.set('category', category);
     if (city) q.set('city', city);
-    if (minPrice) q.set('minPrice', minPrice);
-    if (maxPrice) q.set('maxPrice', maxPrice);
     api<Partner[]>(`/api/partners?${q}`)
       .then(setPartners)
       .catch(() => setLoadError(true));
-  }, [category, city, minPrice, maxPrice]);
+  }, [category, city]);
 
   useEffect(() => {
     search();
@@ -60,7 +55,7 @@ export default function HomePage() {
           <h2>Cara kerja</h2>
           <ol className="hero-steps">
             <li>Cari pendamping berdasarkan kota &amp; kategori (Jabodetabek)</li>
-            <li>Booking → pendamping terima → koordinasi jadwal (bayar online menyusul)</li>
+            <li>Booking → pendamping terima → chat untuk deal dan koordinasi jadwal</li>
             <li>Bertemu sesuai lokasi booking → selesai → ulasan</li>
           </ol>
         </div>
@@ -91,24 +86,6 @@ export default function HomePage() {
               ))}
             </select>
           </div>
-          <div>
-            <label htmlFor="minp">Harga min/jam (Rp)</label>
-            <input
-              id="minp"
-              value={minPrice}
-              onChange={(e) => setMinPrice(e.target.value)}
-              type="number"
-            />
-          </div>
-          <div>
-            <label htmlFor="maxp">Harga max/jam (Rp)</label>
-            <input
-              id="maxp"
-              value={maxPrice}
-              onChange={(e) => setMaxPrice(e.target.value)}
-              type="number"
-            />
-          </div>
           <div className="filters-actions">
             <button type="button" onClick={search}>
               Tampilkan profil
@@ -126,7 +103,7 @@ export default function HomePage() {
           <article key={p.id} className="card partner-card">
             <div className="partner-card-meta">
               <span className="muted">
-                {p.city} · Rp {p.hourlyRate.toLocaleString('id-ID')}/jam
+                {p.city} · Tarif dibahas di chat
               </span>
             </div>
             <h3>{p.fullName}</h3>

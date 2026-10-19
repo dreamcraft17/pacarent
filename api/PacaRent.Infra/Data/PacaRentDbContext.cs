@@ -53,6 +53,7 @@ public class PacaRentDbContext(DbContextOptions<PacaRentDbContext> options) : Db
         {
             e.HasKey(x => x.Id);
             e.Property(x => x.TotalAmount).HasPrecision(18, 2);
+            e.Property(x => x.ChatJson).HasColumnType("jsonb").HasDefaultValue("[]");
             e.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Restrict);
             e.HasOne(x => x.Partner).WithMany().HasForeignKey(x => x.PartnerId).OnDelete(DeleteBehavior.Restrict);
         });

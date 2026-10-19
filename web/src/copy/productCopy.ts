@@ -22,16 +22,16 @@ export const productCopy = {
     'Verified',
     'Tertarik → langsung atur jadwal',
     'Bukan app swipe',
-    'Bayar aman lewat platform',
+    'Deal jelas lewat chat',
   ],
   launchEmpty: {
     eyebrow: 'Early access',
     title: 'Grid masih kosong — tim lagi ngisi profil.',
     lead: 'Daftar dulu biar dapat kabar pas ada pendamping live. Mau jadi pendamping? Join juga — 18+, tempat publik, S&K jelas.',
     steps: [
-      { title: 'Swipe mata', sub: 'Baca bio & tarif' },
+      { title: 'Swipe mata', sub: 'Baca bio & vibe' },
+      { title: 'Chat dulu', sub: 'Deal detail dengan jelas' },
       { title: 'Atur jadwal', sub: 'Tanggal, durasi, lokasi' },
-      { title: 'Done', sub: 'Status ke-save di akunmu' },
     ],
     ctaUser: 'Daftar — kabarin aku',
     ctaCompanion: 'Mau jadi pendamping',
@@ -69,9 +69,8 @@ export const productCopy = {
   },
   booking: {
     pageTitle: 'Jadwal kamu',
-    pageDekEarly:
-      'Early access: belum bayar online. Setelah pendamping terima, koordinasi aja terus tandai selesai.',
-    pageDekPay: 'Setelah diterima, kamu bisa bayar lewat platform.',
+    pageDekEarly: 'Kirim request, buka chat, lalu sepakati tarif dan detail pertemuan bersama pendamping.',
+    pageDekPay: 'Chat tersedia di setiap booking untuk menyepakati tarif dan detail pertemuan.',
     empty: 'Belum booking siapa pun. Jelajahi pendamping verified dan atur rencana pertamamu.',
     emptyTitle: 'Belum ada jadwal',
     emptyCta: 'Jelajahi pendamping',
@@ -119,7 +118,7 @@ export const productCopy = {
   },
   companionApply: {
     title: 'Jadi pendamping',
-    dek: 'Tarif & bio kamu yang atur. Verified, 18+, ketemu di tempat public dulu.',
+    dek: 'Bio dan vibe kamu yang tampil. Tarif dibahas langsung lewat chat setelah ada booking request.',
     success: 'Profil aktif — kamu bisa terima booking sekarang.',
   },
   membership: {

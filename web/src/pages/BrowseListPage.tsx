@@ -15,7 +15,6 @@ type Partner = {
   id: string;
   fullName: string;
   city: string;
-  hourlyRate: number;
   bio: string;
   rating: number;
   reviewCount: number;
@@ -167,8 +166,7 @@ export default function BrowseListPage() {
                     <span className="browse-card-city"> · {p.city}</span>
                   </h2>
                   <p className="browse-card-rate">
-                    Rp {p.hourlyRate.toLocaleString('id-ID')}
-                    <span>/jam</span>
+                    Tarif dibahas di chat
                     <span className="browse-card-rating">
                       ★ {p.rating.toFixed(1)}
                       {p.reviewCount > 0 ? ` (${p.reviewCount})` : ''}

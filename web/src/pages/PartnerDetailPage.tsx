@@ -28,12 +28,6 @@ export default function PartnerDetailPage() {
     api<{ id: number; name: string }[]>('/api/categories').then(setCategories);
   }, [id]);
 
-  const hourlyRate: number = data?.partner?.partnerProfile?.hourlyRate ?? 0;
-  const durationHours = Number(form.durationHours) || 0;
-  const subtotal = hourlyRate * durationHours;
-  const platformFee = Math.round(subtotal * 0.15);
-  const total = subtotal + platformFee;
-  const formatRp = (n: number) => `Rp ${n.toLocaleString('id-ID')}`;
 
   const book = async (e: FormEvent) => {
     e.preventDefault();
@@ -72,9 +66,7 @@ export default function PartnerDetailPage() {
         <h1>{partner.profile?.fullName}</h1>
         <p className="v3-muted">{partner.profile?.city}</p>
         <p>{partner.partnerProfile?.bio}</p>
-        <p className="v3-booking-rate">
-          Rp {partner.partnerProfile?.hourlyRate?.toLocaleString('id-ID')}/jam
-        </p>
+        <p className="v3-deal-pill">Tarif dibahas di chat</p>
       </aside>
 
       <div className="v3-booking-form-col">
@@ -115,20 +107,9 @@ export default function PartnerDetailPage() {
             <label>{productCopy.booking.form.notes}</label>
             <textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} />
 
-            <div className="cost-summary" aria-live="polite">
-              <p className="cost-summary-title">{productCopy.booking.form.costTitle}</p>
-              <div className="cost-summary-row">
-                <span>{productCopy.booking.form.costCompanion(durationHours || 0)}</span>
-                <span>{formatRp(subtotal)}</span>
-              </div>
-              <div className="cost-summary-row">
-                <span>{productCopy.booking.form.costPlatform}</span>
-                <span>{formatRp(platformFee)}</span>
-              </div>
-              <div className="cost-summary-row total">
-                <span>{productCopy.booking.form.costTotal}</span>
-                <span>{formatRp(total)}</span>
-              </div>
+            <div className="v3-deal-note">
+              <strong>Request dulu, ngobrol kemudian</strong>
+              <p>Setelah request dikirim, kamu dan pendamping bisa menyepakati tarif serta detail lainnya lewat chat booking.</p>
             </div>
 
             <button type="submit">{productCopy.booking.submit}</button>

@@ -7,7 +7,6 @@ import { productCopy } from '../copy/productCopy';
 export default function PartnerApplyPage() {
   const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
   const [bio, setBio] = useState('');
-  const [hourlyRate, setHourlyRate] = useState('100000');
   const [selected, setSelected] = useState<number[]>([]);
   const [msg, setMsg] = useState('');
 
@@ -23,7 +22,6 @@ export default function PartnerApplyPage() {
     e.preventDefault();
     const fd = new FormData();
     fd.append('bio', bio);
-    fd.append('hourlyRate', hourlyRate);
     selected.forEach((id) => fd.append('categoryIds', String(id)));
     const token = localStorage.getItem('pacarent_access');
     const res = await fetch('/api/partners/apply', {
@@ -48,8 +46,10 @@ export default function PartnerApplyPage() {
         <form className="v3-form" onSubmit={submit}>
           <label>Bio</label>
           <textarea value={bio} onChange={(e) => setBio(e.target.value)} required />
-          <label>Tarif per jam (Rp)</label>
-          <input type="number" value={hourlyRate} onChange={(e) => setHourlyRate(e.target.value)} />
+          <div className="v3-deal-note">
+            <strong>Deal dibahas di chat</strong>
+            <p>Tarif dan detail lain tidak perlu dipasang di profil. Bahas langsung setelah ada booking request.</p>
+          </div>
           <label>Kategori layanan</label>
           {categories.map((c) => (
             <label key={c.id}>

@@ -49,16 +49,6 @@ public class PartnersController(
                 || c.Contains(u.Profile!.City.ToLower()));
         }
 
-        if (minPrice is not null)
-        {
-            query = query.Where(u => u.PartnerProfile!.HourlyRate >= minPrice);
-        }
-
-        if (maxPrice is not null)
-        {
-            query = query.Where(u => u.PartnerProfile!.HourlyRate <= maxPrice);
-        }
-
         var partners = await query.Take(100).ToListAsync(ct);
         var partnerIds = partners.Select(p => p.Id).ToList();
 
@@ -94,7 +84,6 @@ public class PartnersController(
                 u.Profile!.FullName,
                 u.Profile.City,
                 u.Profile.PhotoUrl,
-                u.PartnerProfile!.HourlyRate,
                 u.PartnerProfile.Bio,
                 Verified = u.PartnerProfile.VerificationStatus == VerificationStatus.Approved,
                 Categories = u.PartnerProfile.PartnerCategories.Select(c => c.Category.Name),
@@ -120,6 +109,7 @@ public class PartnersController(
         {
             return NotFound();
         }
+        var partnerProfile = u.PartnerProfile!;
 
         var reviews = await db.Reviews.AsNoTracking()
             .Where(r => r.TargetId == id)
@@ -141,7 +131,22 @@ public class PartnersController(
             await db.SaveChangesAsync(ct);
         }
 
-        return Ok(new { partner = u, reviews, pendampingPro });
+        return Ok(new
+        {
+            partner = new
+            {
+                u.Id,
+                Profile = u.Profile,
+                PartnerProfile = new
+                {
+                    partnerProfile.Bio,
+                    partnerProfile.VerificationStatus,
+                    Categories = partnerProfile.PartnerCategories.Select(pc => pc.Category.Name)
+                }
+            },
+            reviews,
+            pendampingPro
+        });
     }
 
     [HttpPost("apply")]
@@ -158,7 +163,8 @@ public class PartnersController(
         user.Role = UserRole.Partner;
         user.PartnerProfile ??= new PartnerProfile { UserId = uid };
         user.PartnerProfile.Bio = req.Bio.Trim();
-        user.PartnerProfile.HourlyRate = req.HourlyRate;
+        // Harga tidak ditentukan di profil. Customer dan pendamping menyepakati detail
+        // secara langsung melalui chat pada booking.
         // Documents remain accepted for future verification, but are optional during MVP onboarding.
         if (req.Ktp is not null)
         {

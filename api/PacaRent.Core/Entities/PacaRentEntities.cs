@@ -85,6 +85,8 @@ public class Booking
     public DateTime? CompletedAt { get; set; }
     public DateTime? ClaimDeadline { get; set; }
     public decimal TotalAmount { get; set; }
+    /// <summary>Pesan customer dan pendamping untuk negosiasi detail booking.</summary>
+    public string ChatJson { get; set; } = "[]";
 
     /// <summary>Booking dari customer dengan langganan Pro — ditandai prioritas ke mitra (Tahap membership).</summary>
     public bool IsPriorityBooking { get; set; }

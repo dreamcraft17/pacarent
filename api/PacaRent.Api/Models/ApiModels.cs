@@ -43,7 +43,6 @@ public record UpdateProfileRequest(
 
 public record PartnerApplyRequest(
     string Bio,
-    decimal HourlyRate,
     int[] CategoryIds,
     IFormFile? Ktp,
     IFormFile? Selfie);
@@ -55,6 +54,10 @@ public record CreateBookingRequest(
     int DurationHours,
     string MeetingLocation,
     string? Notes);
+
+public record SendChatMessageRequest(string Text);
+
+public record ChatMessageDto(Guid Id, Guid SenderId, string Text, DateTime SentAt);
 
 public record CreateReviewRequest(Guid BookingId, Guid TargetId, int Rating, string? Comment);
 
