@@ -878,3 +878,283 @@
   margin-bottom: 1rem;
   line-height: 1.5;
 }
+
+/* Profile / dating-app inspired editor: identity first, controls second. */
+.profile-vibe-page {
+  max-width: 1080px;
+}
+
+.profile-vibe-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin: 1.2rem 0 1.6rem;
+}
+
+.profile-vibe-head h1 {
+  max-width: 27rem;
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.35rem);
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.profile-vibe-head .v3-page-dek {
+  max-width: 34rem;
+  margin-bottom: 0;
+  font-size: 1rem;
+}
+
+.profile-completion {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--pr-ink);
+  border-radius: 999px;
+  background: var(--pr-paper);
+  color: var(--pr-ink);
+  font-size: 0.8rem;
+  font-weight: 700;
+  box-shadow: 3px 3px 0 rgb(16 47 49 / 12%);
+}
+
+.profile-completion-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--pr-coral);
+}
+
+.profile-vibe-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
+  align-items: start;
+  gap: clamp(1rem, 3vw, 2rem);
+}
+
+.profile-preview-column {
+  position: sticky;
+  top: 5.75rem;
+}
+
+.profile-preview-card {
+  overflow: hidden;
+  border: 1px solid var(--pr-ink);
+  border-radius: 28px;
+  background: var(--pr-ink);
+  box-shadow: 7px 7px 0 rgb(16 47 49 / 14%);
+}
+
+.profile-preview-photo {
+  position: relative;
+  min-height: 24rem;
+  overflow: hidden;
+  background: linear-gradient(145deg, #d8efb4 0%, #86beb0 46%, #1a7169 100%);
+}
+
+.profile-preview-photo.has-photo img {
+  width: 100%;
+  height: 100%;
+  min-height: 24rem;
+  display: block;
+  object-fit: cover;
+}
+
+.profile-preview-empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  min-height: 24rem;
+  padding: 2rem;
+  color: var(--pr-ink);
+}
+
+.profile-preview-empty > span {
+  margin-bottom: 1.5rem;
+  color: var(--pr-paper);
+  font-size: 3.5rem;
+  line-height: 1;
+}
+
+.profile-preview-empty strong {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.06em;
+  line-height: 0.95;
+}
+
+.profile-preview-empty small {
+  max-width: 13rem;
+  margin-top: 1rem;
+  color: rgb(16 47 49 / 72%);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.profile-preview-gradient {
+  position: absolute;
+  inset: 30% 0 0;
+  background: linear-gradient(transparent, rgb(16 47 49 / 90%));
+  pointer-events: none;
+}
+
+.profile-preview-overlay {
+  position: absolute;
+  right: 1.35rem;
+  bottom: 1.25rem;
+  left: 1.35rem;
+  color: var(--pr-paper);
+}
+
+.profile-preview-eyebrow {
+  margin: 0 0 0.25rem;
+  color: var(--pr-accent);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.profile-preview-overlay h2 {
+  margin: 0;
+  color: var(--pr-paper);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  letter-spacing: -0.05em;
+}
+
+.profile-preview-overlay p:last-child {
+  margin: 0.3rem 0 0;
+  color: rgb(255 254 251 / 78%);
+  font-weight: 600;
+}
+
+.profile-preview-body {
+  padding: 1rem 1.25rem 1.3rem;
+  color: var(--pr-paper);
+}
+
+.profile-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.profile-chip {
+  padding: 0.35rem 0.6rem;
+  border: 1px solid rgb(255 254 251 / 22%);
+  border-radius: 999px;
+  color: rgb(255 254 251 / 82%);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.profile-chip--accent {
+  border-color: transparent;
+  background: var(--pr-accent);
+  color: var(--pr-ink);
+}
+
+.profile-preview-body > p {
+  margin: 0.9rem 0 0;
+  color: rgb(255 254 251 / 72%);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.profile-prompt-card {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.85rem;
+  padding: 1rem;
+  border: 1px solid var(--pr-ink);
+  border-radius: 18px;
+  background: var(--pr-accent);
+  color: var(--pr-ink);
+}
+
+.profile-prompt-icon {
+  display: grid;
+  flex: 0 0 1.8rem;
+  place-items: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: var(--pr-ink);
+  color: var(--pr-accent);
+  font-weight: 800;
+}
+
+.profile-prompt-card strong { font-size: 0.88rem; }
+.profile-prompt-card p { margin: 0.2rem 0 0; font-size: 0.82rem; line-height: 1.45; }
+
+.profile-vibe-form { min-width: 0; }
+.profile-editor-card { margin-bottom: 0.9rem; }
+
+.profile-editor-card .v3-panel-title {
+  margin-bottom: 0.45rem;
+  font-size: 1.35rem;
+}
+
+.profile-section-intro {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 1.1rem;
+}
+
+.profile-section-intro p { margin: 0; color: var(--pr-muted); font-size: 0.86rem; }
+
+.profile-section-number {
+  display: grid;
+  place-items: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 0.55rem;
+  background: var(--pr-accent);
+  color: var(--pr-ink);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.profile-photo-field { margin-bottom: 1.3rem; }
+.profile-safety-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  margin: 0 0 1rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: 12px;
+  background: rgb(255 254 251 / 72%);
+  color: var(--pr-ink-soft);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.profile-safety-note span { color: var(--pr-primary); font-weight: 900; }
+.profile-safety-note p { margin: 0; }
+
+.profile-save-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.2rem !important;
+  background: var(--pr-primary) !important;
+  font-size: 0.95rem;
+}
+.profile-save-button span { font-size: 1.25rem; }
+.profile-save-status { margin: 0.8rem 0 0; color: var(--pr-primary); font-size: 0.86rem; font-weight: 700; }
+
+@media (max-width: 760px) {
+  .profile-vibe-head { display: block; }
+  .profile-completion { margin-top: 1rem; }
+  .profile-vibe-layout { grid-template-columns: 1fr; }
+  .profile-preview-column { position: static; }
+  .profile-preview-photo, .profile-preview-photo.has-photo img, .profile-preview-empty { min-height: 20rem; }
+}
+
+@media (max-width: 480px) {
+  .profile-vibe-head h1 { font-size: 2.35rem; }
+  .profile-preview-photo, .profile-preview-photo.has-photo img, .profile-preview-empty { min-height: 18rem; }
+}
