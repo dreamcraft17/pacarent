@@ -134,6 +134,34 @@ h3 {
   color: var(--pr-primary);
 }
 
+.v3-topbar--admin {
+  border-color: var(--pr-ink);
+  background: var(--pr-ink);
+  color: var(--pr-paper);
+}
+
+.v3-topbar--admin .v3-brand,
+.v3-topbar--admin .v3-topbar-actions a,
+.v3-topbar--admin .v3-topbar-actions button {
+  color: var(--pr-paper);
+}
+
+.v3-topbar--admin .v3-topbar-actions a:hover,
+.v3-topbar--admin .v3-topbar-actions button:hover {
+  color: var(--pr-accent);
+}
+
+.admin-nav-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--pr-accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
 .v3-footer {
   margin: 1rem auto 1.25rem;
   padding: 0 1rem;

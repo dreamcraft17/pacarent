@@ -16,11 +16,12 @@ import { productCopy } from './copy/productCopy';
 function Shell() {
   const { me, logout, loading } = useAuth();
   const { pathname } = useLocation();
-  const hideBottomNav = pathname === '/login' || pathname === '/register' || pathname === '/admin';
+  const isAdminRoute = pathname === '/admin';
+  const hideBottomNav = pathname === '/login' || pathname === '/register' || isAdminRoute;
 
   return (
     <div className="app app-v3">
-      <header className="v3-topbar">
+      <header className={`v3-topbar${isAdminRoute ? ' v3-topbar--admin' : ''}`}>
         <Link to="/" className="v3-brand">
           <span className="v3-brand-mark" aria-hidden="true">
             P
@@ -28,17 +29,26 @@ function Shell() {
           <span>PacaRent</span>
         </Link>
         <div className="v3-topbar-actions">
-          <Link to="/syarat">S&amp;K</Link>
-          {me?.role === 'Admin' && <Link to="/admin">Admin</Link>}
-          {me && me.role !== 'Partner' && <Link to="/mitra/daftar">Jadi pendamping</Link>}
-          {me && <Link to="/membership">{productCopy.membership.navLabel}</Link>}
+          {isAdminRoute ? (
+            <>
+              <span className="admin-nav-badge"><span className="admin-live-dot" aria-hidden /> Internal admin</span>
+              <Link to="/">Kembali ke aplikasi</Link>
+            </>
+          ) : (
+            <>
+              <Link to="/syarat">S&amp;K</Link>
+              {me?.role === 'Admin' && <Link to="/admin">Admin</Link>}
+              {me && me.role !== 'Partner' && <Link to="/mitra/daftar">Jadi pendamping</Link>}
+              {me && <Link to="/membership">{productCopy.membership.navLabel}</Link>}
+            </>
+          )}
           {loading ? (
             <span className="v3-muted">...</span>
           ) : me ? (
             <>
-              <Link to="/profile">Profil</Link>
+              {!isAdminRoute && <Link to="/profile">Profil</Link>}
               <button type="button" onClick={logout}>
-                Keluar
+                {isAdminRoute ? 'Keluar admin' : 'Keluar'}
               </button>
             </>
           ) : (
