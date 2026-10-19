@@ -357,10 +357,10 @@
 .launch-panel {
   margin-top: 0.5rem;
   padding: clamp(1.5rem, 4vw, 2.5rem);
-  border: 1px solid #c5ddd8;
-  border-radius: 24px;
+  border: 1.5px solid var(--pr-ink);
+  border-radius: 26px;
   background: var(--pr-paper);
-  box-shadow: var(--pr-shadow-soft);
+  box-shadow: 7px 7px 0 var(--pr-coral);
   overflow: hidden;
 }
 
@@ -372,21 +372,25 @@
 }
 
 .launch-panel-kicker {
-  margin: 0 0 0.45rem;
-  color: var(--pr-primary);
-  font-size: 0.72rem;
+  display: inline-flex;
+  margin: 0 0 0.75rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  background: var(--pr-ink);
+  color: var(--pr-accent);
+  font-size: 0.68rem;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  transform: rotate(-2deg);
 }
 
 .launch-panel h2 {
   margin: 0;
   max-width: 28rem;
-  font-family: var(--font-display);
   font-size: clamp(1.5rem, 3.2vw, 2.1rem);
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 .launch-panel-lead {
@@ -413,12 +417,13 @@
   top: 1.05rem;
   left: 1.05rem;
   right: 1.05rem;
-  height: 1px;
+  height: 2px;
   background: repeating-linear-gradient(
     to right,
-    var(--pr-line-warm) 0 6px,
-    transparent 6px 11px
+    var(--pr-ink) 0 6px,
+    transparent 6px 12px
   );
+  opacity: 0.25;
 }
 
 .launch-flow li {
@@ -436,12 +441,21 @@
   flex-shrink: 0;
   display: grid;
   place-items: center;
-  width: 2.1rem;
-  height: 2.1rem;
+  width: 2.15rem;
+  height: 2.15rem;
   border-radius: 999px;
-  background: var(--pr-paper);
-  border: 1.5px solid var(--pr-primary);
-  color: var(--pr-primary);
+  background: var(--pr-accent);
+  border: 1.5px solid var(--pr-ink);
+  color: var(--pr-ink);
+  box-shadow: 2px 2px 0 var(--pr-ink);
+}
+
+.launch-flow li:nth-child(2) .launch-flow-n {
+  background: var(--pr-coral);
+}
+
+.launch-flow li:nth-child(3) .launch-flow-n {
+  background: var(--pr-mint);
 }
 
 .launch-flow-icon {
@@ -471,13 +485,14 @@
 
 /* The one memorable element: "you + plus one" rendered as two overlapping
    name-tag circles meeting at a heart — the product's actual pitch, not
-   decoration. Mint/teal only, no new colors. */
+   decoration. Same lime/coral/ink palette as the rest of the page. */
 .launch-panel-mark {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   height: clamp(7rem, 14vw, 9.5rem);
+  transform: rotate(-3deg);
 }
 
 .launch-mark-avatar {
@@ -487,23 +502,24 @@
   width: clamp(5rem, 11vw, 6.5rem);
   height: clamp(5rem, 11vw, 6.5rem);
   border-radius: 999px;
-  font-family: var(--font-display);
+  border: 1.5px solid var(--pr-ink);
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.01em;
 }
 
 .launch-mark-avatar--you {
   left: 0;
-  background: var(--pr-mint);
-  color: var(--pr-primary);
-  border: 1.5px solid var(--pr-primary);
+  background: var(--pr-accent);
+  color: var(--pr-ink);
+  box-shadow: 4px 4px 0 var(--pr-ink);
 }
 
 .launch-mark-avatar--plus-one {
   right: 0;
   background: var(--pr-ink);
   color: var(--pr-paper);
+  box-shadow: -4px 4px 0 var(--pr-coral);
 }
 
 .launch-mark-plus {
@@ -511,18 +527,17 @@
   z-index: 1;
   display: grid;
   place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2.35rem;
+  height: 2.35rem;
   border-radius: 999px;
   background: var(--pr-paper);
-  border: 1.5px solid var(--pr-line-warm);
-  box-shadow: 0 4px 12px rgb(16 47 49 / 10%);
+  border: 1.5px solid var(--pr-ink);
 }
 
 .launch-mark-heart {
   width: 1.1rem;
   height: 1.1rem;
-  color: var(--pr-primary);
+  color: var(--pr-coral);
 }
 
 .launch-btn {
@@ -534,30 +549,30 @@
   font-size: 0.88rem;
   font-weight: 700;
   text-decoration: none;
-  border: 1px solid transparent;
+  border: 1.5px solid var(--pr-ink);
   cursor: pointer;
   font-family: inherit;
 }
 
 .launch-btn-primary {
-  background: var(--pr-ink);
-  color: #f4fffb;
+  background: var(--pr-accent);
+  color: var(--pr-ink);
+  box-shadow: 3px 3px 0 var(--pr-ink);
 }
 
 .launch-btn-primary:hover {
-  background: var(--pr-primary-hover);
-  color: #fff;
+  background: var(--pr-coral);
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 var(--pr-ink);
 }
 
 .launch-btn-secondary {
   background: var(--pr-paper);
-  border-color: var(--pr-line-warm);
   color: var(--pr-ink);
 }
 
 .launch-btn-secondary:hover {
-  border-color: var(--pr-primary);
-  color: var(--pr-primary);
+  background: var(--pr-mint);
 }
 
 .launch-btn-ghost {
