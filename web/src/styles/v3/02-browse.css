@@ -366,7 +366,7 @@
 
 .launch-panel-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(9rem, 20vw, 13rem);
+  grid-template-columns: minmax(0, 1fr) clamp(10rem, 20vw, 14rem);
   gap: clamp(1.5rem, 4vw, 3rem);
   align-items: center;
 }
@@ -401,84 +401,13 @@
   line-height: 1.5;
 }
 
-/* Connected stepper, not three identical cards — a line runs behind the
-   icons to read as one process instead of three unrelated tiles. */
-.launch-flow {
-  position: relative;
-  display: flex;
-  margin: 1.75rem 0 1.85rem;
+.launch-trail {
+  margin: 1.1rem 0 1.65rem;
   padding: 0;
-  list-style: none;
-}
-
-.launch-flow::before {
-  content: '';
-  position: absolute;
-  top: 1.05rem;
-  left: 1.05rem;
-  right: 1.05rem;
-  height: 2px;
-  background: repeating-linear-gradient(
-    to right,
-    var(--pr-ink) 0 6px,
-    transparent 6px 12px
-  );
-  opacity: 0.25;
-}
-
-.launch-flow li {
-  position: relative;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  padding-right: 0.5rem;
-}
-
-.launch-flow-n {
-  position: relative;
-  z-index: 1;
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  width: 2.15rem;
-  height: 2.15rem;
-  border-radius: 999px;
-  background: var(--pr-accent);
-  border: 1.5px solid var(--pr-ink);
-  color: var(--pr-ink);
-  box-shadow: 2px 2px 0 var(--pr-ink);
-}
-
-.launch-flow li:nth-child(2) .launch-flow-n {
-  background: var(--pr-coral);
-}
-
-.launch-flow li:nth-child(3) .launch-flow-n {
-  background: var(--pr-mint);
-}
-
-.launch-flow-icon {
-  /* the badge's hard drop-shadow (2px 2px) visually pulls the combined
-     circle+shadow shape toward the bottom-right, so nudge the icon the
-     same way to read as centered against that shape, not the bare circle */
-  transform: translate(1px, 1px);
-  width: 1.1rem;
-  height: 1.1rem;
-}
-
-.launch-flow strong {
-  display: block;
-  font-size: 0.9rem;
-  color: var(--pr-ink);
-}
-
-.launch-flow span {
-  display: block;
-  margin-top: 0.15rem;
-  font-size: 0.78rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   color: var(--pr-ink-soft);
-  line-height: 1.35;
 }
 
 .launch-panel-actions {
@@ -487,61 +416,107 @@
   gap: 0.55rem;
 }
 
-/* The one memorable element: "you + plus one" rendered as two overlapping
-   name-tag circles meeting at a heart — the product's actual pitch, not
-   decoration. Same lime/coral/ink palette as the rest of the page. */
-.launch-panel-mark {
+/* The one memorable element: a mocked listing card, built from the same
+   classes a real browse-card will use once partners go live — a concrete
+   preview of the product, not an abstract decoration. */
+.launch-preview {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  width: clamp(10rem, 20vw, 13.5rem);
+  margin-inline: auto;
+  border: 1.5px solid var(--pr-ink);
+  border-radius: 20px;
+  background: var(--pr-paper);
+  box-shadow: 6px 6px 0 var(--pr-ink);
+  transform: rotate(2deg);
+  overflow: hidden;
+}
+
+.launch-preview-ribbon {
+  position: absolute;
+  top: 0.65rem;
+  right: -1.9rem;
+  z-index: 2;
+  width: 7.5rem;
+  padding: 0.25rem 0;
+  background: var(--pr-coral);
+  color: var(--pr-ink);
+  border-block: 1.5px solid var(--pr-ink);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  transform: rotate(35deg);
+}
+
+.launch-preview-media {
+  position: relative;
+  aspect-ratio: 4 / 5;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: clamp(7rem, 14vw, 9.5rem);
-  transform: rotate(-3deg);
+  background: repeating-linear-gradient(
+    135deg,
+    var(--pr-mint) 0 10px,
+    var(--pr-paper) 10px 20px
+  );
 }
 
-.launch-mark-avatar {
-  position: absolute;
-  display: grid;
-  place-items: center;
-  width: clamp(5rem, 11vw, 6.5rem);
-  height: clamp(5rem, 11vw, 6.5rem);
-  border-radius: 999px;
-  border: 1.5px solid var(--pr-ink);
-  font-size: 0.95rem;
+.launch-preview-initial {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
   font-weight: 700;
-  letter-spacing: -0.01em;
+  color: var(--pr-ink-soft);
 }
 
-.launch-mark-avatar--you {
-  left: 0;
-  background: var(--pr-accent);
-  color: var(--pr-ink);
-  box-shadow: 4px 4px 0 var(--pr-ink);
+.launch-preview-media-foot {
+  position: absolute;
+  left: 0.6rem;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
 }
 
-.launch-mark-avatar--plus-one {
-  right: 0;
-  background: var(--pr-ink);
-  color: var(--pr-paper);
-  box-shadow: -4px 4px 0 var(--pr-coral);
+.launch-preview-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.75rem 0.85rem 0.95rem;
 }
 
-.launch-mark-plus {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  width: 2.35rem;
-  height: 2.35rem;
-  border-radius: 999px;
-  background: var(--pr-paper);
-  border: 1.5px solid var(--pr-ink);
+.launch-preview-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.launch-mark-heart {
-  width: 1.1rem;
-  height: 1.1rem;
+.launch-preview-heart {
+  width: 0.95rem;
+  height: 0.95rem;
   color: var(--pr-coral);
+}
+
+.launch-preview-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  color: var(--pr-ink-soft);
+}
+
+.launch-preview-rate {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--pr-ink);
+}
+
+.launch-preview-rate span {
+  font-weight: 500;
+  color: var(--pr-ink-soft);
 }
 
 .launch-btn {
@@ -625,36 +600,8 @@
     grid-template-columns: 1fr;
   }
 
-  .launch-panel-mark {
-    display: none;
-  }
-
-  .launch-flow {
-    flex-direction: column;
-    gap: 1.1rem;
-  }
-
-  .launch-flow::before {
-    top: 0;
-    bottom: 0;
-    left: 1.05rem;
-    right: auto;
-    width: 1px;
-    height: auto;
-    background: repeating-linear-gradient(
-      to bottom,
-      var(--pr-line-warm) 0 6px,
-      transparent 6px 11px
-    );
-  }
-
-  .launch-flow li {
-    flex-direction: row;
-    align-items: flex-start;
-  }
-
-  .launch-flow-copy {
-    padding-top: 0.2rem;
+  .launch-preview {
+    width: clamp(9rem, 45vw, 11rem);
   }
 
   .launch-panel-actions {

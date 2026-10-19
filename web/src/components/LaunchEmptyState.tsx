@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { productCopy } from '../copy/productCopy';
-import { IconCalendar, IconHeart, IconUser } from './DatingIcons';
+import { IconHeart } from './DatingIcons';
 
 type Props = {
   id?: string;
@@ -8,8 +8,6 @@ type Props = {
   secondaryLabel?: string;
   showUserRegister?: boolean;
 };
-
-const STEP_ICONS = [IconUser, IconCalendar, IconHeart];
 
 export default function LaunchEmptyState({
   id = 'launch-empty-title',
@@ -30,22 +28,9 @@ export default function LaunchEmptyState({
             <p className="launch-panel-lead">{copy.lead}</p>
           </div>
 
-          <ol className="launch-flow" aria-label="Cara kerja PacaRent">
-            {copy.steps.map((step, i) => {
-              const Icon = STEP_ICONS[i] ?? IconUser;
-              return (
-                <li key={step.title}>
-                  <span className="launch-flow-n">
-                    <Icon className="launch-flow-icon" />
-                  </span>
-                  <div className="launch-flow-copy">
-                    <strong>{step.title}</strong>
-                    <span>{step.sub}</span>
-                  </div>
-                </li>
-              );
-            })}
-          </ol>
+          <p className="launch-trail" aria-label="Cara kerja PacaRent">
+            {copy.steps.map((step) => step.title).join(' → ')}
+          </p>
 
           <div className="launch-panel-actions">
             {showUserRegister && (
@@ -64,12 +49,27 @@ export default function LaunchEmptyState({
           </div>
         </div>
 
-        <div className="launch-panel-mark" aria-hidden>
-          <span className="launch-mark-avatar launch-mark-avatar--you">Kamu</span>
-          <span className="launch-mark-plus">
-            <IconHeart className="launch-mark-heart" />
-          </span>
-          <span className="launch-mark-avatar launch-mark-avatar--plus-one">+1</span>
+        {/* A real preview of what a listing card will look like, not an
+           abstract mark — ties the empty state to the actual product. */}
+        <div className="launch-preview" aria-hidden>
+          <span className="launch-preview-ribbon">Segera hadir</span>
+          <div className="launch-preview-media">
+            <span className="launch-preview-initial">?</span>
+            <div className="launch-preview-media-foot">
+              <span className="browse-chip browse-chip-verified">Verified</span>
+              <span className="browse-chip">Teman acara</span>
+            </div>
+          </div>
+          <div className="launch-preview-body">
+            <div className="launch-preview-topline">
+              <span className="browse-card-vibe">Teman acara</span>
+              <IconHeart className="launch-preview-heart" />
+            </div>
+            <p className="launch-preview-name">Nama pendamping</p>
+            <p className="launch-preview-rate">
+              Rp 000.000<span>/jam</span>
+            </p>
+          </div>
         </div>
       </div>
     </section>
