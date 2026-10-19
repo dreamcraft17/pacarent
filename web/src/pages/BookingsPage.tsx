@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { api } from '../api/client';
 import PageShell from '../components/layout/PageShell';
 import Panel from '../components/layout/Panel';
@@ -204,7 +204,16 @@ export default function BookingsPage() {
         </a>
       )}
 
-      {items.length === 0 && <p className="v3-muted">{productCopy.booking.empty}</p>}
+      {items.length === 0 && (
+        <Panel className="v3-bookings-empty">
+          <p className="v3-kicker">{productCopy.launchEmpty.eyebrow}</p>
+          <h2 className="v3-panel-title">{productCopy.booking.emptyTitle}</h2>
+          <p className="v3-muted">{productCopy.booking.empty}</p>
+          <Link className="v3-btn-primary v3-bookings-empty-cta" to="/">
+            {productCopy.booking.emptyCta}
+          </Link>
+        </Panel>
+      )}
 
       {items.map((b) => (
         <Panel key={b.id}>

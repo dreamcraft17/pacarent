@@ -72,7 +72,9 @@ export const productCopy = {
     pageDekEarly:
       'Early access: belum bayar online. Setelah pendamping terima, koordinasi aja terus tandai selesai.',
     pageDekPay: 'Setelah diterima, kamu bisa bayar lewat platform.',
-    empty: 'Belum ada jadwal. Balik jelajahi dulu?',
+    empty: 'Belum booking siapa pun. Jelajahi pendamping verified dan atur rencana pertamamu.',
+    emptyTitle: 'Belum ada jadwal',
+    emptyCta: 'Jelajahi pendamping',
     detailPanel: 'Atur pertemuan',
     submit: 'Kirim booking',
     success: 'Booking kekirim. Tunggu pendamping jawab ya.',
