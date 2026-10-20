@@ -131,6 +131,91 @@ textarea {
     gap: 0.9rem;
   }
 
+  /* Profile cards become a scan-friendly list on phones: identity first,
+     compact photo, short context, then one clear next action. */
+  .browse-card {
+    display: grid;
+    grid-template-columns: 7.25rem minmax(0, 1fr);
+    border-radius: 18px;
+    box-shadow: 3px 3px 0 rgb(16 47 49 / 10%);
+  }
+
+  .browse-card-media {
+    min-height: 12rem;
+    aspect-ratio: auto;
+  }
+
+  .browse-card-media-foot {
+    right: 0.45rem;
+    bottom: 0.45rem;
+    left: 0.45rem;
+    gap: 0.25rem;
+  }
+
+  .browse-chip {
+    padding: 0.22rem 0.4rem;
+    font-size: 0.58rem;
+  }
+
+  .browse-card-body {
+    min-width: 0;
+    padding: 0.8rem 0.8rem 0.85rem;
+    gap: 0.3rem;
+  }
+
+  .browse-card-topline {
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+
+  .browse-card-vibe,
+  .browse-card-verified {
+    font-size: 0.58rem;
+  }
+
+  .browse-card-name {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: 1.05rem;
+  }
+
+  .browse-card-city {
+    display: inline;
+    font-size: 0.82em;
+  }
+
+  .browse-card-rate {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.2rem 0.45rem;
+    font-size: 0.78rem;
+  }
+
+  .browse-card-rating {
+    margin-left: 0;
+    font-size: 0.9em;
+  }
+
+  .browse-card-bio {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: 0.76rem;
+    line-height: 1.35;
+  }
+
+  .browse-card-cta {
+    width: 100%;
+    min-height: 42px;
+    margin-top: 0.25rem;
+    padding: 0.55rem 0.65rem;
+    font-size: 0.78rem;
+  }
+
   .launch-panel {
     padding: 1.15rem;
     border-radius: 20px;
