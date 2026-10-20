@@ -225,6 +225,10 @@ h3 {
   max-width: 520px;
 }
 
+.v3-page--content {
+  max-width: 740px;
+}
+
 .v3-page--wide {
   max-width: 1080px;
 }

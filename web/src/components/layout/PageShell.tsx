@@ -5,7 +5,7 @@ type Props = {
   dek?: string;
   children: ReactNode;
   className?: string;
-  width?: 'default' | 'narrow' | 'wide';
+  width?: 'default' | 'narrow' | 'content' | 'wide';
 };
 
 export default function PageShell({

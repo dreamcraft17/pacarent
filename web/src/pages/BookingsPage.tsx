@@ -27,6 +27,17 @@ const STATUS_LABELS: Record<string, string> = {
   disputed: 'Dalam peninjauan',
 };
 
+const STATUS_ICONS: Record<string, string> = {
+  pendingpartner: '🕐',
+  accepted: '✅',
+  paid: '✅',
+  inprogress: '🟢',
+  completed: '🎉',
+  cancelled: '✕',
+  refunded: '↩️',
+  disputed: '⚠️',
+};
+
 const CHAT_STARTERS = [
   'Hai! Kamu biasanya suka nongkrong di mana?',
   'Mau bahas rencana ketemunya dulu?',
@@ -40,6 +51,10 @@ function statusIndex(status: string) {
 
 function statusLabel(status: string) {
   return STATUS_LABELS[status.toLowerCase()] ?? status;
+}
+
+function statusIcon(status: string) {
+  return STATUS_ICONS[status.toLowerCase()] ?? '•';
 }
 
 function BookingTimeline({ status }: { status: string }) {
@@ -266,18 +281,26 @@ export default function BookingsPage() {
 
   return (
     <PageShell
+      width="content"
       title={productCopy.booking.pageTitle}
       dek={paymentsEnabled ? productCopy.booking.pageDekPay : productCopy.booking.pageDekEarly}
     >
-      {emergency && (
-        <a className="v3-emergency" href={emergency.emergencyHelpUrl}>
-          {emergency.emergencyHelpLabel}
-        </a>
-      )}
-
-      <div className="booking-directory-actions" aria-label="Akses booking dan chat">
-        <Link className="v3-btn-primary" to="/bookings">Daftar booking</Link>
-        <Link className="v3-btn-secondary" to="/chat">Daftar chat</Link>
+      <div className="v3-booking-toolbar">
+        {emergency && (
+          <a className="v3-emergency" href={emergency.emergencyHelpUrl}>
+            <span aria-hidden="true">🚨</span> {emergency.emergencyHelpLabel}
+          </a>
+        )}
+        <div className="v3-booking-tiles" aria-label="Akses booking dan chat">
+          <Link className="v3-action-tile v3-action-tile--primary" to="/bookings">
+            <span className="v3-action-tile-icon" aria-hidden="true">🗓️</span>
+            <span>Daftar booking</span>
+          </Link>
+          <Link className="v3-action-tile" to="/chat">
+            <span className="v3-action-tile-icon" aria-hidden="true">💬</span>
+            <span>Daftar chat</span>
+          </Link>
+        </div>
       </div>
 
       {items.length === 0 && (
@@ -292,14 +315,24 @@ export default function BookingsPage() {
       )}
 
       {items.map((b) => (
-        <Panel key={b.id}>
-          <div className="v3-booking-card-meta">
-            <div className="v3-booking-badges">
-              <span className="badge">{statusLabel(b.status)}</span>
-              {b.isPriorityBooking && <span className="badge badge-verified">Prioritas</span>}
-            </div>
+        <Panel key={b.id} className={`v3-booking-card status-${b.status.toLowerCase()}`}>
+          <div className="v3-booking-card-head">
+            <span className="v3-booking-status">
+              <span aria-hidden="true">{statusIcon(b.status)}</span> {statusLabel(b.status)}
+            </span>
+            {b.isPriorityBooking && <span className="v3-booking-priority">⭐ Prioritas</span>}
             <span className="v3-booking-date">{new Date(b.scheduledAt).toLocaleString('id-ID')}</span>
           </div>
+          {!isPartner && partnerNames[b.partnerId] && (
+            <div className="v3-booking-partner">
+              <span className="v3-booking-avatar" aria-hidden="true">
+                {partnerNames[b.partnerId].charAt(0).toUpperCase()}
+              </span>
+              <span>
+                Bareng <strong>{partnerNames[b.partnerId]}</strong>
+              </span>
+            </div>
+          )}
           <BookingTimeline status={b.status} />
           <p className="v3-booking-location">
             <span aria-hidden="true">📍</span> {b.meetingLocation}
