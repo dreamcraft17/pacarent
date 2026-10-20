@@ -152,6 +152,8 @@ textarea {
 
   .browse-count {
     justify-self: start;
+    padding: 0.3rem 0.65rem;
+    font-size: 0.74rem;
   }
 
   .browse-trust-list {
@@ -208,13 +210,13 @@ textarea {
      compact photo, short context, then one clear next action. */
   .browse-card {
     display: grid;
-    grid-template-columns: 7.25rem minmax(0, 1fr);
+    grid-template-columns: 6.75rem minmax(0, 1fr);
     border-radius: 18px;
     box-shadow: 3px 3px 0 rgb(16 47 49 / 10%);
   }
 
   .browse-card-media {
-    min-height: 12rem;
+    min-height: 11rem;
     aspect-ratio: auto;
   }
 
@@ -246,6 +248,12 @@ textarea {
     font-size: 0.58rem;
   }
 
+  .browse-card-vibe {
+    padding: 0.22rem 0.42rem;
+    border-radius: 999px;
+    background: #e7f3ee;
+  }
+
   .browse-card-name {
     display: -webkit-box;
     overflow: hidden;
@@ -260,15 +268,16 @@ textarea {
   }
 
   .browse-card-rate {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.2rem 0.45rem;
+    display: block;
     font-size: 0.78rem;
   }
 
   .browse-card-rating {
-    margin-left: 0;
+    display: inline-flex;
+    margin: 0 0 0 0.35rem;
+    padding: 0.14rem 0.35rem;
+    border-radius: 999px;
+    background: #f0f3f0;
     font-size: 0.9em;
   }
 
@@ -287,6 +296,25 @@ textarea {
     margin-top: 0.25rem;
     padding: 0.55rem 0.65rem;
     font-size: 0.78rem;
+  }
+
+  .bottom-nav {
+    bottom: 0.5rem;
+    width: calc(100% - 1.25rem);
+    border-radius: 18px;
+    padding: 0.2rem 0.35rem calc(0.2rem + env(safe-area-inset-bottom));
+  }
+
+  .bottom-nav-item {
+    min-height: 40px;
+    min-width: 58px;
+    gap: 0.08rem;
+    font-size: 0.68rem;
+  }
+
+  .bottom-nav-icon svg {
+    width: 22px;
+    height: 22px;
   }
 
   .launch-panel {

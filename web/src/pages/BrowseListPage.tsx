@@ -173,6 +173,8 @@ export default function BrowseListPage() {
         <div className="browse-grid">
           {partners.map((p) => {
             const initial = p.fullName.charAt(0).toUpperCase();
+            const rawCategory = p.categories[0];
+            const categoryLabel = rawCategory?.toLowerCase() === 'sewa pacar' ? 'Teman jalan' : rawCategory;
             const photoSrc = apiAssetUrl(p.photoUrl);
             const photoStyle = photoSrc
               ? { backgroundImage: `url(${photoSrc})` }
@@ -189,13 +191,13 @@ export default function BrowseListPage() {
                     {p.verified && <span className="browse-chip browse-chip-verified">Verified</span>}
                     {p.pendampingPro && <span className="browse-chip browse-chip-verified">Verified+</span>}
                     {p.boosted && <span className="browse-chip">Boost</span>}
-                    {p.categories[0] && <span className="browse-chip">{p.categories[0]}</span>}
+                    {categoryLabel && <span className="browse-chip">{categoryLabel}</span>}
                   </div>
                 </div>
                 <div className="browse-card-body">
                   <div className="browse-card-topline">
                     <span className="browse-card-vibe">
-                      {p.categories[0] ?? productCopy.discover.defaultCategoryLabel}
+                      {categoryLabel ?? productCopy.discover.defaultCategoryLabel}
                     </span>
                     {p.verified && <span className="browse-card-verified">✓ verified</span>}
                   </div>
