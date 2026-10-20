@@ -11,7 +11,7 @@ export default function TrustStrip() {
         <span className="trust-icon" aria-hidden>
           ✓
         </span>
-        Plus one verified, bukan drama
+        Temani apa aja — bukan cari jodoh
       </li>
       <li>
         <span className="trust-icon" aria-hidden>

@@ -57,12 +57,12 @@ export default function LaunchEmptyState({
             <span className="launch-preview-initial">?</span>
             <div className="launch-preview-media-foot">
               <span className="browse-chip browse-chip-verified">Verified</span>
-              <span className="browse-chip">Teman acara</span>
+              <span className="browse-chip">{productCopy.discover.defaultCategoryLabel}</span>
             </div>
           </div>
           <div className="launch-preview-body">
             <div className="launch-preview-topline">
-              <span className="browse-card-vibe">Teman acara</span>
+              <span className="browse-card-vibe">{productCopy.discover.defaultCategoryLabel}</span>
               <IconHeart className="launch-preview-heart" />
             </div>
             <p className="launch-preview-name">Nama pendamping</p>

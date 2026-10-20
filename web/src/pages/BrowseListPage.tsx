@@ -85,30 +85,42 @@ export default function BrowseListPage() {
     <div className="browse-home v3-page v3-page--wide">
       <header className="browse-masthead" aria-labelledby="browse-title">
         <div className="browse-masthead-main">
-          <p className="browse-kicker">Teman buat nemenin apa aja</p>
-          <h1 id="browse-title">Lagi pengin ditemenin?</h1>
+          <p className="browse-kicker">{productCopy.discover.eyebrow}</p>
+          <h1 id="browse-title">{productCopy.discover.title}</h1>
           <p className="browse-dek">{productCopy.discover.lead}</p>
           <div className="browse-hero-actions">
-            <a className="browse-hero-action browse-hero-action--primary" href="#profil">Lihat profil</a>
+            <a className="browse-hero-action browse-hero-action--primary" href="#profil">
+              {productCopy.discover.heroCtaPrimary}
+            </a>
             {me ? (
-              <Link className="browse-hero-action" to="/chat">Cek chat</Link>
+              <Link className="browse-hero-action" to="/chat">
+                {productCopy.discover.heroCtaChat}
+              </Link>
             ) : (
-              <Link className="browse-hero-action" to="/register">Daftar dulu</Link>
+              <Link className="browse-hero-action" to="/register">
+                {productCopy.discover.heroCtaRegister}
+              </Link>
             )}
           </div>
           <div className="browse-masthead-proof" aria-label="Komitmen PacaRent">
-            <span>18+ only</span>
-            <span>verified profiles</span>
-            <span>ketemu di tempat publik</span>
+            {productCopy.discover.heroProof.map((chip) => (
+              <span key={chip}>{chip}</span>
+            ))}
           </div>
         </div>
         <aside className="browse-plan-card" aria-label="Cara kerja PacaRent">
-          <p className="browse-plan-kicker">GIMANA CARANYA?</p>
-          <h2>Pilih, chat, berangkat.</h2>
+          <p className="browse-plan-kicker">{productCopy.discover.howItWorks.kicker}</p>
+          <h2>{productCopy.discover.howItWorks.title}</h2>
           <ol>
-            <li><span>01</span><div><strong>Lihat profil</strong><small>Cek foto, bio, dan verified-nya</small></div></li>
-            <li><span>02</span><div><strong>Kirim request</strong><small>Tulis rencana singkatmu</small></div></li>
-            <li><span>03</span><div><strong>Ngobrol dulu</strong><small>Bahas detailnya di chat</small></div></li>
+            {productCopy.discover.howItWorks.steps.map((step, i) => (
+              <li key={step.title}>
+                <span>{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <strong>{step.title}</strong>
+                  <small>{step.sub}</small>
+                </div>
+              </li>
+            ))}
           </ol>
         </aside>
         <BrowseTrustRail />
@@ -116,8 +128,8 @@ export default function BrowseListPage() {
 
       <div className="browse-toolbar" id="profil">
         <div className="browse-toolbar-label">
-          <span className="browse-toolbar-kicker">CARI PENDAMPING</span>
-          <strong>Kamu lagi mau ngapain?</strong>
+          <span className="browse-toolbar-kicker">{productCopy.discover.toolbarKicker}</span>
+          <strong>{productCopy.discover.toolbarTitle}</strong>
         </div>
         <div className="browse-filters">
           <FilterMenu
@@ -182,7 +194,9 @@ export default function BrowseListPage() {
                 </div>
                 <div className="browse-card-body">
                   <div className="browse-card-topline">
-                    <span className="browse-card-vibe">{p.categories[0] ?? 'Teman acara'}</span>
+                    <span className="browse-card-vibe">
+                      {p.categories[0] ?? productCopy.discover.defaultCategoryLabel}
+                    </span>
                     {p.verified && <span className="browse-card-verified">✓ verified</span>}
                   </div>
                   <h2 className="browse-card-name">
@@ -190,7 +204,7 @@ export default function BrowseListPage() {
                     <span className="browse-card-city"> · {p.city}</span>
                   </h2>
                   <p className="browse-card-rate">
-                    Vibe-nya pas? Mulai ngobrol
+                    {productCopy.discover.cardTeaser}
                     <span className="browse-card-rating">
                       ★ {p.rating.toFixed(1)}
                       {p.reviewCount > 0 ? ` (${p.reviewCount})` : ''}
