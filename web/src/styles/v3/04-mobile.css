@@ -107,14 +107,28 @@ textarea {
   .browse-trust-rail { order: 3; }
   .browse-hero-actions { display: grid; grid-template-columns: 1fr 1fr; }
   .browse-hero-action { width: 100%; }
-  .browse-toolbar-label { grid-column: 1 / -1; }
-
   .browse-toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
     align-items: stretch;
+    gap: 0.8rem;
     margin-bottom: 1rem;
+    padding: 1rem;
+  }
+
+  .browse-toolbar-label {
+    display: grid;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+
+  .browse-toolbar-label strong {
+    font-size: 1.12rem;
+    line-height: 1.15;
   }
 
   .browse-filters {
+    width: 100%;
     min-width: 0;
     grid-template-columns: 1fr;
   }
