@@ -1,32 +1,40 @@
+/* Single source of truth for PacaRent theme tokens.
+   Previously these were re-declared (with drifting values) in design-tokens.css,
+   01-shell.css, and 05-redesign.css; only the last :root in load order ever won,
+   so the earlier declarations were silently dead. Values below are the ones that
+   were actually rendering. */
 :root {
-  --font-display: 'Fraunces', Georgia, serif;
+  --font-display: 'DM Sans', system-ui, sans-serif;
   --font-body: 'DM Sans', system-ui, sans-serif;
 
-  --pr-primary: var(--colors-primary-DEFAULT);
-  --pr-primary-hover: var(--colors-primary-700);
-  --pr-primary-soft: #e6f4f2;
+  --pr-primary: #187a70;
+  --pr-primary-hover: #0f5e57;
+  --pr-primary-soft: #e8f5ef;
   --pr-heading: var(--pr-ink);
-  --pr-text: var(--pr-ink-soft);
-  --pr-muted: var(--colors-neutral-500);
-  --pr-border: var(--pr-line-warm);
+  --pr-text: #405052;
+  --pr-muted: #7c8788;
+  --pr-border: #dfe4df;
   --pr-surface: var(--pr-paper);
   --pr-bg: var(--pr-canvas);
-  --pr-danger: var(--colors-semantic-error-base, #dc2626);
-  --pr-success: var(--colors-semantic-success-dark);
-  --pr-radius: var(--borders-radius-default, 8px);
+  --pr-danger: #b42318;
+  --pr-success: #059669;
+  --pr-radius: 16px;
   --pr-shadow: 0 1px 2px rgb(15 23 42 / 6%), 0 4px 12px rgb(15 118 110 / 6%);
 
   /* Booking accent stays teal so discovery does not imply a romantic match mechanic. */
   --pr-booking: var(--pr-primary);
   /* PacaRent editorial marketplace semantic tokens */
   --pr-ink: #102f31;
-  --pr-ink-soft: #4f5c5f;
-  --pr-canvas: #f1eee9;
-  --pr-paper: #ffffff;
-  --pr-line-warm: #ded9d2;
-  --pr-mint: #edf6f2;
+  --pr-ink-soft: #5d696b;
+  --pr-canvas: #f6f2ea;
+  --pr-paper: #fffdfa;
+  --pr-line-warm: #ddd9d0;
+  --pr-mint: #eef8f3;
   --pr-discover-bg: #faf7f5;
-  --pr-card-radius: 22px;
+  --pr-card-radius: 24px;
+  --pr-shadow-soft: 0 18px 45px rgb(16 47 49 / 9%);
+  --pr-accent: #c9f261;
+  --pr-coral: #ff927c;
 
   /* Launch empty state */
   --pr-launch-surface: #f7fbfa;

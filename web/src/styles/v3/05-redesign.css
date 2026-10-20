@@ -1,27 +1,6 @@
 /* PacaRent v4 visual direction
-   Mobile-first, photo-led, warm, playful, and calm enough for safety-critical copy. */
-
-:root {
-  --pr-primary: #187a70;
-  --pr-primary-hover: #0f5e57;
-  --pr-primary-soft: #e8f5ef;
-  --pr-ink: #102f31;
-  --pr-ink-soft: #5d696b;
-  --pr-canvas: #f6f2ea;
-  --pr-paper: #fffdfa;
-  --pr-line-warm: #ddd9d0;
-  --pr-mint: #eef8f3;
-  --pr-heading: #102f31;
-  --pr-text: #405052;
-  --pr-muted: #7c8788;
-  --pr-border: #dfe4df;
-  --pr-bg: #f6f2ea;
-  --pr-card-radius: 24px;
-  --pr-shadow-soft: 0 18px 45px rgb(16 47 49 / 9%);
-  --pr-accent: #c9f261;
-  --pr-coral: #ff927c;
-  --pr-radius: 16px;
-}
+   Mobile-first, photo-led, warm, playful, and calm enough for safety-critical copy.
+   Theme tokens live in ../pacarent-theme.css. */
 
 body {
   background-color: var(--pr-canvas);

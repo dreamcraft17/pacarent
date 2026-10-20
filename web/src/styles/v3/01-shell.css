@@ -1,31 +1,4 @@
-/* PacaRent v3 — tokens + app shell + shared UI */
-
-:root {
-  --font-display: 'DM Sans', system-ui, sans-serif;
-  --font-body: 'DM Sans', system-ui, sans-serif;
-  --pr-primary: #1a7169;
-  --pr-primary-hover: #125850;
-  --pr-primary-soft: #e8f3ef;
-  --pr-ink: #102f31;
-  --pr-ink-soft: #5a6568;
-  --pr-canvas: #f0ece4;
-  --pr-paper: #fffefb;
-  --pr-line-warm: #ddd7ce;
-  --pr-mint: #edf6f2;
-  --pr-heading: var(--pr-ink);
-  --pr-text: #3d484a;
-  --pr-muted: #7a8487;
-  --pr-border: var(--pr-line-warm);
-  --pr-surface: var(--pr-paper);
-  --pr-bg: var(--pr-canvas);
-  --pr-card-radius: 20px;
-  --pr-shadow-soft: 0 16px 40px rgb(16 47 49 / 8%);
-  --pr-accent: #c7ed68;
-  --pr-coral: #ff9078;
-  --pr-booking: var(--pr-primary);
-  --pr-danger: #b42318;
-  --pr-radius: 12px;
-}
+/* PacaRent v3 — app shell + shared UI. Theme tokens live in ../pacarent-theme.css. */
 
 body {
   font-family: var(--font-body);
