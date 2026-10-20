@@ -27,6 +27,12 @@ const STATUS_LABELS: Record<string, string> = {
   disputed: 'Dalam peninjauan',
 };
 
+const CHAT_STARTERS = [
+  'Hai! Kamu biasanya suka nongkrong di mana?',
+  'Mau bahas rencana ketemunya dulu?',
+  'Ada tempat yang kamu rekomendasikan?',
+] as const;
+
 function statusIndex(status: string) {
   const key = status.toLowerCase();
   return key in FLOW_STEP ? FLOW_STEP[key] : -1;
@@ -240,7 +246,7 @@ export default function BookingsPage() {
           </div>
           <BookingTimeline status={b.status} />
           <p>{b.meetingLocation}</p>
-          <p className="v3-muted">Chat terbuka sejak request dikirim. Lanjut ngobrol dari sini.</p>
+          <p className="v3-muted">Request terkirim. Kenalan dulu lewat chat—detail rencana bisa dibahas di sini.</p>
           <div className="v3-btn-row">
             {isPartner && (b.status === 'PendingPartner' || b.status === 'pendingPartner') && (
               <>
@@ -283,26 +289,54 @@ export default function BookingsPage() {
           {chatOpen[b.id] && (
             <div className="booking-chat" aria-label={`Chat booking ${b.id}`}>
               <div className="booking-chat-head">
-                <div>
-                  <strong>Chat booking</strong>
-                  <p>Ngobrol santai dan atur rencana ketemuan di sini.</p>
+                <div className="booking-chat-person">
+                  <span className="booking-chat-avatar" aria-hidden="true">✦</span>
+                  <div>
+                    <strong>Chat untuk rencana ini</strong>
+                    <p>Ngobrol santai, lalu atur detailnya bareng.</p>
+                  </div>
                 </div>
-                <span className="badge">Tersimpan</span>
+                <span className="badge">Tersimpan di booking</span>
+              </div>
+              <div className="booking-chat-context">
+                <span>Rencana ketemu</span>
+                <strong>{b.meetingLocation}</strong>
               </div>
               <div className="booking-chat-messages" aria-live="polite">
-                {(chatItems[b.id] ?? []).length === 0 && <p className="v3-muted">Belum ada pesan. Mulai ngobrol duluan.</p>}
+                {(chatItems[b.id] ?? []).length === 0 && (
+                  <div className="booking-chat-empty">
+                    <strong>Mulai dari pembuka yang ringan</strong>
+                    <p>Kenalan dulu. Detail tanggal, durasi, dan tempat bisa kalian rapikan di sini.</p>
+                    <div className="booking-chat-starters" aria-label="Pilihan pembuka chat">
+                      {CHAT_STARTERS.map((starter) => (
+                        <button
+                          key={starter}
+                          type="button"
+                          className="booking-chat-starter"
+                          onClick={() => setChatDrafts((prev) => ({ ...prev, [b.id]: starter }))}
+                        >
+                          {starter}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 {(chatItems[b.id] ?? []).map((message) => (
                   <div key={message.id} className={`booking-chat-message ${message.senderId === me?.id ? 'is-mine' : ''}`}>
                     <p>{message.text}</p>
-                    <time dateTime={message.sentAt}>{new Date(message.sentAt).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' })}</time>
+                    <time dateTime={message.sentAt}>
+                      {message.senderId === me?.id ? 'Terkirim · ' : ''}
+                      {new Date(message.sentAt).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}
+                    </time>
                   </div>
                 ))}
               </div>
               <div className="booking-chat-compose">
                 <input
+                  aria-label="Tulis pesan chat"
                   value={chatDrafts[b.id] ?? ''}
                   maxLength={2000}
-                  placeholder="Tulis pesan…"
+                  placeholder="Tulis pesan atau pilih pembuka…"
                   onChange={(e) => setChatDrafts((prev) => ({ ...prev, [b.id]: e.target.value }))}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {

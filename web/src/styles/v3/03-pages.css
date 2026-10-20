@@ -1197,10 +1197,51 @@
   gap: 0.75rem;
 }
 
+.booking-chat-person { display: flex; align-items: center; gap: 0.65rem; }
+.booking-chat-avatar {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 50%;
+  background: var(--pr-accent);
+  color: var(--pr-ink);
+  font-size: 1rem;
+  box-shadow: 2px 2px 0 var(--pr-ink);
+}
 .booking-chat-head strong { color: var(--pr-ink); }
 .booking-chat-head p { margin: 0.2rem 0 0; color: var(--pr-muted); font-size: 0.8rem; }
+.booking-chat-context {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  margin-top: 0.9rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: 12px;
+  background: rgb(255 254 251 / 72%);
+  color: var(--pr-muted);
+  font-size: 0.78rem;
+}
+.booking-chat-context strong { color: var(--pr-ink); font-weight: 700; }
 .booking-chat-messages { display: flex; flex-direction: column; gap: 0.55rem; max-height: 18rem; overflow-y: auto; margin: 1rem 0; }
-.booking-chat-messages > .v3-muted { margin: 0; font-size: 0.82rem; }
+.booking-chat-empty { padding: 0.45rem 0 0.1rem; }
+.booking-chat-empty strong { color: var(--pr-ink); font-size: 0.9rem; }
+.booking-chat-empty p { margin: 0.25rem 0 0.75rem; color: var(--pr-muted); font-size: 0.82rem; line-height: 1.45; }
+.booking-chat-starters { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.booking-chat-starter {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid rgb(26 113 105 / 28%);
+  border-radius: 999px;
+  background: var(--pr-paper);
+  color: var(--pr-primary-hover);
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+.booking-chat-starter:hover { border-color: var(--pr-primary); background: var(--pr-primary-soft); }
 .booking-chat-message { align-self: flex-start; max-width: 85%; padding: 0.65rem 0.8rem; border-radius: 14px 14px 14px 4px; background: var(--pr-paper); color: var(--pr-ink); }
 .booking-chat-message.is-mine { align-self: flex-end; border-radius: 14px 14px 4px 14px; background: var(--pr-ink); color: var(--pr-paper); }
 .booking-chat-message p { margin: 0; white-space: pre-wrap; line-height: 1.4; }
@@ -1211,6 +1252,8 @@
 .booking-chat-compose button { width: auto !important; flex: 0 0 auto; margin: 0 !important; }
 
 @media (max-width: 480px) {
+  .booking-chat-head { align-items: flex-start; }
+  .booking-chat-head .badge { max-width: 8rem; text-align: right; }
   .booking-chat-compose { align-items: stretch; }
   .booking-chat-compose button { padding-inline: 0.8rem; }
 }
