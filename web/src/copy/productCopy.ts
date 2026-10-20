@@ -11,9 +11,9 @@ export const productCopy = {
   discover: {
     eyebrow: 'Event • date • nongkrong',
     title: 'Punya rencana, tapi nggak mau datang sendirian?',
-    lead: 'Cari pendamping verified yang vibes-nya nyambung. Lihat profilnya, mulai ngobrol, lalu atur ketemu di tempat publik.',
+    lead: 'Cari pendamping verified buat momenmu. Lihat profilnya, kirim request, lalu atur ketemu di tempat publik.',
     profileCount: (n: number) => (n === 1 ? '1 profil buat dijelajahi' : `${n} profil buat dijelajahi`),
-    ctaProfile: 'Lihat profil & booking',
+    ctaProfile: 'Lihat profil & mulai',
     filterEmptyTitle: 'Belum nemu yang pas?',
     filterEmptyLead: 'Coba ganti kota atau kategori. Siapa tahu yang kamu cari ada di sana.',
     filterReset: 'Reset filter',
@@ -70,7 +70,7 @@ export const productCopy = {
   },
   booking: {
     pageTitle: 'Jadwal kamu',
-    pageDekEarly: 'Lihat profil yang terasa cocok, kirim request, lalu langsung mulai ngobrol.',
+    pageDekEarly: 'Lihat profil yang terasa pas buat rencanamu, kirim request, lalu langsung mulai ngobrol.',
     pageDekPay: 'Chat terbuka sejak request dikirim supaya kamu bisa langsung mulai ngobrol.',
     empty: 'Belum booking siapa pun. Jelajahi pendamping verified dan atur rencana pertamamu.',
     emptyTitle: 'Belum ada jadwal',

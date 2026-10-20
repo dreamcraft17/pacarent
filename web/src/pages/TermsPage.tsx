@@ -62,7 +62,7 @@ export default function TermsPage() {
             </div>
             <p>
               PacaRent menyediakan platform digital yang mempertemukan <strong>pengguna</strong> dengan{' '}
-              <strong>pendamping</strong> untuk sewa pacar, teman kencan, nongkrong, dan temani acara. PacaRent{' '}
+              <strong>pendamping</strong> untuk event, nongkrong, dinner, dan aktivitas sosial yang disepakati. PacaRent{' '}
               <strong>bukan</strong> pihak dalam kesepakatan pribadi antara pengguna dan pendamping, tidak mengawasi
               pertemuan secara langsung, dan tidak menjamin hasil, kecocokan, ketersediaan, atau kepuasan dari interaksi
               di lapangan.

@@ -45,17 +45,17 @@ export default function HomePage() {
     <div>
       <section className="hero">
         <div>
-          <h1>Sewa pacar, teman kencan, dan teman acara</h1>
+          <h1>Plus-one buat event, dinner, dan nongkrong</h1>
           <p className="hero-lead">
-            Sewa pacar, teman kencan, atau pendamping acara. Early access: belum wajib bayar
-            online.
+            Cari pendamping verified untuk momen tertentu. Pilih profil, kirim request, lalu ngobrol
+            langsung. Early access: pembayaran online belum wajib.
           </p>
         </div>
         <div className="card card-highlight">
           <h2>Cara kerja</h2>
           <ol className="hero-steps">
             <li>Cari pendamping berdasarkan kota &amp; kategori (Jabodetabek)</li>
-            <li>Request → pendamping terima → cocok, lalu ngobrol dan atur rencana</li>
+            <li>Request → chat langsung → atur detail rencana bersama</li>
             <li>Bertemu sesuai lokasi booking → selesai → ulasan</li>
           </ol>
         </div>
@@ -103,7 +103,7 @@ export default function HomePage() {
           <article key={p.id} className="card partner-card">
             <div className="partner-card-meta">
               <span className="muted">
-                {p.city} · Cocok? Mulai ngobrol
+                {p.city} · Vibe-nya pas? Mulai ngobrol
               </span>
             </div>
             <h3>{p.fullName}</h3>

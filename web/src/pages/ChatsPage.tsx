@@ -11,6 +11,11 @@ type Booking = {
   meetingLocation: string;
 };
 
+type ChatMessage = {
+  text: string;
+  sentAt: string;
+};
+
 const STATUS_LABELS: Record<string, string> = {
   pendingpartner: 'Menunggu jawaban',
   accepted: 'Diterima',
@@ -27,13 +32,44 @@ function statusLabel(status: string) {
 
 export default function ChatsPage() {
   const [items, setItems] = useState<Booking[]>([]);
+  const [previews, setPreviews] = useState<Record<string, ChatMessage | null>>({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api<Booking[]>('/api/bookings')
-      .then(setItems)
-      .catch(console.error)
-      .finally(() => setLoading(false));
+    let disposed = false;
+
+    const sync = async () => {
+      try {
+        const bookings = await api<Booking[]>('/api/bookings');
+        if (disposed) return;
+        setItems(bookings);
+        const results = await Promise.allSettled(
+          bookings.map(async (booking) => {
+            const messages = await api<ChatMessage[]>(`/api/bookings/${booking.id}/chat`);
+            return [booking.id, messages.at(-1) ?? null] as const;
+          }),
+        );
+        if (disposed) return;
+        setPreviews((current) => {
+          const next = { ...current };
+          for (const result of results) {
+            if (result.status === 'fulfilled') next[result.value[0]] = result.value[1];
+          }
+          return next;
+        });
+      } catch (error) {
+        if (!disposed) console.error(error);
+      } finally {
+        if (!disposed) setLoading(false);
+      }
+    };
+
+    sync();
+    const timer = window.setInterval(sync, 2000);
+    return () => {
+      disposed = true;
+      window.clearInterval(timer);
+    };
   }, []);
 
   return (
@@ -64,6 +100,9 @@ export default function ChatsPage() {
             <span className="chat-list-avatar" aria-hidden="true">✦</span>
           </div>
           <p className="chat-list-card-copy">Lanjutkan obrolan dan rapikan detail ketemuan di sini.</p>
+          <p className="chat-list-card-preview">
+            {previews[booking.id]?.text ?? 'Belum ada pesan. Kirim pembuka dulu, biar obrolannya mulai.'}
+          </p>
           <Link className="v3-btn-primary" to={`/bookings?chat=${booking.id}`}>Buka chat</Link>
         </Panel>
       ))}

@@ -1270,6 +1270,7 @@
   box-shadow: 2px 2px 0 var(--pr-ink);
 }
 .chat-list-card-copy { margin: 0; color: var(--pr-muted); }
+.chat-list-card-preview { margin: 0; padding: 0.75rem 0.85rem; border-radius: 14px; background: var(--pr-primary-soft); color: var(--pr-ink); line-height: 1.4; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 .chat-list-card .v3-btn-primary { width: fit-content; margin: 0; text-decoration: none; }
 
 @media (max-width: 480px) {

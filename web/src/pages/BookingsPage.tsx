@@ -7,7 +7,7 @@ import { productCopy } from '../copy/productCopy';
 import { useAuth } from '../auth/AuthContext';
 import { waShareLink } from '../lib/whatsapp';
 
-const TIMELINE_LABELS = ['Diajukan', 'Diterima', 'Cocok', 'Selesai'] as const;
+const TIMELINE_LABELS = ['Diajukan', 'Diterima', 'Siap jalan', 'Selesai'] as const;
 const FLOW_STEP: Record<string, number> = {
   pendingpartner: 0,
   accepted: 1,
@@ -19,7 +19,7 @@ const FLOW_STEP: Record<string, number> = {
 const STATUS_LABELS: Record<string, string> = {
   pendingpartner: 'Diajukan',
   accepted: 'Diterima',
-  paid: 'Cocok',
+  paid: 'Siap jalan',
   inprogress: 'Berlangsung',
   completed: 'Selesai',
   cancelled: 'Dibatalkan',

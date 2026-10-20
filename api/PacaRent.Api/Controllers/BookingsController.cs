@@ -170,7 +170,7 @@ public class BookingsController(
         }
 
         await db.SaveChangesAsync(ct);
-        await notify.NotifyAsync(booking.UserId, NotificationType.Booking, "Cocok! 🎉", "Pendamping menerima request kamu. Chat sekarang terbuka.", ct);
+        await notify.NotifyAsync(booking.UserId, NotificationType.Booking, "Request diterima", "Pendamping menerima request kamu. Lanjutkan chat untuk merapikan detailnya.", ct);
         await audit.LogAsync(userId, "accept_booking", "booking", id.ToString(), null, ct);
         return Ok(booking);
     }

@@ -20,7 +20,7 @@ public class ConfigController(
         {
             emergencyHelpUrl = settings.CurrentValue.EmergencyHelpUrl,
             emergencyHelpLabel = settings.CurrentValue.EmergencyHelpLabel,
-            termsSummary = "Sewa pacar, teman kencan, dan teman acara—booking lewat platform (early access, gratis).",
+            termsSummary = "Pendamping untuk event, dinner, dan nongkrong—request dan chat lewat platform (early access).",
             skipBookingPayment = settings.CurrentValue.SkipBookingPayment,
             paymentsEnabled = !settings.CurrentValue.SkipBookingPayment,
             paymentUseMock = dokuCfg.UseSandboxMock,

@@ -167,7 +167,7 @@ export default function BrowseListPage() {
                     <span className="browse-card-city"> · {p.city}</span>
                   </h2>
                   <p className="browse-card-rate">
-                    Cocok? Mulai ngobrol
+                    Vibe-nya pas? Mulai ngobrol
                     <span className="browse-card-rating">
                       ★ {p.rating.toFixed(1)}
                       {p.reviewCount > 0 ? ` (${p.reviewCount})` : ''}
