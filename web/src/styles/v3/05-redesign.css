@@ -360,3 +360,59 @@ textarea:focus,
     font-size: clamp(2.2rem, 11vw, 3rem);
   }
 }
+
+@media (max-width: 480px) {
+  .v3-main {
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+  }
+
+  .browse-toolbar {
+    gap: 0.65rem;
+    padding: 0.85rem;
+  }
+
+  .browse-toolbar-label strong {
+    font-size: 1.02rem;
+  }
+
+  .browse-filters {
+    gap: 0.45rem;
+  }
+
+  .browse-filters .filter-menu-trigger {
+    min-height: 44px;
+    padding-inline: 0.65rem 1.7rem;
+  }
+
+  .browse-filters .filter-menu-value {
+    font-size: 0.72rem;
+  }
+
+  .browse-card-media {
+    height: 12rem;
+    aspect-ratio: auto;
+  }
+
+  .browse-card-body {
+    padding: 0.8rem 0.85rem 0.85rem;
+  }
+
+  .browse-card-name {
+    font-size: 1.12rem;
+  }
+
+  .browse-card-bio {
+    -webkit-line-clamp: 1;
+    font-size: 0.78rem;
+  }
+
+  .browse-card-cta {
+    min-height: 44px;
+  }
+
+  .bottom-nav {
+    width: calc(100% - 0.8rem);
+    padding-inline: 0.2rem;
+  }
+}
