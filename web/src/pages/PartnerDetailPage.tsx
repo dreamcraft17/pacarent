@@ -6,6 +6,7 @@ import { useAuth } from '../auth/AuthContext';
 import { trackBookingSubmitted } from '../lib/analytics';
 import { productCopy } from '../copy/productCopy';
 import { getBookingSource } from '../lib/viewport';
+import { apiAssetUrl } from '../api/client';
 
 export default function PartnerDetailPage() {
   const { id } = useParams();
@@ -57,15 +58,25 @@ export default function PartnerDetailPage() {
 
   if (!data) return <p className="v3-muted">Memuat profil…</p>;
   const partner = data.partner;
+  const photoSrc = apiAssetUrl(partner.profile?.photoUrl);
+  const categoryLabel = (name: string) => name.toLowerCase() === 'sewa pacar' ? 'Teman jalan' : name;
 
   return (
     <div className="v3-booking">
       <aside className="v3-booking-profile">
-        <span className="badge badge-verified">✓ {productCopy.booking.profileVerified}</span>
-        {data.pendampingPro && <span className="badge badge-verified">★ Verified+</span>}
-        <h1>{partner.profile?.fullName}</h1>
-        <p className="v3-muted">{partner.profile?.city}</p>
-        <p>{partner.partnerProfile?.bio}</p>
+        {photoSrc && (
+          <div className="v3-booking-profile-photo" style={{ backgroundImage: `url(${photoSrc})` }} />
+        )}
+        <div className="v3-booking-profile-copy">
+          <div className="v3-booking-profile-badges">
+            <span className="badge badge-verified">✓ {productCopy.booking.profileVerified}</span>
+            {data.pendampingPro && <span className="badge badge-verified">★ Verified+</span>}
+          </div>
+          <p className="v3-booking-profile-kicker">Kenalan dulu</p>
+          <h1>{partner.profile?.fullName}</h1>
+          <p className="v3-muted">{partner.profile?.city}</p>
+          <p>{partner.partnerProfile?.bio}</p>
+        </div>
       </aside>
 
       <div className="v3-booking-form-col">
@@ -78,7 +89,7 @@ export default function PartnerDetailPage() {
             >
               {categories.map((c) => (
                 <option key={c.id} value={c.id}>
-                  {c.name}
+                  {categoryLabel(c.name)}
                 </option>
               ))}
             </select>

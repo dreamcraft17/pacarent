@@ -382,6 +382,70 @@ textarea:focus,
   outline-offset: 4px;
 }
 
+.v3-booking-profile {
+  overflow: hidden;
+  padding: 0;
+  background: var(--pr-ink);
+  color: #e7f1ed;
+}
+
+.v3-booking-profile-photo {
+  min-height: 16rem;
+  background-position: center;
+  background-size: cover;
+}
+
+.v3-booking-profile-copy {
+  padding: 1.2rem;
+}
+
+.v3-booking-profile-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.85rem;
+}
+
+.v3-booking-profile-kicker {
+  margin: 0 0 0.25rem;
+  color: var(--pr-accent);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.v3-booking-profile h1 {
+  color: #fffdfa;
+}
+
+.v3-booking-profile .v3-muted {
+  color: #b9d1cb;
+}
+
+.v3-booking-profile-copy > p:last-child {
+  color: #d6e5df;
+}
+
+.v3-booking-form-col > .v3-panel {
+  box-shadow: var(--pr-shadow-soft);
+}
+
+.v3-booking-form-col > .v3-panel:first-child .v3-panel-title {
+  font-size: clamp(1.55rem, 5vw, 2rem);
+  letter-spacing: -0.06em;
+}
+
+@media (max-width: 767px) {
+  .v3-booking-profile-photo {
+    min-height: 13rem;
+  }
+
+  .v3-booking-profile-copy {
+    padding: 1rem;
+  }
+}
+
 .browse-card-cta {
   box-shadow: none;
 }
