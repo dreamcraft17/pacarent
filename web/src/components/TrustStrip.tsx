@@ -1,24 +1,16 @@
+import { productCopy } from '../copy/productCopy';
+
 export default function TrustStrip() {
   return (
     <ul className="trust-strip" aria-label="Keamanan platform">
-      <li>
-        <span className="trust-icon" aria-hidden>
-          ✓
-        </span>
-        Pendamping terverifikasi
-      </li>
-      <li>
-        <span className="trust-icon" aria-hidden>
-          ✓
-        </span>
-        Temani apa aja — bukan cari jodoh
-      </li>
-      <li>
-        <span className="trust-icon" aria-hidden>
-          ✓
-        </span>
-        Gratis untuk mulai
-      </li>
+      {productCopy.trustRail.slice(0, 3).map((line) => (
+        <li key={line}>
+          <span className="trust-icon" aria-hidden>
+            ✓
+          </span>
+          {line}
+        </li>
+      ))}
       <li>
         <span className="trust-icon" aria-hidden>
           ✓

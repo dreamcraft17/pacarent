@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PageShell from '../components/layout/PageShell';
 import Panel from '../components/layout/Panel';
 import { api } from '../api/client';
+import { productCopy } from '../copy/productCopy';
 
 type Booking = {
   id: string;
@@ -17,13 +18,12 @@ type ChatMessage = {
 };
 
 const STATUS_LABELS: Record<string, string> = {
-  pendingpartner: 'Menunggu jawaban',
+  pendingpartner: 'Nunggu jawab',
   accepted: 'Diterima',
   paid: 'Siap jalan',
-  inprogress: 'Berlangsung',
+  inprogress: 'Lagi jalan',
   completed: 'Selesai',
-  cancelled: 'Dibatalkan',
-  refunded: 'Direfund',
+  cancelled: 'Batal',
 };
 
 function statusLabel(status: string) {
@@ -31,6 +31,7 @@ function statusLabel(status: string) {
 }
 
 export default function ChatsPage() {
+  const c = productCopy.chat;
   const [items, setItems] = useState<Booking[]>([]);
   const [previews, setPreviews] = useState<Record<string, ChatMessage | null>>({});
   const [loading, setLoading] = useState(true);
@@ -73,19 +74,25 @@ export default function ChatsPage() {
   }, []);
 
   return (
-    <PageShell title="Chat" dek="Semua obrolan dari request dan booking kamu ada di sini.">
+    <PageShell title={c.pageTitle} dek={c.pageDek}>
       <div className="booking-directory-actions">
-        <Link className="v3-btn-secondary" to="/bookings">Daftar booking</Link>
-        <Link className="v3-btn-primary" to="/">Cari pendamping</Link>
+        <Link className="v3-btn-secondary" to="/bookings">
+          {c.linkBookings}
+        </Link>
+        <Link className="v3-btn-primary" to="/">
+          {c.linkBrowse}
+        </Link>
       </div>
 
-      {loading && <p className="v3-muted">Memuat chat…</p>}
+      {loading && <p className="v3-muted">{c.loading}</p>}
       {!loading && items.length === 0 && (
         <Panel className="v3-bookings-empty">
-          <p className="v3-kicker">Belum ada obrolan</p>
-          <h2 className="v3-panel-title">Cari pendamping dulu, ngobrol kemudian.</h2>
-          <p className="v3-muted">Setelah request dikirim, chat kamu akan muncul di sini.</p>
-          <Link className="v3-btn-primary v3-bookings-empty-cta" to="/">Jelajahi pendamping</Link>
+          <p className="v3-kicker">{c.emptyKicker}</p>
+          <h2 className="v3-panel-title">{c.emptyTitle}</h2>
+          <p className="v3-muted">{c.emptyLead}</p>
+          <Link className="v3-btn-primary v3-bookings-empty-cta" to="/">
+            {c.emptyCta}
+          </Link>
         </Panel>
       )}
 
@@ -94,16 +101,20 @@ export default function ChatsPage() {
           <div className="chat-list-card-head">
             <div>
               <span className="badge">{statusLabel(booking.status)}</span>
-              <h2 className="v3-panel-title">Rencana di {booking.meetingLocation}</h2>
+              <h2 className="v3-panel-title">{c.planAt(booking.meetingLocation)}</h2>
               <p className="v3-muted">{new Date(booking.scheduledAt).toLocaleString('id-ID')}</p>
             </div>
-            <span className="chat-list-avatar" aria-hidden="true">✦</span>
+            <span className="chat-list-avatar" aria-hidden="true">
+              ✦
+            </span>
           </div>
-          <p className="chat-list-card-copy">Lanjutkan obrolan dan rapikan detail ketemuan di sini.</p>
+          <p className="chat-list-card-copy">{c.listHint}</p>
           <p className="chat-list-card-preview">
-            {previews[booking.id]?.text ?? 'Belum ada pesan. Kirim pembuka dulu, biar obrolannya mulai.'}
+            {previews[booking.id]?.text ?? c.previewEmpty}
           </p>
-          <Link className="v3-btn-primary" to={`/bookings?chat=${booking.id}`}>Buka chat</Link>
+          <Link className="v3-btn-primary" to={`/bookings?chat=${booking.id}`}>
+            {c.openChat}
+          </Link>
         </Panel>
       ))}
     </PageShell>

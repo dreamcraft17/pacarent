@@ -39,7 +39,9 @@ function Shell() {
             <>
               <Link to="/syarat">S&amp;K</Link>
               {me?.role === 'Admin' && <Link to="/admin">Admin</Link>}
-              {me && me.role !== 'Partner' && <Link to="/mitra/daftar">Jadi pendamping</Link>}
+              {me && me.role !== 'Partner' && (
+                <Link to="/mitra/daftar">{productCopy.topNav.becomeCompanion}</Link>
+              )}
               {me && <Link to="/membership">{productCopy.membership.navLabel}</Link>}
             </>
           )}
