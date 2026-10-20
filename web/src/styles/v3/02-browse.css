@@ -8,6 +8,7 @@
 
 .browse-masthead {
   display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(15rem, 0.85fr);
   gap: 1.35rem;
   padding: clamp(1.25rem, 4vw, 2rem);
   margin-bottom: 1.25rem;
@@ -56,6 +57,35 @@
   line-height: 1.55;
 }
 
+.browse-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1.2rem;
+}
+
+.browse-hero-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.6rem;
+  padding: 0.65rem 0.95rem;
+  border: 1px solid rgb(255 254 251 / 28%);
+  border-radius: 999px;
+  color: #fffefb;
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.browse-hero-action--primary {
+  border-color: var(--pr-accent);
+  background: var(--pr-accent);
+  color: var(--pr-ink);
+}
+
+.browse-hero-action:hover { transform: translateY(-1px); color: var(--pr-ink); background: var(--pr-coral); border-color: var(--pr-coral); }
+
 .browse-masthead-proof {
   display: flex;
   flex-wrap: wrap;
@@ -73,8 +103,43 @@
 }
 
 .browse-trust-rail {
+  grid-column: 1 / -1;
   padding: 0.85rem 0 0;
+  border-top: 1px solid rgb(255 254 251 / 16%);
 }
+
+.browse-plan-card {
+  align-self: stretch;
+  padding: 1.1rem;
+  border: 1px solid rgb(199 237 104 / 42%);
+  border-radius: 20px;
+  background: rgb(255 254 251 / 8%);
+  color: #fffefb;
+}
+
+.browse-plan-kicker,
+.browse-toolbar-kicker {
+  margin: 0;
+  color: var(--pr-accent);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.browse-plan-card h2 {
+  margin: 0.55rem 0 1rem;
+  color: #fffefb;
+  font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.browse-plan-card ol { display: grid; gap: 0.7rem; margin: 0; padding: 0; list-style: none; }
+.browse-plan-card li { display: flex; gap: 0.65rem; align-items: flex-start; }
+.browse-plan-card li > span { color: var(--pr-accent); font-size: 0.7rem; font-weight: 900; }
+.browse-plan-card strong { display: block; font-size: 0.86rem; }
+.browse-plan-card small { display: block; margin-top: 0.1rem; color: #b9d1cb; font-size: 0.76rem; }
 
 .browse-trust-list {
   display: flex;
@@ -120,6 +185,9 @@
   backdrop-filter: blur(8px);
   box-shadow: 0 8px 24px rgb(16 47 49 / 5%);
 }
+
+.browse-toolbar-label { display: grid; gap: 0.15rem; min-width: 11rem; }
+.browse-toolbar-label strong { color: var(--pr-ink); font-size: 0.88rem; }
 
 .browse-filters {
   display: grid;

@@ -9,6 +9,7 @@ import { trackBookingStarted, trackDiscoveryAction, trackDiscoveryView } from '.
 import { productCopy } from '../copy/productCopy';
 import { partnerBackdrop } from '../lib/partnerVisual';
 import { setBookingSource } from '../lib/viewport';
+import { useAuth } from '../auth/AuthContext';
 
 type Category = { id: number; name: string };
 type Partner = {
@@ -26,6 +27,7 @@ type Partner = {
 };
 
 export default function BrowseListPage() {
+  const { me } = useAuth();
   const [categories, setCategories] = useState<Category[]>([]);
   const [partners, setPartners] = useState<Partner[]>([]);
   const [category, setCategory] = useState('');
@@ -83,19 +85,40 @@ export default function BrowseListPage() {
     <div className="browse-home v3-page v3-page--wide">
       <header className="browse-masthead" aria-labelledby="browse-title">
         <div className="browse-masthead-main">
-          <p className="browse-kicker">{productCopy.discover.eyebrow}</p>
+          <p className="browse-kicker">PACARENT / SOCIAL PLANS</p>
           <h1 id="browse-title">{productCopy.discover.title}</h1>
           <p className="browse-dek">{productCopy.discover.lead}</p>
+          <div className="browse-hero-actions">
+            <a className="browse-hero-action browse-hero-action--primary" href="#profil">Mulai cari</a>
+            {me ? (
+              <Link className="browse-hero-action" to="/chat">Buka chat</Link>
+            ) : (
+              <Link className="browse-hero-action" to="/register">Buat akun</Link>
+            )}
+          </div>
           <div className="browse-masthead-proof" aria-label="Komitmen PacaRent">
             <span>18+ only</span>
             <span>verified profiles</span>
             <span>ketemu di tempat publik</span>
           </div>
         </div>
+        <aside className="browse-plan-card" aria-label="Cara kerja PacaRent">
+          <p className="browse-plan-kicker">FLOW PACARENT</p>
+          <h2>Rencana jelas, ngobrolnya santai.</h2>
+          <ol>
+            <li><span>01</span><div><strong>Pilih profil</strong><small>Lihat vibe dan verifikasi</small></div></li>
+            <li><span>02</span><div><strong>Kirim request</strong><small>Tanggal, durasi, lokasi publik</small></div></li>
+            <li><span>03</span><div><strong>Mulai chat</strong><small>Rapiin detail bareng</small></div></li>
+          </ol>
+        </aside>
         <BrowseTrustRail />
       </header>
 
-      <div className="browse-toolbar">
+      <div className="browse-toolbar" id="profil">
+        <div className="browse-toolbar-label">
+          <span className="browse-toolbar-kicker">DISCOVER</span>
+          <strong>Cari yang tersedia buat momenmu</strong>
+        </div>
         <div className="browse-filters">
           <FilterMenu
             label="Kategori"
