@@ -45,13 +45,17 @@ function statusLabel(status: string) {
 function BookingTimeline({ status }: { status: string }) {
   const active = statusIndex(status);
   return (
-    <ul className="timeline" aria-label="Progress booking">
-      {TIMELINE_LABELS.map((label, i) => (
-        <li key={label} className={i <= active ? 'active' : undefined}>
-          {label}
-        </li>
-      ))}
-    </ul>
+    <ol className="timeline" aria-label="Progress booking">
+      {TIMELINE_LABELS.map((label, i) => {
+        const state = active < 0 ? 'upcoming' : i < active ? 'done' : i === active ? 'current' : 'upcoming';
+        return (
+          <li key={label} className={`timeline-step is-${state}`}>
+            <span className="timeline-dot" aria-hidden="true">{state === 'done' ? '✓' : ''}</span>
+            <span className="timeline-label">{label}</span>
+          </li>
+        );
+      })}
+    </ol>
   );
 }
 
@@ -290,13 +294,17 @@ export default function BookingsPage() {
       {items.map((b) => (
         <Panel key={b.id}>
           <div className="v3-booking-card-meta">
-            <span className="badge">{statusLabel(b.status)}</span>
-            {b.isPriorityBooking && <span className="badge badge-verified">Prioritas</span>}
-            <span className="v3-muted">{new Date(b.scheduledAt).toLocaleString('id-ID')}</span>
+            <div className="v3-booking-badges">
+              <span className="badge">{statusLabel(b.status)}</span>
+              {b.isPriorityBooking && <span className="badge badge-verified">Prioritas</span>}
+            </div>
+            <span className="v3-booking-date">{new Date(b.scheduledAt).toLocaleString('id-ID')}</span>
           </div>
           <BookingTimeline status={b.status} />
-          <p>{b.meetingLocation}</p>
-          <p className="v3-muted">Request terkirim. Kenalan dulu lewat chat—detail rencana bisa dibahas di sini.</p>
+          <p className="v3-booking-location">
+            <span aria-hidden="true">📍</span> {b.meetingLocation}
+          </p>
+          <p className="v3-booking-note">Request terkirim. Kenalan dulu lewat chat—detail rencana bisa dibahas di sini.</p>
           <div className="v3-btn-row">
             {isPartner && (b.status === 'PendingPartner' || b.status === 'pendingPartner') && (
               <>
@@ -325,12 +333,14 @@ export default function BookingsPage() {
                   {productCopy.booking.shareCta}
                 </button>
               )}
-            <button type="button" className="v3-btn-secondary" onClick={() => act(b.id, 'cancel')}>
+          </div>
+          <div className="v3-booking-quiet-actions">
+            <button type="button" className="v3-btn-quiet" onClick={() => act(b.id, 'cancel')}>
               Batalkan
             </button>
             <button
               type="button"
-              className="v3-btn-secondary v3-btn-danger"
+              className="v3-btn-quiet is-danger"
               onClick={() => report(isPartner ? b.userId : b.partnerId)}
             >
               Laporkan

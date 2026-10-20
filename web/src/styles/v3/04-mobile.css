@@ -373,15 +373,8 @@ textarea {
     font-size: 16px;
   }
 
-  .timeline {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding-bottom: 0.35rem;
-    scrollbar-width: thin;
-  }
-
-  .timeline li {
-    flex: 0 0 4.9rem;
+  .timeline-label {
+    font-size: 0.62rem;
   }
 
   .booking-chat-head {
