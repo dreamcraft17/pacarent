@@ -10,8 +10,8 @@ export const productCopy = {
   brandTag: 'Plus one, biar nggak awkward',
   discover: {
     eyebrow: 'Event • date • nongkrong',
-    title: 'Mau datang sendirian? Butuh teman?',
-    lead: 'Cari teman verified buat event, dinner, atau nongkrong. Lihat profilnya, kirim request, lalu ngobrol aja.',
+    title: 'Lagi pengin ditemenin?',
+    lead: 'Mau nongkrong, dinner, datang ke acara, atau sekadar ngobrol? Cari teman verified yang enak diajak bareng.',
     profileCount: (n: number) => (n === 1 ? '1 profil buat dijelajahi' : `${n} profil buat dijelajahi`),
     ctaProfile: 'Lihat profil & mulai',
     filterEmptyTitle: 'Belum nemu yang pas?',
