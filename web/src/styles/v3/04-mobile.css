@@ -114,6 +114,10 @@ textarea {
     gap: 0.8rem;
     margin-bottom: 1rem;
     padding: 1rem;
+    border-color: #d6e4de;
+    border-radius: 22px;
+    background: linear-gradient(145deg, #fffefb 0%, #f1f7f3 100%);
+    box-shadow: 0 10px 24px rgb(16 47 49 / 8%);
   }
 
   .browse-toolbar-label {
@@ -130,7 +134,20 @@ textarea {
   .browse-filters {
     width: 100%;
     min-width: 0;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+
+  .browse-filters .filter-menu-trigger {
+    min-height: 48px;
+    border-color: #d4ddd8;
+    border-radius: 14px;
+    background: #fffefb;
+    box-shadow: 0 2px 0 rgb(16 47 49 / 4%);
+  }
+
+  .browse-filters .filter-menu-value {
+    font-size: 0.8rem;
   }
 
   .browse-count {
