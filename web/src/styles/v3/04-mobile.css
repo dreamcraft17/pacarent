@@ -192,6 +192,13 @@ textarea {
     font-size: 0.75rem;
   }
 
+  .browse-trust-list li:last-child a,
+  .browse-trust-list li:last-child a:hover,
+  .browse-trust-list li:last-child a:focus-visible {
+    color: #fffefb;
+    text-decoration-color: var(--pr-accent);
+  }
+
   .browse-grid {
     grid-template-columns: 1fr;
     gap: 0.9rem;
