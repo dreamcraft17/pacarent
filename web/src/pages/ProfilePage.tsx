@@ -1,5 +1,5 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
-import { api } from '../api/client';
+import { api, apiAssetUrl } from '../api/client';
 import PageShell from '../components/layout/PageShell';
 import Panel from '../components/layout/Panel';
 import { productCopy } from '../copy/productCopy';
@@ -18,6 +18,7 @@ export default function ProfilePage() {
   const [saved, setSaved] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
+  const [photoRevision, setPhotoRevision] = useState(() => Date.now());
 
   useEffect(() => {
     api<any>('/api/auth/me').then((me) => {
@@ -30,6 +31,7 @@ export default function ProfilePage() {
           emergencyContactPhone: me.profile.emergencyContactPhone ?? '',
           birthDate: me.profile.birthDate?.slice(0, 10) ?? '2000-01-01',
         });
+        setPhotoRevision(Date.now());
       }
     });
   }, []);
@@ -45,6 +47,7 @@ export default function ProfilePage() {
       body.append('file', file);
       const res = await api<{ photoUrl: string }>('/api/profile/photo', { method: 'POST', body });
       setForm((f) => ({ ...f, photoUrl: res.photoUrl }));
+      setPhotoRevision(Date.now());
       await refreshMe();
     } catch (err) {
       setUploadError(err instanceof Error ? err.message : 'Upload gagal');
@@ -52,6 +55,9 @@ export default function ProfilePage() {
       setUploading(false);
     }
   };
+
+  const photoPath = apiAssetUrl(form.photoUrl);
+  const photoSrc = photoPath ? `${photoPath}${photoPath.includes('?') ? '&' : '?'}v=${photoRevision}` : '';
 
   const save = async (e: FormEvent) => {
     e.preventDefault();
@@ -77,9 +83,9 @@ export default function ProfilePage() {
       <div className="profile-vibe-layout">
         <aside className="profile-preview-column">
           <section className="profile-preview-card" aria-label="Pratinjau profil">
-            <div className={`profile-preview-photo ${form.photoUrl ? 'has-photo' : ''}`}>
-              {form.photoUrl ? (
-                <img src={form.photoUrl} alt="Pratinjau foto profil" />
+            <div className={`profile-preview-photo ${photoSrc ? 'has-photo' : ''}`}>
+              {photoSrc ? (
+                <img src={photoSrc} alt="Pratinjau foto profil" />
               ) : (
                 <div className="profile-preview-empty">
                   <span aria-hidden>✦</span>
@@ -118,13 +124,13 @@ export default function ProfilePage() {
               <p>Hal yang orang perlu tahu duluan.</p>
             </div>
             <div className="v3-photo-field profile-photo-field">
-              <label className={`v3-photo-slot ${form.photoUrl ? 'is-filled' : 'is-empty'}`}>
-                {form.photoUrl ? <img className="v3-photo-slot-img" src={form.photoUrl} alt="Foto profil" /> : <span className="v3-photo-slot-empty" aria-hidden>+</span>}
-                <span className="v3-photo-slot-badge" aria-hidden>{form.photoUrl ? '✎' : '+'}</span>
+              <label className={`v3-photo-slot ${photoSrc ? 'is-filled' : 'is-empty'}`}>
+                {photoSrc ? <img className="v3-photo-slot-img" src={photoSrc} alt="Foto profil" /> : <span className="v3-photo-slot-empty" aria-hidden>+</span>}
+                <span className="v3-photo-slot-badge" aria-hidden>{photoSrc ? '✎' : '+'}</span>
                 <input type="file" accept="image/jpeg,image/png,image/webp" onChange={uploadPhoto} disabled={uploading} hidden />
               </label>
               <div className="v3-photo-meta">
-                <p>{uploading ? productCopy.profile.photoUploading : form.photoUrl ? productCopy.profile.photoChange : productCopy.profile.photoUpload}</p>
+                <p>{uploading ? productCopy.profile.photoUploading : photoSrc ? productCopy.profile.photoChange : productCopy.profile.photoUpload}</p>
                 <p className="v3-muted">{productCopy.profile.photoHint}</p>
                 {uploadError && <p className="v3-error">{uploadError}</p>}
               </div>

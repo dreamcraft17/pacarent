@@ -223,6 +223,7 @@ public class AuthController(
             : new AuthMeProfileDto(
                 user.Profile.FullName,
                 user.Profile.City,
+                user.Profile.PhotoUrl,
                 user.Profile.EmergencyContactName,
                 user.Profile.EmergencyContactPhone);
 

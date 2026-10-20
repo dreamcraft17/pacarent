@@ -8,6 +8,14 @@ function apiUrl(path: string): string {
   return base ? `${base}${normalized}` : normalized;
 }
 
+export function apiAssetUrl(path: string | null | undefined): string {
+  if (!path) return '';
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  const normalized = path.startsWith('/') ? path : `/${path}`;
+  const base = import.meta.env.VITE_API_BASE?.replace(/\/$/, '') ?? '';
+  return base ? `${base}${normalized}` : normalized;
+}
+
 /**
  * The access token lives in an httpOnly cookie the API sets on login/register/
  * refresh — never in localStorage, which any injected script could read.

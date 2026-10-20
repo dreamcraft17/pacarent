@@ -1,0 +1,244 @@
+/* Mobile-first contract for every v3 route.
+   Desktop enhancements stay in the page files behind min-width breakpoints;
+   this layer owns the small-screen interaction rules in one place. */
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  max-width: 100%;
+}
+
+@media (max-width: 767px) {
+  .v3-topbar {
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.65rem;
+    padding: 0.55rem 0.7rem;
+  }
+
+  .v3-brand {
+    flex: 0 0 auto;
+    font-size: 1.05rem;
+  }
+
+  .v3-topbar-actions {
+    flex: 1 1 100%;
+    justify-content: space-between;
+    gap: 0.25rem 0.55rem;
+    min-width: 0;
+  }
+
+  .v3-topbar-actions a,
+  .v3-topbar-actions button {
+    min-height: 36px;
+    font-size: 0.76rem;
+  }
+
+  .v3-main {
+    min-width: 0;
+    padding-top: 0.9rem;
+  }
+
+  .v3-page-head {
+    margin-bottom: 1rem;
+  }
+
+  .v3-page-head h1 {
+    font-size: clamp(1.75rem, 9vw, 2.45rem);
+  }
+
+  .v3-page-dek {
+    font-size: 0.92rem;
+  }
+
+  .v3-panel {
+    padding: 1rem;
+    border-radius: 18px;
+  }
+
+  .v3-btn-row {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .v3-btn-row button,
+  .v3-btn-row a {
+    width: 100%;
+  }
+
+  .booking-directory-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .booking-directory-actions > * {
+    width: 100% !important;
+    text-align: center;
+  }
+
+  .browse-masthead {
+    padding: 1.15rem;
+    border-radius: 20px;
+    box-shadow: 4px 4px 0 var(--pr-accent);
+  }
+
+  .browse-masthead h1 {
+    font-size: clamp(1.9rem, 10vw, 2.55rem);
+  }
+
+  .browse-dek {
+    font-size: 0.94rem;
+  }
+
+  .browse-toolbar {
+    align-items: stretch;
+    margin-bottom: 1rem;
+  }
+
+  .browse-filters {
+    min-width: 0;
+    grid-template-columns: 1fr;
+  }
+
+  .browse-count {
+    justify-self: start;
+  }
+
+  .browse-trust-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .browse-trust-list li:last-child {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+
+  .browse-grid {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+
+  .launch-panel {
+    padding: 1.15rem;
+    border-radius: 20px;
+    box-shadow: 4px 4px 0 var(--pr-coral);
+  }
+
+  .launch-panel-actions {
+    width: 100%;
+  }
+
+  .launch-btn {
+    width: 100%;
+  }
+
+  .v3-auth {
+    margin-inline: 0;
+    border-radius: 18px;
+  }
+
+  .v3-auth-aside,
+  .v3-auth-main {
+    padding: 1.15rem;
+  }
+
+  .v3-auth-aside h2 {
+    font-size: 1.45rem;
+  }
+
+  .v3-form input,
+  .v3-form select,
+  .v3-form textarea,
+  .booking-chat-compose input {
+    font-size: 16px;
+  }
+
+  .timeline {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.35rem;
+    scrollbar-width: thin;
+  }
+
+  .timeline li {
+    flex: 0 0 4.9rem;
+  }
+
+  .booking-chat-head {
+    flex-wrap: wrap;
+  }
+
+  .booking-chat-context {
+    flex-wrap: wrap;
+  }
+
+  .booking-chat-starters {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .booking-chat-starter {
+    width: 100%;
+  }
+
+  .terms-page {
+    padding: 1rem;
+    border-radius: 18px;
+  }
+
+  .terms-summary {
+    grid-template-columns: 1fr;
+    margin-bottom: 1.25rem;
+  }
+
+  .terms-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-summary {
+    gap: 0.55rem;
+  }
+
+  .admin-stat {
+    min-height: 108px;
+    padding: 0.8rem;
+    border-radius: 15px;
+  }
+
+  .admin-stat strong {
+    font-size: 1.8rem;
+  }
+
+  .admin-panel {
+    padding: 1rem;
+  }
+
+  .profile-vibe-head h1 {
+    font-size: clamp(2rem, 10vw, 2.5rem);
+  }
+
+  .profile-preview-photo,
+  .profile-preview-photo.has-photo img,
+  .profile-preview-empty {
+    min-height: 18rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .browse-trust-list {
+    justify-content: flex-start;
+  }
+}

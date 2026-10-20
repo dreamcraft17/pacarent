@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { api } from '../api/client';
+import { api, apiAssetUrl } from '../api/client';
 import BrowseTrustRail from '../components/BrowseTrustRail';
 import FilterMenu from '../components/FilterMenu';
 import { jabodetabekFilterOptions } from '../data/jabodetabek-cities';
@@ -138,17 +138,18 @@ export default function BrowseListPage() {
         <div className="browse-grid">
           {partners.map((p) => {
             const initial = p.fullName.charAt(0).toUpperCase();
-            const photoStyle = p.photoUrl
-              ? { backgroundImage: `url(${p.photoUrl})` }
+            const photoSrc = apiAssetUrl(p.photoUrl);
+            const photoStyle = photoSrc
+              ? { backgroundImage: `url(${photoSrc})` }
               : { backgroundColor: partnerBackdrop(p.fullName) };
 
             return (
               <article key={p.id} className="browse-card">
                 <div
-                  className={`browse-card-media${p.photoUrl ? '' : ' browse-card-media--placeholder'}`}
+                  className={`browse-card-media${photoSrc ? '' : ' browse-card-media--placeholder'}`}
                   style={photoStyle}
                 >
-                  {!p.photoUrl && <span className="browse-card-initial">{initial}</span>}
+                  {!photoSrc && <span className="browse-card-initial">{initial}</span>}
                   <div className="browse-card-media-foot">
                     {p.verified && <span className="browse-chip browse-chip-verified">Verified</span>}
                     {p.pendampingPro && <span className="browse-chip browse-chip-verified">Verified+</span>}

@@ -24,7 +24,12 @@ public record TokenResponse(
     Guid UserId,
     string Role);
 
-public record AuthMeProfileDto(string FullName, string City, string? EmergencyContactName, string? EmergencyContactPhone);
+public record AuthMeProfileDto(
+    string FullName,
+    string City,
+    string? PhotoUrl,
+    string? EmergencyContactName,
+    string? EmergencyContactPhone);
 
 public record AuthMeResponse(
     Guid Id,

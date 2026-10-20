@@ -17,6 +17,7 @@ type Me = {
   profile?: {
     fullName: string;
     city: string;
+    photoUrl?: string | null;
     emergencyContactName?: string | null;
     emergencyContactPhone?: string | null;
   };

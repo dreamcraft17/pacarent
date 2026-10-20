@@ -180,6 +180,37 @@ export default function BookingsPage() {
     setSearchParams(next, { replace: true });
   }, [chatItems, items, searchParams, setSearchParams]);
 
+  useEffect(() => {
+    const openBookingIds = Object.entries(chatOpen)
+      .filter(([, isOpen]) => isOpen)
+      .map(([bookingId]) => bookingId);
+    if (openBookingIds.length === 0) return;
+
+    let disposed = false;
+    const syncOpenChats = async () => {
+      const results = await Promise.allSettled(
+        openBookingIds.map(async (bookingId) => {
+          const messages = await api<ChatMessage[]>(`/api/bookings/${bookingId}/chat`);
+          return [bookingId, messages] as const;
+        }),
+      );
+      if (disposed) return;
+      setChatItems((prev) => {
+        const next = { ...prev };
+        for (const result of results) {
+          if (result.status === 'fulfilled') next[result.value[0]] = result.value[1];
+        }
+        return next;
+      });
+    };
+
+    const timer = window.setInterval(syncOpenChats, 2000);
+    return () => {
+      disposed = true;
+      window.clearInterval(timer);
+    };
+  }, [chatOpen]);
+
   const sendChat = async (bookingId: string) => {
     const text = chatDrafts[bookingId]?.trim();
     if (!text || chatSending[bookingId]) return;
@@ -315,7 +346,7 @@ export default function BookingsPage() {
                     <p>Ngobrol santai, lalu atur detailnya bareng.</p>
                   </div>
                 </div>
-                <span className="badge">Tersimpan di booking</span>
+                <span className="badge">Update otomatis</span>
               </div>
               <div className="booking-chat-context">
                 <span>Rencana ketemu</span>
