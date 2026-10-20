@@ -55,9 +55,6 @@ export default function LoginPage() {
         {error && <p className="v3-error">{error}</p>}
         <button type="submit">{c.loginSubmit}</button>
       </form>
-      <p className="v3-muted" style={{ marginTop: '1rem' }}>
-        Dev: admin@pacarent.local / Admin123!
-      </p>
       <p style={{ marginTop: '0.75rem' }}>
         <Link className="v3-link" to="/register" state={from !== '/bookings' ? { from } : undefined}>
           {c.loginRegister}

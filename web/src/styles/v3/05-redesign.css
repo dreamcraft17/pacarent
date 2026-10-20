@@ -210,7 +210,51 @@ textarea:focus,
 }
 
 .v3-auth-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   background: var(--pr-paper);
+}
+
+.v3-auth-aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.v3-auth-aside ul {
+  padding: 0;
+  list-style: none;
+}
+
+.v3-auth-aside li {
+  position: relative;
+  padding-left: 1.3rem;
+}
+
+.v3-auth-aside li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--pr-accent);
+  font-weight: 900;
+}
+
+.v3-form > button {
+  min-height: 48px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--pr-accent);
+  color: var(--pr-ink);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 5px 0 rgb(16 47 49 / 13%);
+}
+
+.v3-form > button:hover {
+  background: #b9e94b;
+  transform: translateY(-1px);
 }
 
 .browse-masthead {
