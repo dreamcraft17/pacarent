@@ -85,15 +85,15 @@ export default function BrowseListPage() {
     <div className="browse-home v3-page v3-page--wide">
       <header className="browse-masthead" aria-labelledby="browse-title">
         <div className="browse-masthead-main">
-          <p className="browse-kicker">PACARENT / SOCIAL PLANS</p>
-          <h1 id="browse-title">{productCopy.discover.title}</h1>
+          <p className="browse-kicker">Biar nggak awkward sendirian</p>
+          <h1 id="browse-title">Mau datang, tapi males sendirian?</h1>
           <p className="browse-dek">{productCopy.discover.lead}</p>
           <div className="browse-hero-actions">
-            <a className="browse-hero-action browse-hero-action--primary" href="#profil">Mulai cari</a>
+            <a className="browse-hero-action browse-hero-action--primary" href="#profil">Lihat profil</a>
             {me ? (
-              <Link className="browse-hero-action" to="/chat">Buka chat</Link>
+              <Link className="browse-hero-action" to="/chat">Cek chat</Link>
             ) : (
-              <Link className="browse-hero-action" to="/register">Buat akun</Link>
+              <Link className="browse-hero-action" to="/register">Daftar dulu</Link>
             )}
           </div>
           <div className="browse-masthead-proof" aria-label="Komitmen PacaRent">
@@ -103,12 +103,12 @@ export default function BrowseListPage() {
           </div>
         </div>
         <aside className="browse-plan-card" aria-label="Cara kerja PacaRent">
-          <p className="browse-plan-kicker">FLOW PACARENT</p>
-          <h2>Rencana jelas, ngobrolnya santai.</h2>
+          <p className="browse-plan-kicker">GIMANA CARANYA?</p>
+          <h2>Pilih, chat, berangkat.</h2>
           <ol>
-            <li><span>01</span><div><strong>Pilih profil</strong><small>Lihat vibe dan verifikasi</small></div></li>
-            <li><span>02</span><div><strong>Kirim request</strong><small>Tanggal, durasi, lokasi publik</small></div></li>
-            <li><span>03</span><div><strong>Mulai chat</strong><small>Rapiin detail bareng</small></div></li>
+            <li><span>01</span><div><strong>Lihat profil</strong><small>Cek foto, bio, dan verified-nya</small></div></li>
+            <li><span>02</span><div><strong>Kirim request</strong><small>Tulis rencana singkatmu</small></div></li>
+            <li><span>03</span><div><strong>Ngobrol dulu</strong><small>Bahas detailnya di chat</small></div></li>
           </ol>
         </aside>
         <BrowseTrustRail />
@@ -116,8 +116,8 @@ export default function BrowseListPage() {
 
       <div className="browse-toolbar" id="profil">
         <div className="browse-toolbar-label">
-          <span className="browse-toolbar-kicker">DISCOVER</span>
-          <strong>Cari yang tersedia buat momenmu</strong>
+          <span className="browse-toolbar-kicker">CARI PENDAMPING</span>
+          <strong>Kamu lagi mau ngapain?</strong>
         </div>
         <div className="browse-filters">
           <FilterMenu

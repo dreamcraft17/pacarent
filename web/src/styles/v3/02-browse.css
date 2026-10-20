@@ -36,8 +36,7 @@
   color: var(--pr-accent);
   font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .browse-masthead h1 {
