@@ -11,6 +11,7 @@ public class PacaRentDbContext(DbContextOptions<PacaRentDbContext> options) : Db
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<PartnerCategory> PartnerCategories => Set<PartnerCategory>();
     public DbSet<Booking> Bookings => Set<Booking>();
+    public DbSet<Conversation> Conversations => Set<Conversation>();
     public DbSet<Payment> Payments => Set<Payment>();
     public DbSet<Review> Reviews => Set<Review>();
     public DbSet<Report> Reports => Set<Report>();
@@ -56,6 +57,15 @@ public class PacaRentDbContext(DbContextOptions<PacaRentDbContext> options) : Db
             e.Property(x => x.ChatJson).HasColumnType("jsonb").HasDefaultValue("[]");
             e.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Restrict);
             e.HasOne(x => x.Partner).WithMany().HasForeignKey(x => x.PartnerId).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<Conversation>(e =>
+        {
+            e.HasKey(x => x.Id);
+            e.Property(x => x.MessagesJson).HasColumnType("jsonb").HasDefaultValue("[]");
+            e.HasIndex(x => new { x.UserId, x.PartnerId }).IsUnique();
+            e.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
+            e.HasOne(x => x.Partner).WithMany().HasForeignKey(x => x.PartnerId).OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<Payment>(e =>

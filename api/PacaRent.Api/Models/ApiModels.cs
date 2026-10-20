@@ -62,6 +62,8 @@ public record CreateBookingRequest(
 
 public record SendChatMessageRequest(string Text);
 
+public record CreateConversationRequest(Guid PartnerId, string? OpeningMessage);
+
 public record ChatMessageDto(Guid Id, Guid SenderId, string Text, DateTime SentAt);
 
 public record CreateReviewRequest(Guid BookingId, Guid TargetId, int Rating, string? Comment);

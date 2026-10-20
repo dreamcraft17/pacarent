@@ -95,6 +95,19 @@ public class Booking
     public ICollection<Review> Reviews { get; set; } = new List<Review>();
 }
 
+/// <summary>Obrolan langsung sebelum ada jadwal/booking. Pesan disimpan sebagai JSONB.</summary>
+public class Conversation
+{
+    public Guid Id { get; set; }
+    public Guid UserId { get; set; }
+    public User User { get; set; } = null!;
+    public Guid PartnerId { get; set; }
+    public User Partner { get; set; } = null!;
+    public string MessagesJson { get; set; } = "[]";
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+}
+
 public class Payment
 {
     public Guid Id { get; set; }

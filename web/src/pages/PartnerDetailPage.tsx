@@ -1,72 +1,48 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Panel from '../components/layout/Panel';
-import { api } from '../api/client';
+import { api, apiAssetUrl } from '../api/client';
 import { useAuth } from '../auth/AuthContext';
-import { trackBookingSubmitted } from '../lib/analytics';
 import { productCopy } from '../copy/productCopy';
-import { getBookingSource } from '../lib/viewport';
-import { apiAssetUrl } from '../api/client';
 
 export default function PartnerDetailPage() {
   const { id } = useParams();
   const { me } = useAuth();
   const nav = useNavigate();
   const [data, setData] = useState<any>(null);
-  const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
-  const [form, setForm] = useState({
-    categoryId: '1',
-    scheduledAt: '',
-    durationHours: '2',
-    meetingLocation: '',
-    notes: '',
-  });
+  const [openingMessage, setOpeningMessage] = useState('');
   const [msg, setMsg] = useState('');
 
   useEffect(() => {
     if (!id) return;
     api(`/api/partners/${id}`).then(setData).catch(console.error);
-    api<{ id: number; name: string }[]>('/api/categories').then(setCategories);
   }, [id]);
 
-
-  const book = async (e: FormEvent) => {
+  const startChat = async (e: FormEvent) => {
     e.preventDefault();
     if (!me) {
-      nav('/login');
+      nav('/login', { state: { from: `/mitra/${id}` } });
       return;
     }
     try {
-      const booking = await api<{ id: string }>('/api/bookings', {
+      const conversation = await api<{ id: string }>('/api/conversations', {
         method: 'POST',
-        body: JSON.stringify({
-          partnerId: id,
-          categoryId: Number(form.categoryId),
-          scheduledAt: new Date(form.scheduledAt).toISOString(),
-          durationHours: Number(form.durationHours),
-          meetingLocation: form.meetingLocation,
-          notes: form.notes,
-        }),
+        body: JSON.stringify({ partnerId: id, openingMessage: openingMessage.trim() || null }),
       });
-      trackBookingSubmitted(id, getBookingSource());
-      setMsg(productCopy.booking.success);
-      nav(`/bookings?chat=${booking.id}`);
+      nav(`/chat?conversation=${conversation.id}`);
     } catch (err) {
-      setMsg(err instanceof Error ? err.message : 'Gagal booking');
+      setMsg(err instanceof Error ? err.message : 'Chat belum bisa dibuka');
     }
   };
 
   if (!data) return <p className="v3-muted">Memuat profil…</p>;
   const partner = data.partner;
   const photoSrc = apiAssetUrl(partner.profile?.photoUrl);
-  const categoryLabel = (name: string) => name.toLowerCase() === 'sewa pacar' ? 'Teman jalan' : name;
 
   return (
-    <div className="v3-booking">
+    <div className="v3-booking v3-conversation-start">
       <aside className="v3-booking-profile">
-        {photoSrc && (
-          <div className="v3-booking-profile-photo" style={{ backgroundImage: `url(${photoSrc})` }} />
-        )}
+        {photoSrc && <div className="v3-booking-profile-photo" style={{ backgroundImage: `url(${photoSrc})` }} />}
         <div className="v3-booking-profile-copy">
           <div className="v3-booking-profile-badges">
             <span className="badge badge-verified">✓ {productCopy.booking.profileVerified}</span>
@@ -80,71 +56,25 @@ export default function PartnerDetailPage() {
       </aside>
 
       <div className="v3-booking-form-col">
-        <Panel title={productCopy.booking.detailPanel}>
-          <form className="v3-form" onSubmit={book}>
-            <label>{productCopy.booking.form.category}</label>
-            <select
-              value={form.categoryId}
-              onChange={(e) => setForm({ ...form, categoryId: e.target.value })}
-            >
-              {categories.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {categoryLabel(c.name)}
-                </option>
-              ))}
-            </select>
-            <label>{productCopy.booking.form.when}</label>
-            <input
-              type="datetime-local"
-              value={form.scheduledAt}
-              onChange={(e) => setForm({ ...form, scheduledAt: e.target.value })}
-              required
-            />
-            <label>{productCopy.booking.form.duration}</label>
-            <input
-              type="number"
-              min={1}
-              value={form.durationHours}
-              onChange={(e) => setForm({ ...form, durationHours: e.target.value })}
-            />
-            <label>{productCopy.booking.form.location}</label>
-            <input
-              value={form.meetingLocation}
-              onChange={(e) => setForm({ ...form, meetingLocation: e.target.value })}
-              placeholder={productCopy.booking.form.locationPlaceholder}
-              required
-            />
-            <label>{productCopy.booking.form.notes}</label>
-            <textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} />
-
-            <button type="submit">{productCopy.booking.submit}</button>
-
-            <p className="v3-muted booking-chat-hint">Chat langsung tersedia setelah request terkirim.</p>
-
+        <Panel title="Chat aja dulu">
+          <form className="v3-form" onSubmit={startChat}>
+            <p className="v3-conversation-lead">Belum perlu tentuin tanggal, durasi, atau tempat. Kenalan dulu, bahas maunya apa, baru atur detail kalau udah sama-sama oke.</p>
+            <label htmlFor="opening-message">Mau bilang apa? <span className="v3-muted">(opsional)</span></label>
+            <textarea id="opening-message" value={openingMessage} onChange={(e) => setOpeningMessage(e.target.value)} placeholder="Hai, lagi available buat nemenin ngopi atau nongkrong?" rows={5} />
+            <button type="submit">Chat sekarang</button>
             <ul className="booking-policy">
-              <li>{productCopy.booking.form.policyCancel}</li>
-              <li>{productCopy.booking.form.policyPublic}</li>
-              <li>
-                {productCopy.booking.form.policyTermsPrefix}{' '}
-                <Link to="/syarat" className="v3-link">
-                  {productCopy.booking.form.policyTermsLink}
-                </Link>
-                .
-              </li>
+              <li>Jadwal, durasi, tempat, dan deal dibahas langsung di chat.</li>
+              <li>Ketemuan pertama? Pilih tempat umum yang ramai.</li>
+              <li>Kalau udah sepakat, baru lanjut bikin jadwal di PacaRent.</li>
+              <li>Sebelum gas, baca <Link to="/syarat" className="v3-link">S&amp;K</Link>.</li>
             </ul>
           </form>
           {msg && <p className="v3-error">{msg}</p>}
         </Panel>
 
         <Panel title={productCopy.booking.reviewsTitle}>
-          {(data.reviews as any[]).length === 0 && (
-            <p className="v3-muted">{productCopy.booking.reviewsEmpty}</p>
-          )}
-          {(data.reviews as any[]).map((r) => (
-            <p key={r.id}>
-              ★ {r.rating} — {r.comment}
-            </p>
-          ))}
+          {(data.reviews as any[]).length === 0 && <p className="v3-muted">{productCopy.booking.reviewsEmpty}</p>}
+          {(data.reviews as any[]).map((r) => <p key={r.id}>★ {r.rating} — {r.comment}</p>)}
         </Panel>
       </div>
     </div>
