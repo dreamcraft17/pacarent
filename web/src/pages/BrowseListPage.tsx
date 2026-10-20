@@ -84,7 +84,7 @@ export default function BrowseListPage() {
   return (
     <div className="browse-home v3-page v3-page--wide">
       <header className="browse-masthead" aria-labelledby="browse-title">
-        <div className="browse-masthead-main">
+        <div className="browse-hero">
           <p className="browse-kicker">{productCopy.discover.eyebrow}</p>
           <h1 id="browse-title">{productCopy.discover.title}</h1>
           <p className="browse-dek">{productCopy.discover.lead}</p>
@@ -102,19 +102,22 @@ export default function BrowseListPage() {
               </Link>
             )}
           </div>
-          <div className="browse-masthead-proof" aria-label="Komitmen PacaRent">
-            {productCopy.discover.heroProof.map((chip) => (
-              <span key={chip}>{chip}</span>
-            ))}
-          </div>
+          <p className="browse-hero-stat">
+            <span className="browse-hero-stat-dot" aria-hidden="true" />
+            {loading
+              ? 'Lagi muat profil…'
+              : partners.length > 0
+                ? `${partners.length} pendamping siap diajak ngobrol sekarang`
+                : 'Baru mulai di Jabodetabek — jadi yang pertama gabung'}
+          </p>
         </div>
-        <aside className="browse-plan-card" aria-label="Cara kerja PacaRent">
+        <aside className="browse-plan-rail" aria-label="Cara kerja PacaRent">
           <p className="browse-plan-kicker">{productCopy.discover.howItWorks.kicker}</p>
           <h2>{productCopy.discover.howItWorks.title}</h2>
-          <ol>
+          <ol className="browse-plan-steps">
             {productCopy.discover.howItWorks.steps.map((step, i) => (
-              <li key={step.title}>
-                <span>{String(i + 1).padStart(2, '0')}</span>
+              <li key={step.title} className="browse-plan-step">
+                <span className="browse-plan-step-index">{i + 1}</span>
                 <div>
                   <strong>{step.title}</strong>
                   <small>{step.sub}</small>
@@ -123,8 +126,8 @@ export default function BrowseListPage() {
             ))}
           </ol>
         </aside>
-        <BrowseTrustRail />
       </header>
+      <BrowseTrustRail />
 
       <div className="browse-toolbar" id="profil">
         <div className="browse-toolbar-label">

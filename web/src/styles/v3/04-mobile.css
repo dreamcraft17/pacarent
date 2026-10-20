@@ -90,8 +90,10 @@ textarea {
 
   .browse-masthead {
     grid-template-columns: 1fr;
-    padding: 1.15rem;
-    border-radius: 20px;
+    padding: 1.15rem 0 0;
+  }
+
+  .browse-plan-rail {
     box-shadow: 4px 4px 0 var(--pr-accent);
   }
 
@@ -103,8 +105,7 @@ textarea {
     font-size: 0.94rem;
   }
 
-  .browse-plan-card { order: 2; }
-  .browse-trust-rail { order: 3; }
+  .browse-plan-rail { order: 2; }
   .browse-hero-actions { display: grid; grid-template-columns: 1fr 1fr; }
   .browse-hero-action { width: 100%; }
   .browse-toolbar {

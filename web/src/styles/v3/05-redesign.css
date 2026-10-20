@@ -498,21 +498,14 @@ textarea:focus,
   .conversation-head .v3-btn-secondary { padding: 0.55rem 0.7rem; font-size: 0.78rem; }
 }
 
-.browse-masthead {
-  border: 0;
-  border-radius: 30px;
-  box-shadow: 8px 8px 0 var(--pr-accent);
-}
-
 .browse-masthead h1 {
   letter-spacing: -0.045em;
   word-spacing: 0.035em;
   line-height: 1.04;
 }
 
-.browse-plan-card {
-  border-radius: 22px;
-  background: rgb(255 253 250 / 10%);
+.browse-plan-rail {
+  box-shadow: 6px 6px 0 var(--pr-accent);
 }
 
 .browse-toolbar {
@@ -749,9 +742,8 @@ textarea:focus,
     display: none;
   }
 
-  .browse-masthead {
-    border-radius: 26px;
-    box-shadow: 5px 5px 0 var(--pr-accent);
+  .browse-plan-rail {
+    box-shadow: 4px 4px 0 var(--pr-accent);
   }
 
   .browse-masthead h1 {
