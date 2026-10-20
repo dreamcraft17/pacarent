@@ -85,8 +85,8 @@ export default function BrowseListPage() {
     <div className="browse-home v3-page v3-page--wide">
       <header className="browse-masthead" aria-labelledby="browse-title">
         <div className="browse-masthead-main">
-          <p className="browse-kicker">Biar nggak awkward sendirian</p>
-          <h1 id="browse-title">Mau datang, tapi males sendirian?</h1>
+          <p className="browse-kicker">Butuh teman buat nemenin?</p>
+          <h1 id="browse-title">Mau datang sendirian? Butuh teman?</h1>
           <p className="browse-dek">{productCopy.discover.lead}</p>
           <div className="browse-hero-actions">
             <a className="browse-hero-action browse-hero-action--primary" href="#profil">Lihat profil</a>
