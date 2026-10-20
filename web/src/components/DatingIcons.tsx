@@ -50,6 +50,15 @@ export function IconCalendar({ className }: IconProps) {
   );
 }
 
+export function IconChat({ className }: IconProps) {
+  return (
+    <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M5 5.5h14a2 2 0 012 2v8a2 2 0 01-2 2H11l-4.5 3v-3.1A2 2 0 015 15.5v-10z" stroke="currentColor" strokeWidth="1.75" strokeLinejoin="round" />
+      <path d="M8 10h8M8 13h5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function IconUser({ className }: IconProps) {
   return (
     <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>

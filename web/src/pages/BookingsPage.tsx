@@ -166,6 +166,20 @@ export default function BookingsPage() {
     }
   };
 
+  useEffect(() => {
+    const bookingId = searchParams.get('chat');
+    if (!bookingId || !items.some((booking) => booking.id === bookingId)) return;
+    setChatOpen((prev) => ({ ...prev, [bookingId]: true }));
+    if (!(bookingId in chatItems)) {
+      api<ChatMessage[]>(`/api/bookings/${bookingId}/chat`)
+        .then((messages) => setChatItems((prev) => ({ ...prev, [bookingId]: messages })))
+        .catch(console.error);
+    }
+    const next = new URLSearchParams(searchParams);
+    next.delete('chat');
+    setSearchParams(next, { replace: true });
+  }, [chatItems, items, searchParams, setSearchParams]);
+
   const sendChat = async (bookingId: string) => {
     const text = chatDrafts[bookingId]?.trim();
     if (!text || chatSending[bookingId]) return;
@@ -225,6 +239,11 @@ export default function BookingsPage() {
           {emergency.emergencyHelpLabel}
         </a>
       )}
+
+      <div className="booking-directory-actions" aria-label="Akses booking dan chat">
+        <Link className="v3-btn-primary" to="/bookings">Daftar booking</Link>
+        <Link className="v3-btn-secondary" to="/chat">Daftar chat</Link>
+      </div>
 
       {items.length === 0 && (
         <Panel className="v3-bookings-empty">

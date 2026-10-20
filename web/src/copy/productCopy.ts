@@ -63,6 +63,7 @@ export const productCopy = {
   nav: {
     explore: 'Jelajahi',
     bookings: 'Jadwal',
+    chat: 'Chat',
     profile: 'Profil',
     login: 'Masuk',
     register: 'Daftar',

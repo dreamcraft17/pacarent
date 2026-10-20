@@ -2,6 +2,7 @@ import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './auth/AuthContext';
 import AdminPage from './pages/AdminPage';
 import BookingsPage from './pages/BookingsPage';
+import ChatsPage from './pages/ChatsPage';
 import BrowseListPage from './pages/BrowseListPage';
 import LoginPage from './pages/LoginPage';
 import MembershipPage from './pages/MembershipPage';
@@ -68,6 +69,7 @@ function Shell() {
           <Route path="/profile" element={<RequireAuth><ProfilePage /></RequireAuth>} />
           <Route path="/membership" element={<RequireAuth><MembershipPage /></RequireAuth>} />
           <Route path="/bookings" element={<RequireAuth><BookingsPage /></RequireAuth>} />
+          <Route path="/chat" element={<RequireAuth><ChatsPage /></RequireAuth>} />
           <Route path="/admin" element={<RequireAdmin><AdminPage /></RequireAdmin>} />
         </Routes>
       </main>

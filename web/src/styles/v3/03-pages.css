@@ -1251,6 +1251,27 @@
 .booking-chat-compose input { min-width: 0; flex: 1; padding: 0.65rem 0.75rem; border: 1px solid var(--pr-line-warm); border-radius: 999px; background: var(--pr-paper); font: inherit; }
 .booking-chat-compose button { width: auto !important; flex: 0 0 auto; margin: 0 !important; }
 
+.booking-directory-actions { display: flex; flex-wrap: wrap; gap: 0.65rem; margin: 0 0 1rem; }
+.booking-directory-actions .v3-btn-primary,
+.booking-directory-actions .v3-btn-secondary { width: auto; margin: 0; text-decoration: none; }
+.chat-list-card { display: flex; flex-direction: column; gap: 0.8rem; }
+.chat-list-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.chat-list-card-head .v3-panel-title { margin: 0.55rem 0 0; }
+.chat-list-avatar {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 2.55rem;
+  height: 2.55rem;
+  border-radius: 50%;
+  background: var(--pr-accent);
+  color: var(--pr-ink);
+  font-size: 1.1rem;
+  box-shadow: 2px 2px 0 var(--pr-ink);
+}
+.chat-list-card-copy { margin: 0; color: var(--pr-muted); }
+.chat-list-card .v3-btn-primary { width: fit-content; margin: 0; text-decoration: none; }
+
 @media (max-width: 480px) {
   .booking-chat-head { align-items: flex-start; }
   .booking-chat-head .badge { max-width: 8rem; text-align: right; }

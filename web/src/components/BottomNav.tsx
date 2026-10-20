@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import { productCopy } from '../copy/productCopy';
-import { IconCalendar, IconDiscover, IconLogin, IconUser } from './DatingIcons';
+import { IconCalendar, IconChat, IconDiscover, IconLogin, IconUser } from './DatingIcons';
 
 export default function BottomNav() {
   const { pathname } = useLocation();
@@ -25,6 +25,7 @@ export default function BottomNav() {
     <nav className="bottom-nav" aria-label="Navigasi utama">
       {item('/', n.explore, <IconDiscover />)}
       {me ? item('/bookings', n.bookings, <IconCalendar />) : item('/login', n.login, <IconLogin />)}
+      {me && item('/chat', n.chat, <IconChat />)}
       {me ? item('/profile', n.profile, <IconUser />) : item('/register', n.register, <IconUser />)}
     </nav>
   );

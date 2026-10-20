@@ -36,7 +36,7 @@ export default function PartnerDetailPage() {
       return;
     }
     try {
-      await api('/api/bookings', {
+      const booking = await api<{ id: string }>('/api/bookings', {
         method: 'POST',
         body: JSON.stringify({
           partnerId: id,
@@ -49,7 +49,7 @@ export default function PartnerDetailPage() {
       });
       trackBookingSubmitted(id, getBookingSource());
       setMsg(productCopy.booking.success);
-      nav('/bookings');
+      nav(`/bookings?chat=${booking.id}`);
     } catch (err) {
       setMsg(err instanceof Error ? err.message : 'Gagal booking');
     }
