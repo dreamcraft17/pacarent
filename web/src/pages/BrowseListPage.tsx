@@ -181,57 +181,58 @@ export default function BrowseListPage() {
               : { backgroundColor: partnerBackdrop(p.fullName) };
 
             return (
-              <article key={p.id} className="browse-card">
-                <div
-                  className={`browse-card-media${photoSrc ? '' : ' browse-card-media--placeholder'}`}
-                  style={photoStyle}
-                >
-                  {!photoSrc && <span className="browse-card-initial">{initial}</span>}
-                  <div className="browse-card-media-foot">
-                    {p.verified && <span className="browse-chip browse-chip-verified">Verified</span>}
-                    {p.pendampingPro && <span className="browse-chip browse-chip-verified">Verified+</span>}
-                    {p.boosted && <span className="browse-chip">Boost</span>}
-                    {categoryLabel && <span className="browse-chip">{categoryLabel}</span>}
-                  </div>
-                </div>
-                <div className="browse-card-body">
-                  <div className="browse-card-topline">
-                    <span className="browse-card-vibe">
-                      {categoryLabel ?? productCopy.discover.defaultCategoryLabel}
-                    </span>
-                    {p.verified && <span className="browse-card-verified">✓ verified</span>}
-                  </div>
-                  <h2 className="browse-card-name">
-                    {p.fullName}
-                    <span className="browse-card-city"> · {p.city}</span>
-                  </h2>
-                  <p className="browse-card-rate">
-                    {productCopy.discover.cardTeaser}
-                    {p.reviewCount > 0 ? (
-                      <span className="browse-card-rating">
-                        ★ {p.rating.toFixed(1)} ({p.reviewCount})
-                      </span>
-                    ) : (
-                      <span className="browse-card-rating browse-card-rating--new">Baru di sini</span>
-                    )}
-                  </p>
-                  <p className="browse-card-bio">
-                    {p.bio.trim().slice(0, 96)}
-                    {p.bio.length > 96 ? '…' : ''}
-                  </p>
-                  <Link
-                    className="browse-card-cta"
-                    to={`/mitra/${p.id}`}
-                    onClick={() => {
-                      setBookingSource('browse');
-                      trackDiscoveryAction('profile_open');
-                      trackBookingStarted('browse', p.id);
-                    }}
+              <Link
+                key={p.id}
+                className="browse-card-link"
+                to={`/mitra/${p.id}`}
+                onClick={() => {
+                  setBookingSource('browse');
+                  trackDiscoveryAction('profile_open');
+                  trackBookingStarted('browse', p.id);
+                }}
+              >
+                <article className="browse-card">
+                  <div
+                    className={`browse-card-media${photoSrc ? '' : ' browse-card-media--placeholder'}`}
+                    style={photoStyle}
                   >
-                      {productCopy.discover.ctaProfile}
-                  </Link>
-                </div>
-              </article>
+                    {!photoSrc && <span className="browse-card-initial">{initial}</span>}
+                    <div className="browse-card-media-foot">
+                      {p.verified && <span className="browse-chip browse-chip-verified">Verified</span>}
+                      {p.pendampingPro && <span className="browse-chip browse-chip-verified">Verified+</span>}
+                      {p.boosted && <span className="browse-chip">Boost</span>}
+                      {categoryLabel && <span className="browse-chip">{categoryLabel}</span>}
+                    </div>
+                  </div>
+                  <div className="browse-card-body">
+                    <div className="browse-card-topline">
+                      <span className="browse-card-vibe">
+                        {categoryLabel ?? productCopy.discover.defaultCategoryLabel}
+                      </span>
+                      {p.verified && <span className="browse-card-verified">✓ verified</span>}
+                    </div>
+                    <h2 className="browse-card-name">
+                      {p.fullName}
+                      <span className="browse-card-city"> · {p.city}</span>
+                    </h2>
+                    <p className="browse-card-rate">
+                      {productCopy.discover.cardTeaser}
+                      {p.reviewCount > 0 ? (
+                        <span className="browse-card-rating">
+                          ★ {p.rating.toFixed(1)} ({p.reviewCount})
+                        </span>
+                      ) : (
+                        <span className="browse-card-rating browse-card-rating--new">Baru di sini</span>
+                      )}
+                    </p>
+                    <p className="browse-card-bio">
+                      {p.bio.trim().slice(0, 96)}
+                      {p.bio.length > 96 ? '…' : ''}
+                    </p>
+                    <span className="browse-card-cta">{productCopy.discover.ctaProfile}</span>
+                  </div>
+                </article>
+              </Link>
             );
           })}
         </div>
