@@ -46,6 +46,9 @@ public class PartnerProfile
     public string? SelfieFileRef { get; set; }
     public DateTime? VerifiedAt { get; set; }
     public string Bio { get; set; } = "";
+    /// <summary>Layanan yang ditawarkan pendamping, disimpan sebagai JSONB.</summary>
+    public string ServicesJson { get; set; } = "[]";
+    public string ServiceDescription { get; set; } = "";
     public decimal HourlyRate { get; set; }
     public ICollection<PartnerCategory> PartnerCategories { get; set; } = new List<PartnerCategory>();
 }

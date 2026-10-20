@@ -52,6 +52,15 @@ export default function PartnerDetailPage() {
           <h1>{partner.profile?.fullName}</h1>
           <p className="v3-muted">{partner.profile?.city}</p>
           <p>{partner.partnerProfile?.bio}</p>
+          <div className="profile-services">
+            <span className="profile-services-label">Bisa diajak buat</span>
+            {partner.partnerProfile?.serviceDescription && <p className="profile-services-description">{partner.partnerProfile.serviceDescription}</p>}
+            <div className="profile-services-list">
+              {(partner.partnerProfile?.services?.length ? partner.partnerProfile.services : partner.partnerProfile?.categories ?? []).map((service: string) => (
+                <span key={service}>{service.toLowerCase() === 'sewa pacar' ? 'Teman jalan' : service}</span>
+              ))}
+            </div>
+          </div>
         </div>
       </aside>
 

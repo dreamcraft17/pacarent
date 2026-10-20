@@ -49,6 +49,8 @@ public record UpdateProfileRequest(
 public record PartnerApplyRequest(
     string Bio,
     int[] CategoryIds,
+    string[] Services,
+    string ServiceDescription,
     IFormFile? Ktp,
     IFormFile? Selfie);
 

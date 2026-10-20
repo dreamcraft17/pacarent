@@ -8,6 +8,7 @@ using PacaRent.Core.Enums;
 using PacaRent.Core.Rules;
 using PacaRent.Infra.Data;
 using PacaRent.Infra.Services;
+using System.Text.Json;
 
 namespace PacaRent.Api.Controllers;
 
@@ -19,6 +20,8 @@ public class PartnersController(
     INotificationService notify,
     IAuditService audit) : ControllerBase
 {
+    private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
+
     [HttpGet]
     [AllowAnonymous]
     public async Task<IActionResult> Search(
@@ -85,6 +88,8 @@ public class PartnersController(
                 u.Profile.City,
                 u.Profile.PhotoUrl,
                 u.PartnerProfile.Bio,
+                Services = ReadServices(u.PartnerProfile.ServicesJson),
+                ServiceDescription = u.PartnerProfile.ServiceDescription,
                 Verified = u.PartnerProfile.VerificationStatus == VerificationStatus.Approved,
                 Categories = u.PartnerProfile.PartnerCategories.Select(c => c.Category.Name),
                 Rating = r?.Avg ?? 0,
@@ -140,6 +145,8 @@ public class PartnersController(
                 PartnerProfile = new
                 {
                     partnerProfile.Bio,
+                    Services = ReadServices(partnerProfile.ServicesJson),
+                    partnerProfile.ServiceDescription,
                     partnerProfile.VerificationStatus,
                     Categories = partnerProfile.PartnerCategories.Select(pc => pc.Category.Name)
                 }
@@ -163,6 +170,21 @@ public class PartnersController(
         user.Role = UserRole.Partner;
         user.PartnerProfile ??= new PartnerProfile { UserId = uid };
         user.PartnerProfile.Bio = req.Bio.Trim();
+        var services = (req.Services ?? Array.Empty<string>())
+            .Select(x => x?.Trim())
+            .Where(x => !string.IsNullOrWhiteSpace(x))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        if (services.Length == 0)
+        {
+            return BadRequest(new ApiError("services_required", "Tulis minimal satu layanan yang kamu sediakan."));
+        }
+        user.PartnerProfile.ServicesJson = JsonSerializer.Serialize(services, JsonOptions);
+        user.PartnerProfile.ServiceDescription = (req.ServiceDescription ?? "").Trim();
+        if (string.IsNullOrWhiteSpace(user.PartnerProfile.ServiceDescription))
+        {
+            return BadRequest(new ApiError("service_description_required", "Ceritakan layanan yang kamu sediakan."));
+        }
         // Harga tidak ditentukan di profil. Customer dan pendamping menyepakati detail
         // secara langsung melalui chat pada booking.
         // Documents remain accepted for future verification, but are optional during MVP onboarding.
@@ -189,8 +211,15 @@ public class PartnersController(
         }
 
         await db.SaveChangesAsync(ct);
-        await notify.NotifyAsync(uid, NotificationType.System, "Profil mitra aktif", "Profil Anda sudah aktif dan bisa menerima booking.", ct);
+        await notify.NotifyAsync(uid, NotificationType.System, "Profil pendamping aktif", "Profil kamu sudah aktif dan bisa menerima chat.", ct);
         await audit.LogAsync(uid, "partner_apply", "partner_profile", uid.ToString(), null, ct);
         return Ok(new { status = "active" });
+    }
+
+    private static IReadOnlyList<string> ReadServices(string? raw)
+    {
+        if (string.IsNullOrWhiteSpace(raw)) return Array.Empty<string>();
+        try { return JsonSerializer.Deserialize<string[]>(raw, JsonOptions) ?? []; }
+        catch (JsonException) { return Array.Empty<string>(); }
     }
 }

@@ -42,6 +42,8 @@ public class PacaRentDbContext(DbContextOptions<PacaRentDbContext> options) : Db
         {
             e.HasKey(x => x.UserId);
             e.HasOne(x => x.User).WithOne(x => x.PartnerProfile).HasForeignKey<PartnerProfile>(x => x.UserId);
+            e.Property(x => x.ServicesJson).HasColumnType("jsonb").HasDefaultValue("[]");
+            e.Property(x => x.ServiceDescription).HasMaxLength(1000);
             e.Property(x => x.HourlyRate).HasPrecision(18, 2);
         });
 

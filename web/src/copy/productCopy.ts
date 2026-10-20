@@ -152,8 +152,8 @@ export const productCopy = {
       'Buat fitur share rencana pas ketemu — orang dekat kamu tau rencanamu. Bukan layanan darurat; emergency call 112.',
   },
   companionApply: {
-    title: 'Mau tampil di feed?',
-    dek: 'Bio & vibe kamu yang jual. Bikin orang ngerasa cocok sebelum chat.',
+    title: 'Mau jadi pendamping?',
+    dek: 'Tulis vibe dan layananmu. Biar orang tahu enaknya ngajak kamu ngapain sebelum chat.',
     success: 'Profil live — siap nerima ajakan.',
   },
   membership: {

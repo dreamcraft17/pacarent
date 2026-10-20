@@ -12,6 +12,7 @@ public static class DataSeeder
         "Teman nongkrong",
         "Teman jalan",
         "Teman acara",
+        "Lainnya",
     };
 
     /// <summary>Idempotent — aman dipanggil tiap request categories (dev in-memory lama).</summary>
