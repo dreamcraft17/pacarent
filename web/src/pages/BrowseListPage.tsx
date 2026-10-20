@@ -207,10 +207,13 @@ export default function BrowseListPage() {
                   </h2>
                   <p className="browse-card-rate">
                     {productCopy.discover.cardTeaser}
-                    <span className="browse-card-rating">
-                      ★ {p.rating.toFixed(1)}
-                      {p.reviewCount > 0 ? ` (${p.reviewCount})` : ''}
-                    </span>
+                    {p.reviewCount > 0 ? (
+                      <span className="browse-card-rating">
+                        ★ {p.rating.toFixed(1)} ({p.reviewCount})
+                      </span>
+                    ) : (
+                      <span className="browse-card-rating browse-card-rating--new">Baru di sini</span>
+                    )}
                   </p>
                   <p className="browse-card-bio">
                     {p.bio.trim().slice(0, 96)}

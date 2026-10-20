@@ -131,6 +131,12 @@ textarea {
     line-height: 1.15;
   }
 
+  .browse-toolbar-kicker {
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+
   .browse-filters {
     width: 100%;
     min-width: 0;
@@ -227,6 +233,10 @@ textarea {
     gap: 0.25rem;
   }
 
+  .browse-card-media-foot .browse-chip:not(.browse-chip-verified) {
+    display: none;
+  }
+
   .browse-chip {
     padding: 0.22rem 0.4rem;
     font-size: 0.58rem;
@@ -252,6 +262,9 @@ textarea {
     padding: 0.22rem 0.42rem;
     border-radius: 999px;
     background: #e7f3ee;
+    font-size: 0.72rem;
+    letter-spacing: 0.01em;
+    text-transform: none;
   }
 
   .browse-card-name {
@@ -279,6 +292,11 @@ textarea {
     border-radius: 999px;
     background: #f0f3f0;
     font-size: 0.9em;
+  }
+
+  .browse-card-rating--new {
+    color: var(--pr-primary);
+    background: #e7f3ee;
   }
 
   .browse-card-bio {
