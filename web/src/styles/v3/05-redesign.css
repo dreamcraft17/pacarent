@@ -257,6 +257,88 @@ textarea:focus,
   transform: translateY(-1px);
 }
 
+/* Auth is an entry point, not a marketing landing page: one focused card,
+   a short context header, then the form. */
+.v3-auth {
+  display: block;
+  max-width: 640px;
+  margin: 1.5rem auto 2rem;
+  border: 1px solid rgb(16 47 49 / 14%);
+  border-radius: 28px;
+  box-shadow: 7px 7px 0 var(--pr-accent), var(--pr-shadow-soft);
+}
+
+.v3-auth-aside {
+  display: block;
+  padding: 1.35rem 1.35rem 1.15rem;
+  background: var(--pr-ink);
+}
+
+.v3-auth-aside .v3-kicker {
+  margin-bottom: 0.45rem;
+  color: var(--pr-accent);
+}
+
+.v3-auth-aside h2 {
+  margin-bottom: 0.35rem;
+  font-size: clamp(1.7rem, 6vw, 2.35rem);
+  letter-spacing: -0.06em;
+}
+
+.v3-auth-lead {
+  max-width: 42ch;
+  margin-bottom: 0.9rem;
+  font-size: 0.92rem;
+}
+
+.v3-auth-aside ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+}
+
+.v3-auth-aside li {
+  padding: 0.38rem 0.58rem;
+  border: 1px solid rgb(201 242 97 / 26%);
+  border-radius: 999px;
+  background: rgb(255 253 250 / 7%);
+  color: #d9e9e3;
+  font-size: 0.72rem;
+}
+
+.v3-auth-aside li::before {
+  content: none;
+}
+
+.v3-auth-main {
+  display: block;
+  padding: 1.35rem;
+}
+
+.v3-auth-main h2 {
+  margin-bottom: 1rem;
+  font-size: 1.55rem;
+  letter-spacing: -0.045em;
+}
+
+@media (max-width: 767px) {
+  .v3-auth {
+    margin-top: 0.65rem;
+    border-radius: 24px;
+    box-shadow: 4px 4px 0 var(--pr-accent), var(--pr-shadow-soft);
+  }
+
+  .v3-auth-aside,
+  .v3-auth-main {
+    padding: 1.05rem;
+  }
+
+  .v3-auth-main h2 {
+    font-size: 1.4rem;
+  }
+}
+
 .browse-masthead {
   border: 0;
   border-radius: 30px;
