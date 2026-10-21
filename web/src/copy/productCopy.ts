@@ -13,7 +13,7 @@ export const productCopy = {
   },
   discover: {
     eyebrow: 'Lagi mau ngapain?',
-    title: 'Cari temen ngopi?',
+    title: 'Lo bosen sendirian?',
     tagline: 'Bukan app swipe jodoh.',
     lead: 'Mau ngopi, nongkrong, jalan, makan, atau datang ke acara? Pilih profil yang vibes-nya oke, terus chat aja.',
     heroCtaPrimary: 'Lihat profil ↓',
