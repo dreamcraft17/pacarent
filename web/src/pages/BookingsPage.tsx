@@ -373,7 +373,7 @@ export default function BookingsPage() {
               className="v3-btn-quiet is-danger"
               onClick={() => report(isPartner ? b.userId : b.partnerId)}
             >
-              <Flag size={16} strokeWidth={2.5} aria-hidden="true" /> Laporkan
+              <Flag size={20} strokeWidth={2.5} aria-hidden="true" /> Laporkan
             </button>
           </div>
           {chatOpen[b.id] && (

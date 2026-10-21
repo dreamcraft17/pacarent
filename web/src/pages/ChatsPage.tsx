@@ -202,7 +202,7 @@ export default function ChatsPage() {
                 <div className="conversation-head-actions">
                   <Link className="v3-btn-secondary" to={`/mitra/${selected.person.id}`}>Lihat profil</Link>
                   <button type="button" className="v3-btn-quiet is-danger" onClick={() => void report()}>
-                    <Flag size={16} strokeWidth={2.5} aria-hidden="true" /> {c.reportCta}
+                    <Flag size={20} strokeWidth={2.5} aria-hidden="true" /> {c.reportCta}
                   </button>
                 </div>
               </div>
@@ -283,7 +283,7 @@ export default function ChatsPage() {
                       />
 
                       <p className="conversation-schedule-safety">
-                        <ShieldAlert size={16} strokeWidth={2.5} aria-hidden="true" /> {c.scheduleSafety}
+                        <ShieldAlert size={20} strokeWidth={2.5} aria-hidden="true" /> {c.scheduleSafety}
                       </p>
 
                       {scheduleError && <p className="v3-error">{scheduleError}</p>}
