@@ -130,15 +130,6 @@ export default function BrowseListPage() {
         </aside>
       </header>
 
-      <div className="pr-marquee" aria-hidden="true">
-        <div className="pr-marquee__track">
-          {[...productCopy.trustRail, ...productCopy.trustRail].map((item, i) => (
-            <span key={`${item}-${i}`} className="pr-marquee__item">
-              {item}
-            </span>
-          ))}
-        </div>
-      </div>
       <p className="browse-terms-link">
         <Link to="/syarat">{productCopy.launchEmpty.ctaTerms}</Link>
       </p>

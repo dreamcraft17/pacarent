@@ -48,41 +48,6 @@
   color: var(--pr-ink-soft);
 }
 
-.pr-marquee {
-  overflow: hidden;
-  margin: 1.1rem 0 0;
-  padding: 0.6rem 0;
-  border-block: var(--pr-border-width) solid var(--pr-border);
-  background: var(--pr-ink);
-}
-
-.pr-marquee__track {
-  display: flex;
-  width: max-content;
-  gap: 2.5rem;
-  animation: pr-marquee-scroll 22s linear infinite;
-}
-
-.pr-marquee__item {
-  flex-shrink: 0;
-  color: var(--pr-paper);
-  font-weight: 800;
-  font-size: 0.85rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-@keyframes pr-marquee-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pr-marquee__track {
-    animation: none;
-  }
-}
-
 .browse-dek {
   max-width: 36rem;
   margin: 0.9rem 0 0;
