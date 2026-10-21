@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api, apiAssetUrl } from '../api/client';
-import BrowseTrustRail from '../components/BrowseTrustRail';
 import FilterMenu from '../components/FilterMenu';
 import { jabodetabekFilterOptions } from '../data/jabodetabek-cities';
 import LaunchEmptyState from '../components/LaunchEmptyState';
@@ -140,7 +139,9 @@ export default function BrowseListPage() {
           ))}
         </div>
       </div>
-      <BrowseTrustRail />
+      <p className="browse-terms-link">
+        <Link to="/syarat">{productCopy.launchEmpty.ctaTerms}</Link>
+      </p>
 
       <div className="browse-toolbar" id="profil">
         <div className="browse-toolbar-label">

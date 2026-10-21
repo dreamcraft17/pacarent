@@ -143,10 +143,16 @@
   box-shadow: 0 0 0 3px var(--pr-primary-soft);
 }
 
-.browse-trust-rail {
-  margin: 1.1rem 0 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--pr-line-warm);
+.browse-terms-link {
+  margin: 0.75rem 0 1.5rem;
+  font-size: 0.82rem;
+}
+
+.browse-terms-link a {
+  color: var(--pr-ink-soft);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .browse-plan-rail {
@@ -218,33 +224,6 @@
 
 .browse-plan-step strong { display: block; font-size: 0.88rem; color: #fffefb; }
 .browse-plan-step small { display: block; margin-top: 0.15rem; color: #b9d1cb; font-size: 0.78rem; }
-
-.browse-trust-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.browse-trust-list li {
-  padding: 0.4rem 0.75rem;
-  border: 1px solid #cfe0dc;
-  border-radius: 999px;
-  background: rgb(255 254 251 / 85%);
-  color: var(--pr-ink-soft);
-  font-size: 0.78rem;
-  font-weight: 600;
-  line-height: 1.3;
-}
-
-.browse-trust-list a {
-  color: var(--pr-ink);
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
 
 .browse-toolbar {
   position: sticky;
