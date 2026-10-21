@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { productCopy } from '../copy/productCopy';
-import { IconHeart } from './DatingIcons';
 
 type Props = {
   id?: string;
@@ -63,7 +62,6 @@ export default function LaunchEmptyState({
           <div className="launch-preview-body">
             <div className="launch-preview-topline">
               <span className="browse-card-vibe">{productCopy.discover.defaultCategoryLabel}</span>
-              <IconHeart className="launch-preview-heart" />
             </div>
             <p className="launch-preview-name">Nama pendamping</p>
             <p className="launch-preview-rate">

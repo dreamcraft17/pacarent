@@ -189,7 +189,13 @@ export default function ChatsPage() {
           <div className="conversation-list" aria-label="Daftar chat">
             {items.map((item) => (
               <button key={item.id} type="button" className={`conversation-list-item${item.id === selected?.id ? ' is-active' : ''}`} onClick={() => setSearchParams({ conversation: item.id })}>
-                {item.person.photoUrl ? <img src={apiAssetUrl(item.person.photoUrl)} alt="" /> : <span className="conversation-avatar">✦</span>}
+                {item.person.photoUrl ? (
+                  <img src={apiAssetUrl(item.person.photoUrl)} alt="" />
+                ) : (
+                  <span className="conversation-avatar" aria-hidden="true">
+                    {(item.person.fullName || '?').charAt(0).toUpperCase()}
+                  </span>
+                )}
                 <span><strong>{item.person.fullName || 'Teman ngobrol'}</strong><small>{item.person.city || 'PacaRent'}</small><em>{item.lastMessage?.text || 'Belum ada pesan'}</em></span>
               </button>
             ))}

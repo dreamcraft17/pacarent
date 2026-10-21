@@ -356,10 +356,12 @@ textarea:focus,
   height: 3rem;
   border-radius: 50%;
   object-fit: cover;
-  background: var(--pr-primary-soft);
+  background: var(--pr-lilac);
+  border: var(--pr-border-width) solid var(--pr-border);
   display: grid;
   place-items: center;
   color: var(--pr-ink);
+  font-size: 1.1rem;
   font-weight: 800;
 }
 

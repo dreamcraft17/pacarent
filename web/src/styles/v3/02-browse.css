@@ -661,12 +661,6 @@
   justify-content: space-between;
 }
 
-.launch-preview-heart {
-  width: 0.95rem;
-  height: 0.95rem;
-  color: var(--pr-coral);
-}
-
 .launch-preview-name {
   margin: 0;
   font-family: var(--font-display);

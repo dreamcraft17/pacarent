@@ -1,4 +1,5 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
+import { Camera } from 'lucide-react';
 import { api, apiAssetUrl } from '../api/client';
 import PageShell from '../components/layout/PageShell';
 import Panel from '../components/layout/Panel';
@@ -88,7 +89,7 @@ export default function ProfilePage() {
                 <img src={photoSrc} alt="Pratinjau foto profil" />
               ) : (
                 <div className="profile-preview-empty">
-                  <span aria-hidden>✦</span>
+                  <Camera size={28} strokeWidth={2.5} aria-hidden="true" />
                   <strong>Foto lo<br />di sini</strong>
                   <small>Foto yang jelas = first impression yang lebih enak</small>
                 </div>

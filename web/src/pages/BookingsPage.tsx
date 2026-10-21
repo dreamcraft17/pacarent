@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Flag } from 'lucide-react';
+import { Flag, MessageCircle } from 'lucide-react';
 import { api } from '../api/client';
 import PageShell from '../components/layout/PageShell';
 import Panel from '../components/layout/Panel';
@@ -380,7 +380,9 @@ export default function BookingsPage() {
             <div className="booking-chat" aria-label={`Chat booking ${b.id}`}>
               <div className="booking-chat-head">
                 <div className="booking-chat-person">
-                  <span className="booking-chat-avatar" aria-hidden="true">✦</span>
+                  <span className="booking-chat-avatar" aria-hidden="true">
+                    <MessageCircle size={20} strokeWidth={2.5} />
+                  </span>
                   <div>
                     <strong>Chat untuk rencana ini</strong>
                     <p>Ngobrol santai, lalu atur detailnya bareng.</p>
