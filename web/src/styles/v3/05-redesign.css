@@ -420,6 +420,35 @@ textarea:focus,
 .conversation-head .v3-panel-title { margin: 0.2rem 0 0; }
 .conversation-head p { margin-bottom: 0; }
 
+.conversation-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.conversation-empty {
+  padding: 0.5rem 0;
+}
+
+.conversation-schedule {
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--pr-line-warm);
+}
+
+.conversation-schedule-form {
+  padding: 1rem;
+  border-radius: var(--pr-card-radius);
+  background: var(--pr-mint);
+}
+
+.conversation-schedule-safety {
+  margin: 0.75rem 0 0;
+  font-size: 0.82rem;
+  color: var(--pr-ink-soft);
+}
+
 .conversation-messages {
   min-height: 16rem;
   max-height: 30rem;

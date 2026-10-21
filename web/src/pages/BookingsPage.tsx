@@ -38,11 +38,7 @@ const STATUS_ICONS: Record<string, string> = {
   disputed: '⚠️',
 };
 
-const CHAT_STARTERS = [
-  'Hai! Kamu biasanya suka nongkrong di mana?',
-  'Mau bahas rencana ketemunya dulu?',
-  'Ada tempat yang kamu rekomendasikan?',
-] as const;
+const CHAT_STARTERS = productCopy.chat.starters;
 
 function statusIndex(status: string) {
   const key = status.toLowerCase();

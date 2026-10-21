@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import PageShell from '../components/layout/PageShell';
 import Panel from '../components/layout/Panel';
@@ -13,6 +13,15 @@ type Conversation = {
   lastMessage: Message | null;
   updatedAt: string;
 };
+type Category = { id: number; name: string };
+
+const DEFAULT_SCHEDULE = {
+  categoryId: '',
+  scheduledAt: '',
+  durationHours: 2,
+  meetingLocation: '',
+  notes: '',
+};
 
 export default function ChatsPage() {
   const c = productCopy.chat;
@@ -23,8 +32,17 @@ export default function ChatsPage() {
   const [draft, setDraft] = useState('');
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
+
+  const [scheduleOpen, setScheduleOpen] = useState(false);
+  const [scheduleCategories, setScheduleCategories] = useState<Category[]>([]);
+  const [scheduleForm, setScheduleForm] = useState(DEFAULT_SCHEDULE);
+  const [scheduleSubmitting, setScheduleSubmitting] = useState(false);
+  const [scheduleError, setScheduleError] = useState('');
+  const [scheduleSuccess, setScheduleSuccess] = useState(false);
+
   const selectedId = searchParams.get('conversation');
   const selected = useMemo(() => items.find((item) => item.id === selectedId) ?? items[0], [items, selectedId]);
+  const isPartner = me?.role === 'Partner';
 
   useEffect(() => {
     let disposed = false;
@@ -62,6 +80,13 @@ export default function ChatsPage() {
     return () => { disposed = true; window.clearInterval(timer); };
   }, [selected?.id]);
 
+  useEffect(() => {
+    setScheduleOpen(false);
+    setScheduleForm(DEFAULT_SCHEDULE);
+    setScheduleError('');
+    setScheduleSuccess(false);
+  }, [selected?.id]);
+
   const send = async () => {
     const text = draft.trim();
     if (!selected?.id || !text || sending) return;
@@ -73,6 +98,72 @@ export default function ChatsPage() {
     } finally {
       setSending(false);
     }
+  };
+
+  const openSchedule = async () => {
+    if (!selected) return;
+    setScheduleSuccess(false);
+    setScheduleError('');
+    setScheduleOpen(true);
+    if (scheduleCategories.length > 0) return;
+    try {
+      const res = await api<{ partner: { partnerProfile?: { partnerCategories?: { categoryId: number; category?: { name: string } }[] } } }>(
+        `/api/partners/${selected.person.id}`,
+      );
+      const categories = (res.partner.partnerProfile?.partnerCategories ?? [])
+        .map((pc) => ({ id: pc.categoryId, name: pc.category?.name ?? 'Lainnya' }));
+      setScheduleCategories(categories);
+      if (categories[0]) setScheduleForm((prev) => ({ ...prev, categoryId: String(categories[0].id) }));
+    } catch (error) {
+      setScheduleError('Gagal memuat kategori pendamping');
+      console.error(error);
+    }
+  };
+
+  const submitSchedule = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!selected || scheduleSubmitting) return;
+    setScheduleError('');
+    if (!scheduleForm.categoryId || !scheduleForm.scheduledAt || scheduleForm.meetingLocation.trim().length < 3) {
+      setScheduleError('Isi kategori, tanggal, dan lokasi pertemuan (min. 3 karakter) dulu ya.');
+      return;
+    }
+    setScheduleSubmitting(true);
+    try {
+      await api('/api/bookings', {
+        method: 'POST',
+        body: JSON.stringify({
+          partnerId: selected.person.id,
+          categoryId: Number(scheduleForm.categoryId),
+          scheduledAt: new Date(scheduleForm.scheduledAt).toISOString(),
+          durationHours: Number(scheduleForm.durationHours),
+          meetingLocation: scheduleForm.meetingLocation.trim(),
+          notes: scheduleForm.notes.trim() || null,
+        }),
+      });
+      setScheduleSuccess(true);
+      setScheduleForm(DEFAULT_SCHEDULE);
+    } catch (error) {
+      setScheduleError(error instanceof Error ? error.message : 'Request gagal dikirim');
+    } finally {
+      setScheduleSubmitting(false);
+    }
+  };
+
+  const report = async () => {
+    if (!selected) return;
+    const description = prompt(c.reportPrompt);
+    if (!description) return;
+    await api('/api/reports', {
+      method: 'POST',
+      body: JSON.stringify({
+        targetType: 'User',
+        targetId: selected.person.id,
+        reason: 'Pelanggaran',
+        description,
+      }),
+    });
+    alert(c.reportSuccess);
   };
 
   return (
@@ -107,13 +198,103 @@ export default function ChatsPage() {
             <Panel className="conversation-panel">
               <div className="conversation-head">
                 <div><p className="v3-kicker">Lanjut ngobrol</p><h2 className="v3-panel-title">{selected.person.fullName || 'Teman ngobrol'}</h2><p className="v3-muted">{selected.person.city || 'Profil verified di PacaRent'}</p></div>
-                <Link className="v3-btn-secondary" to={`/mitra/${selected.person.id}`}>Lihat profil</Link>
+                <div className="conversation-head-actions">
+                  <Link className="v3-btn-secondary" to={`/mitra/${selected.person.id}`}>Lihat profil</Link>
+                  <button type="button" className="v3-btn-quiet is-danger" onClick={() => void report()}>{c.reportCta}</button>
+                </div>
               </div>
               <div className="conversation-messages" aria-live="polite">
-                {messages.length === 0 && <p className="v3-muted">Belum ada pesan. Sapa duluan aja.</p>}
+                {messages.length === 0 && (
+                  <div className="conversation-empty">
+                    <p className="v3-muted">Belum ada pesan. Sapa duluan aja.</p>
+                    <div className="booking-chat-starters" aria-label="Pilihan pembuka chat">
+                      {c.starters.map((starter) => (
+                        <button key={starter} type="button" className="booking-chat-starter" onClick={() => setDraft(starter)}>
+                          {starter}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 {messages.map((message) => <div key={message.id} className={`conversation-message${message.senderId === me?.id ? ' is-mine' : ''}`}><p>{message.text}</p><time>{new Date(message.sentAt).toLocaleString('id-ID', { hour: '2-digit', minute: '2-digit' })}</time></div>)}
               </div>
               <div className="conversation-compose"><input value={draft} onChange={(e) => setDraft(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') void send(); }} placeholder="Tulis pesan…" aria-label="Tulis pesan" /><button type="button" onClick={() => void send()} disabled={sending || !draft.trim()}>Kirim</button></div>
+
+              {!isPartner && (
+                <div className="conversation-schedule">
+                  {!scheduleOpen && !scheduleSuccess && (
+                    <button type="button" className="v3-btn-primary" style={{ width: 'auto' }} onClick={() => void openSchedule()}>
+                      {c.scheduleCta}
+                    </button>
+                  )}
+                  {scheduleSuccess && <p className="v3-muted">{c.scheduleSuccess}</p>}
+                  {scheduleOpen && (
+                    <form className="v3-form conversation-schedule-form" onSubmit={submitSchedule}>
+                      <p className="v3-panel-title" style={{ fontSize: '1.05rem', margin: '0 0 0.25rem' }}>{c.scheduleTitle}</p>
+                      <p className="v3-muted" style={{ margin: '0 0 0.75rem' }}>{c.scheduleLead}</p>
+
+                      <label htmlFor="schedule-category">Kategori</label>
+                      <select
+                        id="schedule-category"
+                        value={scheduleForm.categoryId}
+                        onChange={(e) => setScheduleForm((prev) => ({ ...prev, categoryId: e.target.value }))}
+                      >
+                        <option value="">Pilih kategori</option>
+                        {scheduleCategories.map((cat) => (
+                          <option key={cat.id} value={cat.id}>{cat.name}</option>
+                        ))}
+                      </select>
+
+                      <label htmlFor="schedule-when">Tanggal &amp; jam</label>
+                      <input
+                        id="schedule-when"
+                        type="datetime-local"
+                        value={scheduleForm.scheduledAt}
+                        onChange={(e) => setScheduleForm((prev) => ({ ...prev, scheduledAt: e.target.value }))}
+                      />
+
+                      <label htmlFor="schedule-duration">Durasi (jam)</label>
+                      <input
+                        id="schedule-duration"
+                        type="number"
+                        min={1}
+                        max={12}
+                        value={scheduleForm.durationHours}
+                        onChange={(e) => setScheduleForm((prev) => ({ ...prev, durationHours: Number(e.target.value) }))}
+                      />
+
+                      <label htmlFor="schedule-location">Lokasi ketemu</label>
+                      <input
+                        id="schedule-location"
+                        value={scheduleForm.meetingLocation}
+                        placeholder="Mall, kafe, atau tempat umum lainnya"
+                        onChange={(e) => setScheduleForm((prev) => ({ ...prev, meetingLocation: e.target.value }))}
+                      />
+
+                      <label htmlFor="schedule-notes">Catatan <span className="v3-muted">(opsional)</span></label>
+                      <textarea
+                        id="schedule-notes"
+                        rows={3}
+                        value={scheduleForm.notes}
+                        onChange={(e) => setScheduleForm((prev) => ({ ...prev, notes: e.target.value }))}
+                      />
+
+                      <p className="conversation-schedule-safety">🛟 {c.scheduleSafety}</p>
+
+                      {scheduleError && <p className="v3-error">{scheduleError}</p>}
+
+                      <div className="v3-btn-row" style={{ marginTop: '0.25rem' }}>
+                        <button type="submit" className="v3-btn-primary" style={{ width: 'auto', margin: 0 }} disabled={scheduleSubmitting}>
+                          {scheduleSubmitting ? c.scheduleSubmitting : c.scheduleSubmit}
+                        </button>
+                        <button type="button" className="v3-btn-secondary" onClick={() => setScheduleOpen(false)}>
+                          Batal
+                        </button>
+                      </div>
+                    </form>
+                  )}
+                </div>
+              )}
             </Panel>
           )}
         </div>

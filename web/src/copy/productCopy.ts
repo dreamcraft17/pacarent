@@ -102,6 +102,22 @@ export const productCopy = {
     previewEmpty: 'Belum ada pesan. Gas kirim yang pertama.',
     openChat: 'Buka chat',
     planAt: (place: string) => `Chat di ${place}`,
+    starters: [
+      'Hai! Kamu biasanya suka nongkrong di mana?',
+      'Mau bahas rencana ketemunya dulu?',
+      'Ada tempat yang kamu rekomendasikan?',
+    ] as const,
+    scheduleCta: 'Ajuin jadwal',
+    scheduleTitle: 'Ajuin jadwal ketemu',
+    scheduleLead: 'Udah cocok ngobrolnya? Isi detailnya, request dikirim ke pendamping buat dikonfirmasi.',
+    scheduleSafety:
+      'Ketemu di tempat umum yang rame, dan kasih tau orang terdekat lokasi & waktunya ya.',
+    scheduleSubmit: 'Kirim request',
+    scheduleSubmitting: 'Mengirim…',
+    scheduleSuccess: 'Request terkirim! Cek Jadwal buat pantau statusnya.',
+    reportCta: 'Laporkan',
+    reportPrompt: 'Deskripsi laporan:',
+    reportSuccess: 'Laporan dikirim ke admin',
   },
   booking: {
     pageTitle: 'Jadwal kamu',
