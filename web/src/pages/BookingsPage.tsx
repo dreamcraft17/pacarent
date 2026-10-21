@@ -260,7 +260,7 @@ export default function BookingsPage() {
   };
 
   const report = async (targetId: string) => {
-    const description = prompt('Deskripsi laporan:');
+    const description = prompt('Ceritain masalahnya:');
     if (!description) return;
     await api('/api/reports', {
       method: 'POST',
@@ -271,7 +271,7 @@ export default function BookingsPage() {
         description,
       }),
     });
-    alert('Laporan dikirim ke admin');
+    alert('Laporan lo udah dikirim ke admin');
   };
 
   const isPartner = me?.role === 'Partner';
@@ -291,11 +291,11 @@ export default function BookingsPage() {
         <div className="v3-booking-tiles" aria-label="Akses booking dan chat">
           <Link className="v3-action-tile v3-action-tile--primary" to="/bookings">
             <span className="v3-action-tile-icon" aria-hidden="true">🗓️</span>
-            <span>Daftar booking</span>
+            <span>Jadwal gue</span>
           </Link>
           <Link className="v3-action-tile" to="/chat">
             <span className="v3-action-tile-icon" aria-hidden="true">💬</span>
-            <span>Daftar chat</span>
+            <span>Chat gue</span>
           </Link>
         </div>
       </div>
@@ -334,7 +334,7 @@ export default function BookingsPage() {
           <p className="v3-booking-location">
             <span aria-hidden="true">📍</span> {b.meetingLocation}
           </p>
-          <p className="v3-booking-note">Request terkirim. Kenalan dulu lewat chat—detail rencana bisa dibahas di sini.</p>
+          <p className="v3-booking-note">Ajakan jadwal udah kekirim. Lanjut ngobrol di chat buat rapihin detailnya.</p>
           <div className="v3-btn-row">
             {isPartner && (b.status === 'PendingPartner' || b.status === 'pendingPartner') && (
               <>
@@ -346,8 +346,8 @@ export default function BookingsPage() {
                 </button>
               </>
             )}
-            <button type="button" className="v3-btn-secondary" onClick={() => toggleChat(b.id)}>
-              {chatOpen[b.id] ? 'Tutup chat' : 'Mulai ngobrol'}
+              <button type="button" className="v3-btn-secondary" onClick={() => toggleChat(b.id)}>
+              {chatOpen[b.id] ? 'Tutup chat' : 'Buka chat'}
             </button>
             {(b.status === 'InProgress' ||
               b.status === 'inProgress' ||
@@ -396,7 +396,7 @@ export default function BookingsPage() {
                 {(chatItems[b.id] ?? []).length === 0 && (
                   <div className="booking-chat-empty">
                     <strong>Mulai dari pembuka yang ringan</strong>
-                    <p>Kenalan dulu. Detail tanggal, durasi, dan tempat bisa kalian rapikan di sini.</p>
+                    <p>Kenalan dulu. Detail tanggal, durasi, dan tempat bisa lo berdua rapihin di sini.</p>
                     <div className="booking-chat-starters" aria-label="Pilihan pembuka chat">
                       {CHAT_STARTERS.map((starter) => (
                         <button

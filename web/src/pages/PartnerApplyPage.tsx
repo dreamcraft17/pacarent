@@ -27,7 +27,7 @@ export default function PartnerApplyPage() {
       return;
     }
     if (!serviceNote.trim()) {
-      setMsg('Ceritain dulu layanan yang kamu sediakan.');
+      setMsg('Ceritain dulu layanan yang lo sediakan.');
       return;
     }
     const selectedServices = categories
@@ -36,7 +36,7 @@ export default function PartnerApplyPage() {
     const otherCategory = categories.find((category) => category.name.toLowerCase() === 'lainnya');
     if (otherCategory && selected.includes(otherCategory.id)) {
       if (!otherService.trim()) {
-        setMsg('Tulis dulu layanan lainnya yang kamu sediakan.');
+        setMsg('Tulis dulu layanan lainnya yang lo sediakan.');
         return;
       }
       selectedServices.push(otherService.trim());
@@ -53,7 +53,7 @@ export default function PartnerApplyPage() {
       body: fd,
     });
     if (!res.ok) {
-      setMsg('Gagal mengirim');
+      setMsg('Nggak bisa dikirim. Coba lagi ya.');
       return;
     }
     setMsg(productCopy.companionApply.success);
@@ -71,9 +71,9 @@ export default function PartnerApplyPage() {
           <textarea value={bio} onChange={(e) => setBio(e.target.value)} required />
           <div className="v3-deal-note">
             <strong>Bikin orang gampang merasa cocok</strong>
-            <p>Tulis bio yang jujur, pilih layanan yang kamu bisa, lalu biar orang tahu enaknya ngajak kamu ngapain.</p>
+            <p>Tulis bio yang jujur, pilih layanan yang lo bisa, lalu biar orang tahu enaknya ngajak lo ngapain.</p>
           </div>
-          <label>Layanan yang kamu sediakan</label>
+          <label>Layanan yang lo sediakan</label>
           <textarea
             value={serviceNote}
             onChange={(e) => setServiceNote(e.target.value)}
@@ -81,7 +81,7 @@ export default function PartnerApplyPage() {
             required
             rows={4}
           />
-          <p className="v3-field-hint">Tulis dengan gaya kamu sendiri biar orang tahu kamu bisa diajak ngapain.</p>
+          <p className="v3-field-hint">Tulis dengan gaya lo sendiri biar orang tahu lo bisa diajak ngapain.</p>
           {categories.map((c) => (
             <label key={c.id}>
               <input type="checkbox" checked={selected.includes(c.id)} onChange={() => toggle(c.id)} /> {c.name}

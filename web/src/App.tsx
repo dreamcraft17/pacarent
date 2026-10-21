@@ -84,7 +84,7 @@ function Shell() {
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { me, loading } = useAuth();
   const location = useLocation();
-  if (loading) return <p className="v3-muted">Memuat...</p>;
+  if (loading) return <p className="v3-muted">Lagi muat…</p>;
   if (!me) {
     return (
       <Navigate
@@ -99,7 +99,7 @@ function RequireAuth({ children }: { children: React.ReactNode }) {
 
 function RequireAdmin({ children }: { children: React.ReactNode }) {
   const { me, loading } = useAuth();
-  if (loading) return <p className="v3-muted">Memuat...</p>;
+  if (loading) return <p className="v3-muted">Lagi muat…</p>;
   if (!me || me.role !== 'Admin') return <Navigate to="/" replace />;
   return children;
 }

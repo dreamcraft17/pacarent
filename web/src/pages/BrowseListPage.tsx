@@ -78,7 +78,7 @@ export default function BrowseListPage() {
   };
 
   const profileCountLabel = loading
-    ? 'Memuat…'
+    ? 'Lagi muat…'
     : productCopy.discover.profileCount(partners.length);
 
   return (
@@ -170,7 +170,7 @@ export default function BrowseListPage() {
 
       {loadError && (
         <div className="browse-alert" role="alert">
-          <p>Tidak bisa hubung ke server. Coba lagi atau cek koneksi.</p>
+          <p>Servernya lagi nggak nyambung. Coba lagi ya.</p>
           <button type="button" className="browse-alert-btn" onClick={load}>
             Coba lagi
           </button>
@@ -256,7 +256,7 @@ export default function BrowseListPage() {
               <article className="browse-card browse-card--promo">
                 <span className="badge badge-verified">{productCopy.discover.earlyAccessBadge}</span>
                 <h2 className="browse-card-name">Masih dikit yang gabung</h2>
-                <p className="browse-card-bio">Daftar sekarang, jadi salah satu yang pertama muncul di sini.</p>
+              <p className="browse-card-bio">Daftar sekarang, biar bisa nongol duluan di sini.</p>
                 <span className="browse-card-cta">{productCopy.discover.earlyAccessCta}</span>
               </article>
             </Link>

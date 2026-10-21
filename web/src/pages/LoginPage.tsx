@@ -22,7 +22,7 @@ export default function LoginPage() {
       await login(loginId, password);
       nav(from);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Gagal masuk');
+      setError(err instanceof Error ? err.message : 'Nggak bisa masuk');
     }
   };
 

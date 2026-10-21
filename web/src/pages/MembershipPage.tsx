@@ -70,7 +70,7 @@ export default function MembershipPage() {
         loadMe();
       }
     } catch (err) {
-      setMsg(err instanceof Error ? err.message : 'Gagal memproses langganan');
+      setMsg(err instanceof Error ? err.message : 'Nggak bisa proses langganannya');
     } finally {
       setBusyTier(null);
     }
@@ -83,7 +83,7 @@ export default function MembershipPage() {
       setMsg(productCopy.membership.cancelled);
       loadMe();
     } catch (err) {
-      setMsg(err instanceof Error ? err.message : 'Gagal membatalkan');
+      setMsg(err instanceof Error ? err.message : 'Nggak bisa batalin langganannya');
     }
   };
 
@@ -94,7 +94,7 @@ export default function MembershipPage() {
       setBoostMsg(productCopy.membership.boostSection.active(new Date(res.expiresAt).toLocaleString('id-ID')));
       loadMe();
     } catch (err) {
-      setBoostMsg(err instanceof Error ? err.message : 'Gagal mengaktifkan boost');
+      setBoostMsg(err instanceof Error ? err.message : 'Nggak bisa nyalain boost');
     }
   };
 

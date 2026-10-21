@@ -5,8 +5,8 @@ export default function TermsPage() {
         <p className="terms-eyebrow">Sebelum mulai</p>
         <h1>Syarat &amp; Ketentuan</h1>
         <p className="terms-lead">
-          Ringkasan aturan PacaRent supaya pengguna dan pendamping tahu apa yang boleh, apa yang menjadi tanggung jawab
-          masing-masing, dan bagaimana menggunakan platform dengan aman.
+          Ringkasan aturan PacaRent biar lo dan pendamping sama-sama tahu batasnya, tanggung jawabnya, dan cara pakai
+          platform ini dengan aman.
         </p>
         <p className="terms-updated">Ringkasan · Diperbarui 19 Oktober 2026</p>
       </header>
@@ -21,7 +21,7 @@ export default function TermsPage() {
           </span>
           <div>
             <strong>Untuk orang dewasa</strong>
-            <span>Pengguna dan pendamping wajib berusia minimal 18 tahun.</span>
+            <span>Lo dan pendamping wajib berusia minimal 18 tahun.</span>
           </div>
         </div>
         <div className="terms-summary-item">
@@ -39,7 +39,7 @@ export default function TermsPage() {
           </span>
           <div>
             <strong>Pilih pertemuan yang aman</strong>
-            <span>Gunakan lokasi publik dan sepakati detail booking dengan jelas.</span>
+            <span>Pilih lokasi publik dan sepakati detail jadwal dengan jelas.</span>
           </div>
         </div>
       </section>
@@ -49,7 +49,7 @@ export default function TermsPage() {
           <p className="terms-nav-title">Di halaman ini</p>
           <a href="#peran">Peran PacaRent</a>
           <a href="#syarat-umum">Syarat umum</a>
-          <a href="#interaksi">Request, chat &amp; pertemuan</a>
+          <a href="#interaksi">Chat, jadwal &amp; ketemuan</a>
           <a href="#kesepakatan">Kesepakatan &amp; pembayaran</a>
           <a href="#penerimaan">Penerimaan</a>
         </nav>
@@ -75,9 +75,9 @@ export default function TermsPage() {
               <h2>Syarat umum</h2>
             </div>
             <ul>
-              <li>Pengguna dan pendamping wajib berusia minimal 18 tahun dan memberikan data yang benar.</li>
+              <li>Lo dan pendamping wajib berusia minimal 18 tahun dan kasih data yang benar.</li>
               <li>Semua pihak wajib saling hormat; pelecehan, ancaman, penipuan, atau pelanggaran hukum dapat berujung pemblokiran dan laporan ke pihak berwenang.</li>
-              <li>Gunakan fitur request dan chat PacaRent untuk memulai komunikasi serta menyusun rencana dengan jelas.</li>
+              <li>Gunakan chat dan fitur jadwal PacaRent buat mulai ngobrol dan menyusun rencana dengan jelas.</li>
               <li>Lokasi, waktu, dan bentuk pertemuan perlu disepakati bersama; pilih tempat umum yang aman bila memungkinkan.</li>
               <li>Data pribadi diproses sesuai kebijakan privasi dan peraturan perlindungan data pribadi yang berlaku di Indonesia.</li>
             </ul>
@@ -86,20 +86,20 @@ export default function TermsPage() {
           <section id="interaksi" className="terms-section terms-section-callout">
             <div className="terms-section-heading">
               <span className="terms-section-number">03</span>
-              <h2>Request, chat &amp; pertemuan</h2>
+              <h2>Chat, jadwal &amp; ketemuan</h2>
             </div>
-            <p className="terms-callout-lead">Baca bagian ini sebelum mengirim request atau bertemu.</p>
+            <p className="terms-callout-lead">Baca bagian ini sebelum mulai chat atau ketemuan.</p>
             <ul>
               <li>
-                Pengguna dapat mengirim request dan memulai chat tanpa menunggu persetujuan awal. Pendamping dapat
-                membalas, menerima, atau menolak request sesuai ketersediaan dan kenyamanannya.
+                Lo bisa mulai chat langsung tanpa nunggu match atau persetujuan awal. Pendamping bisa membalas,
+                menyepakati jadwal, atau menolak ajakan sesuai ketersediaan dan kenyamanannya.
               </li>
               <li>
-                Chat, request, atau status diterima <strong>bukan jaminan</strong> bahwa pertemuan akan terjadi atau
+                Chat atau jadwal yang disepakati <strong>bukan jaminan</strong> bahwa pertemuan pasti terjadi atau
                 bahwa kedua pihak cocok. Komunikasikan perubahan, pembatalan, dan batasan dengan jelas.
               </li>
               <li>
-                Bertemu di tempat umum, beri tahu orang tepercaya tentang rencana, gunakan fitur bagikan rencana bila
+                Ketemu di tempat umum, kasih tahu orang tepercaya tentang rencana, gunakan fitur bagikan rencana bila
                 tersedia, dan hentikan interaksi bila merasa tidak aman. Untuk keadaan darurat, hubungi layanan darurat.
               </li>
               <li>
@@ -129,8 +129,8 @@ export default function TermsPage() {
               <h2>Penerimaan</h2>
             </div>
             <p>
-              Dengan mendaftar atau menggunakan PacaRent, Anda menyatakan telah membaca, memahami, dan menyetujui
-              ringkasan ini. Ketentuan dapat diperbarui; perubahan material akan diinformasikan melalui platform.
+              Dengan mendaftar atau menggunakan PacaRent, lo menyatakan sudah membaca, memahami, dan menyetujui
+              ringkasan ini. Ketentuan bisa diperbarui; perubahan penting akan dikabarkan lewat platform.
             </p>
             <p className="terms-disclaimer">
               Bukan nasihat hukum. Untuk sengketa serius atau kerugian besar, konsultasikan penasihat hukum dan laporkan

@@ -10,7 +10,7 @@ describe('TermsPage', () => {
     expect(screen.getByRole('heading', { name: 'Syarat & Ketentuan' })).toBeInTheDocument();
     expect(screen.getByRole('navigation', { name: 'Daftar isi Syarat dan Ketentuan' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Kesepakatan & pembayaran' })).toHaveAttribute('href', '#kesepakatan');
-    expect(screen.getByRole('heading', { name: 'Request, chat & pertemuan' })).toBeInTheDocument();
-    expect(screen.getByText('Baca bagian ini sebelum mengirim request atau bertemu.')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Chat, jadwal & ketemuan' })).toBeInTheDocument();
+    expect(screen.getByText('Baca bagian ini sebelum mulai chat atau ketemuan.')).toBeInTheDocument();
   });
 });

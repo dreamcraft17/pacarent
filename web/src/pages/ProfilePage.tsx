@@ -70,13 +70,13 @@ export default function ProfilePage() {
     <PageShell width="wide" className="profile-vibe-page">
       <header className="profile-vibe-head">
         <div>
-          <p className="v3-kicker">Profilmu, tapi lebih kamu</p>
+          <p className="v3-kicker">Profil lo, tapi lebih lo</p>
           <h1>Kasih sedikit vibe biar nggak terasa random.</h1>
-          <p className="v3-page-dek">Orang pertama lihat foto, lalu cari konteks. Isi yang nyaman dibagi—sisanya bisa menyusul.</p>
+          <p className="v3-page-dek">Orang biasanya lihat foto dulu, lalu cari konteks. Isi yang nyaman lo bagi—sisanya bisa nyusul.</p>
         </div>
         <div className="profile-completion" aria-label="Status profil">
           <span className="profile-completion-dot" aria-hidden />
-          <span>{form.fullName && form.city && form.photoUrl ? 'Profil siap dilihat' : 'Profil masih bisa dipercantik'}</span>
+          <span>{form.fullName && form.city && form.photoUrl ? 'Profil lo siap dilihat' : 'Profil lo masih bisa dipercantik'}</span>
         </div>
       </header>
 
@@ -89,15 +89,15 @@ export default function ProfilePage() {
               ) : (
                 <div className="profile-preview-empty">
                   <span aria-hidden>✦</span>
-                  <strong>Foto kamu<br />di sini</strong>
+                  <strong>Foto lo<br />di sini</strong>
                   <small>Foto yang jelas = first impression yang lebih enak</small>
                 </div>
               )}
               <div className="profile-preview-gradient" />
               <div className="profile-preview-overlay">
                 <p className="profile-preview-eyebrow">PacaRent profile</p>
-                <h2>{form.fullName || 'Nama kamu'}</h2>
-                <p>{form.city || 'Kota kamu'} <span aria-hidden>·</span> PacaRent member</p>
+                <h2>{form.fullName || 'Nama lo'}</h2>
+                <p>{form.city || 'Kota lo'} <span aria-hidden>·</span> PacaRent member</p>
               </div>
             </div>
             <div className="profile-preview-body">
@@ -105,20 +105,20 @@ export default function ProfilePage() {
                 <span className="profile-chip profile-chip--accent">Akun aktif</span>
                 <span className="profile-chip">Booking jelas</span>
               </div>
-              <p>Profil yang terasa nyata bikin rencana ketemu terasa lebih nyaman dari awal.</p>
+              <p>Profil yang terasa nyata bikin ngobrol dan ketemu jadi lebih nyaman dari awal.</p>
             </div>
           </section>
           <div className="profile-prompt-card">
             <span className="profile-prompt-icon" aria-hidden>↗</span>
             <div>
               <strong>Vibe check</strong>
-              <p>Jujur, jelas, dan tetap jadi diri sendiri. Itu sudah cukup buat mulai.</p>
+              <p>Jujur, jelas, dan tetap jadi diri sendiri. Udah cukup buat mulai.</p>
             </div>
           </div>
         </aside>
 
         <form onSubmit={save} className="profile-vibe-form">
-          <Panel title="Bikin kartu kamu" className="v3-form profile-editor-card">
+          <Panel title="Bikin kartu lo" className="v3-form profile-editor-card">
             <div className="profile-section-intro">
               <span className="profile-section-number">01</span>
               <p>Hal yang orang perlu tahu duluan.</p>
@@ -144,10 +144,10 @@ export default function ProfilePage() {
           <Panel title="Biar tetap nyaman" className="v3-form v3-panel--safety profile-editor-card">
             <div className="profile-section-intro">
               <span className="profile-section-number">02</span>
-              <p>Safety net buat saat kamu punya rencana ketemu.</p>
+              <p>Safety net kalau lo punya rencana ketemu.</p>
             </div>
             <p className="v3-muted v3-safety-hint">{productCopy.profile.safetyHint}</p>
-            <div className="profile-safety-note"><span aria-hidden>✓</span><p>Kontak ini tidak tampil di profil publik.</p></div>
+            <div className="profile-safety-note"><span aria-hidden>✓</span><p>Kontak ini nggak tampil di profil publik.</p></div>
             <label htmlFor="emergency-name">Nama kontak darurat</label>
             <input id="emergency-name" value={form.emergencyContactName} onChange={(e) => setForm({ ...form, emergencyContactName: e.target.value })} placeholder="Contoh: Kak Rani" />
             <label htmlFor="emergency-phone">Nomor HP kontak darurat</label>
@@ -157,12 +157,12 @@ export default function ProfilePage() {
           <Panel title="Detail kecil" className="v3-form profile-editor-card">
             <div className="profile-section-intro">
               <span className="profile-section-number">03</span>
-              <p>Dipakai untuk menjaga pengalaman tetap sesuai usia.</p>
+              <p>Biar pengalaman di sini tetap sesuai usia.</p>
             </div>
             <label htmlFor="profile-birth-date">Tanggal lahir</label>
             <input id="profile-birth-date" type="date" value={form.birthDate} onChange={(e) => setForm({ ...form, birthDate: e.target.value })} />
             <button type="submit" className="profile-save-button">Simpan profil <span aria-hidden>↗</span></button>
-            {saved && <p className="profile-save-status" role="status">{productCopy.profile.saved} Profilmu sudah siap dipakai.</p>}
+            {saved && <p className="profile-save-status" role="status">{productCopy.profile.saved} Profil lo udah siap dipakai.</p>}
           </Panel>
         </form>
       </div>

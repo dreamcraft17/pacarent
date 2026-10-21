@@ -46,13 +46,13 @@ export default function RegisterPage() {
       }
 
       if (data.requiresOtp) {
-        nav('/login', { state: { message: 'Daftar berhasil. Verifikasi OTP lalu masuk.', from } });
+        nav('/login', { state: { message: 'Sip, akun lo jadi. Verifikasi OTP dulu, terus masuk.', from } });
         return;
       }
 
       nav('/login', { state: { from } });
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Gagal daftar');
+      setError(err instanceof Error ? err.message : 'Nggak bisa daftar');
     }
   };
 
@@ -123,7 +123,7 @@ export default function RegisterPage() {
             checked={form.termsAccepted}
             onChange={(e) => setForm({ ...form, termsAccepted: e.target.checked })}
           />{' '}
-          Saya setuju{' '}
+          Gue setuju{' '}
           <Link to="/syarat" target="_blank" rel="noreferrer" className="v3-link">
             Syarat &amp; Ketentuan
           </Link>

@@ -116,7 +116,7 @@ export default function ChatsPage() {
       setScheduleCategories(categories);
       if (categories[0]) setScheduleForm((prev) => ({ ...prev, categoryId: String(categories[0].id) }));
     } catch (error) {
-      setScheduleError('Gagal memuat kategori pendamping');
+      setScheduleError('Kategori pendampingnya nggak kebaca. Coba lagi ya.');
       console.error(error);
     }
   };
@@ -145,7 +145,7 @@ export default function ChatsPage() {
       setScheduleSuccess(true);
       setScheduleForm(DEFAULT_SCHEDULE);
     } catch (error) {
-      setScheduleError(error instanceof Error ? error.message : 'Request gagal dikirim');
+      setScheduleError(error instanceof Error ? error.message : 'Ajakan jadwalnya nggak kekirim');
     } finally {
       setScheduleSubmitting(false);
     }
@@ -168,13 +168,13 @@ export default function ChatsPage() {
   };
 
   return (
-    <PageShell title={c.pageTitle} dek="Lihat profil yang kamu suka, lalu ngobrol langsung. Detail ketemu belakangan aja.">
+      <PageShell title={c.pageTitle} dek="Lihat profil yang lo suka, lalu ngobrol langsung. Detail ketemu belakangan aja.">
       <div className="booking-directory-actions">
         <Link className="v3-btn-secondary" to="/bookings">Lihat jadwal</Link>
         <Link className="v3-btn-primary" to="/">Cari temen</Link>
       </div>
 
-      {loading && <p className="v3-muted">Memuat chat…</p>}
+      {loading && <p className="v3-muted">Lagi muat chat…</p>}
       {!loading && items.length === 0 && (
         <Panel className="v3-bookings-empty">
           <p className="v3-kicker">Belum ada chat</p>

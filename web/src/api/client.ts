@@ -33,7 +33,7 @@ export async function api<T>(
   const res = await fetch(apiUrl(path), { ...options, headers, credentials: 'include' });
   if (!res.ok) {
     const err = await res.json().catch(() => ({ message: res.statusText }));
-    throw new Error(err.message || err.Message || 'Request gagal');
+    throw new Error(err.message || err.Message || 'Nggak bisa diproses');
   }
   if (res.status === 204) return undefined as T;
   return res.json() as Promise<T>;

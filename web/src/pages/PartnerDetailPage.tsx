@@ -35,7 +35,7 @@ export default function PartnerDetailPage() {
     }
   };
 
-  if (!data) return <p className="v3-muted">Memuat profil…</p>;
+  if (!data) return <p className="v3-muted">Lagi muat profil…</p>;
   const partner = data.partner;
   const photoSrc = apiAssetUrl(partner.profile?.photoUrl);
 
@@ -67,7 +67,7 @@ export default function PartnerDetailPage() {
       <div className="v3-booking-form-col">
         <Panel title="Chat aja dulu">
           <form className="v3-form" onSubmit={startChat}>
-            <p className="v3-conversation-lead">Belum perlu tentuin tanggal, durasi, atau tempat. Kenalan dulu, bahas maunya apa, baru atur detail kalau udah sama-sama oke.</p>
+          <p className="v3-conversation-lead">Belum perlu tentuin tanggal, durasi, atau tempat. Kenalan dulu, bahas maunya apa, baru atur detail kalau udah sama-sama oke.</p>
             <label htmlFor="opening-message">Mau bilang apa? <span className="v3-muted">(opsional)</span></label>
             <textarea id="opening-message" value={openingMessage} onChange={(e) => setOpeningMessage(e.target.value)} placeholder="Hai, lagi available buat nemenin ngopi atau nongkrong?" rows={5} />
             <button type="submit">Chat sekarang</button>
