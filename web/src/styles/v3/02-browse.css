@@ -478,8 +478,8 @@
   justify-content: center;
   margin-top: 0.35rem;
   padding: 0.65rem 1rem;
-  border-radius: 999px;
-  background: var(--pr-accent);
+  border-radius: var(--pr-pill);
+  background: var(--pr-paper);
   color: var(--pr-ink);
   font-size: 0.88rem;
   font-weight: 700;
@@ -488,7 +488,7 @@
 }
 
 .browse-card-cta:hover {
-  background: #c3f052;
+  background: var(--pr-canvas);
   color: var(--pr-ink);
 }
 

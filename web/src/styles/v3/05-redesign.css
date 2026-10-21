@@ -1,18 +1,12 @@
-/* PacaRent v4 visual direction
-   Mobile-first, photo-led, warm, playful, and calm enough for safety-critical copy.
-   Theme tokens live in ../pacarent-theme.css. */
+
 
 body {
   background-color: var(--pr-canvas);
 }
-
 .v3-main {
   max-width: 1080px;
-  padding-top: 1rem;
 }
-
 .v3-topbar {
-  width: min(1080px, calc(100% - 1.25rem));
   margin-top: 0.55rem;
   padding: 0.5rem 0.65rem 0.5rem 0.75rem;
   border: var(--pr-border-width) solid var(--pr-border);
@@ -55,9 +49,7 @@ body {
 .v3-page-head {
   margin-bottom: 1.1rem;
 }
-
 .v3-page-head h1 {
-  font-size: clamp(2rem, 8vw, 3.5rem);
   letter-spacing: -0.065em;
   line-height: 0.98;
 }
@@ -67,18 +59,21 @@ body {
   color: var(--pr-ink-soft);
   font-size: 0.98rem;
 }
-
-.v3-panel,
-.card,
-.profile-editor-card,
 .profile-prompt-card,
 .v3-booking-profile,
-.admin-panel,
 .admin-stat,
-.chat-list-card,
 .membership-card {
   border: var(--pr-border-width) solid var(--pr-border);
   border-radius: var(--pr-card-radius);
+  background: var(--pr-paper);
+  box-shadow: var(--pr-shadow);
+}
+.v3-panel,
+.card,
+.profile-editor-card,
+.admin-panel,
+.chat-list-card {
+  border: var(--pr-border-width) solid var(--pr-border);
   background: var(--pr-paper);
   box-shadow: var(--pr-shadow);
 }
@@ -91,12 +86,10 @@ body {
   font-size: 1.2rem;
   letter-spacing: -0.035em;
 }
-
 .v3-btn-primary,
 .v3-btn-secondary,
 .v3-btn-danger,
 .profile-save-button,
-.browse-card-cta,
 .launch-btn {
   min-height: 46px;
   border: var(--pr-border-width) solid var(--pr-border);
@@ -106,11 +99,17 @@ body {
   box-shadow: var(--pr-shadow);
   transition: transform var(--pr-dur) var(--pr-ease), box-shadow var(--pr-dur) var(--pr-ease), background var(--pr-dur) var(--pr-ease);
 }
+.browse-card-cta {
+  border: var(--pr-border-width) solid var(--pr-border);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  box-shadow: var(--pr-shadow);
+  transition: transform var(--pr-dur) var(--pr-ease), box-shadow var(--pr-dur) var(--pr-ease), background var(--pr-dur) var(--pr-ease);
+}
 
 .v3-btn-primary,
 .profile-save-button,
-.launch-btn-primary,
-.browse-card-cta {
+.launch-btn-primary {
   background: var(--pr-accent);
   color: var(--pr-ink);
 }
@@ -141,7 +140,8 @@ body {
 
 .v3-btn-secondary,
 .launch-btn-secondary,
-.launch-btn-ghost {
+.launch-btn-ghost,
+.browse-card-cta {
   background: var(--pr-paper);
   color: var(--pr-ink);
 }
@@ -175,8 +175,7 @@ textarea:focus,
   box-shadow: var(--pr-shadow-sm);
 }
 
-/* Only chips layered over a photo get the sticker tilt — chips inside forms,
-   booking status strips, or next to body text stay flat (readability). */
+
 .browse-card-media-foot .browse-chip {
   transform: rotate(var(--pr-chip-rotate));
 }
@@ -187,12 +186,9 @@ textarea:focus,
   background: var(--pr-accent);
   color: var(--pr-ink);
 }
-
 .v3-auth {
   overflow: hidden;
   border: 1px solid var(--pr-border);
-  border-radius: 28px;
-  box-shadow: var(--pr-shadow-soft);
 }
 
 .v3-auth-aside {
@@ -250,21 +246,14 @@ textarea:focus,
   background: #b9e94b;
   transform: translateY(-1px);
 }
-
-/* Auth is an entry point, not a marketing landing page: one focused card,
-   a short context header, then the form. */
 .v3-auth {
   display: block;
   max-width: 560px;
   margin: 1.5rem auto 2rem;
   border: 1px solid rgb(16 47 49 / 14%);
-  border-radius: 28px;
-  box-shadow: 7px 7px 0 var(--pr-accent), var(--pr-shadow-soft);
 }
-
 .v3-auth-aside {
   display: block;
-  padding: 1.15rem 1.25rem 0.95rem;
   background: var(--pr-ink);
 }
 
@@ -307,36 +296,16 @@ textarea:focus,
 .v3-auth-aside li::before {
   content: none;
 }
-
 .v3-auth-main {
   display: block;
-  padding: 1.25rem;
 }
-
 .v3-auth-main h2 {
   margin-bottom: 1rem;
-  font-size: 1.55rem;
   letter-spacing: -0.045em;
 }
 
-@media (max-width: 767px) {
-  .v3-auth {
-    margin-top: 0.65rem;
-    border-radius: 24px;
-    box-shadow: 4px 4px 0 var(--pr-accent), var(--pr-shadow-soft);
-  }
 
-  .v3-auth-aside,
-  .v3-auth-main {
-    padding: 1rem;
-  }
 
-  .v3-auth-main h2 {
-    font-size: 1.4rem;
-  }
-}
-
-/* Direct chat: profile browsing should lead to a conversation, not a booking form. */
 .v3-conversation-start .v3-booking-form-col > .v3-panel:first-child {
   border-color: rgb(16 76 75 / 15%);
 }
@@ -352,16 +321,12 @@ textarea:focus,
   color: var(--pr-muted);
   line-height: 1.55;
 }
-
 .conversation-layout {
   display: grid;
-  grid-template-columns: minmax(15rem, 0.75fr) minmax(0, 1.25fr);
   gap: 1rem;
   align-items: start;
 }
-
 .conversation-list {
-  display: grid;
   gap: 0.6rem;
 }
 
@@ -422,10 +387,8 @@ textarea:focus,
 .conversation-panel {
   min-width: 0;
 }
-
 .conversation-head {
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
   padding-bottom: 0.9rem;
@@ -527,35 +490,11 @@ textarea:focus,
 }
 
 .conversation-compose button { width: auto; margin: 0; padding-inline: 1.1rem; }
-
-@media (max-width: 767px) {
-  .conversation-layout { grid-template-columns: 1fr; }
-  .conversation-list { display: flex; overflow-x: auto; padding: 0.2rem 0.1rem 0.4rem; }
-  .conversation-list-item { min-width: 14rem; }
-  .conversation-panel { order: -1; }
-  .conversation-head { align-items: center; }
-  .conversation-head .v3-btn-secondary { padding: 0.55rem 0.7rem; font-size: 0.78rem; }
-}
-
-.browse-masthead h1 {
-  letter-spacing: -0.045em;
-  word-spacing: 0.035em;
-  line-height: 1.04;
-}
-
-.browse-plan-rail {
-  box-shadow: 6px 6px 0 var(--pr-accent);
-}
-
 .browse-toolbar {
   border-color: var(--pr-border);
-  border-radius: 24px;
-  box-shadow: 0 12px 30px rgb(16 47 49 / 7%);
 }
-
 .browse-card {
   border-color: var(--pr-border) !important;
-  box-shadow: 0 12px 30px rgb(16 47 49 / 8%);
 }
 
 .browse-card-link {
@@ -576,15 +515,9 @@ textarea:focus,
   background: var(--pr-ink);
   color: #e7f1ed;
 }
-
 .v3-booking-profile-photo {
-  min-height: 16rem;
   background-position: center;
   background-size: cover;
-}
-
-.v3-booking-profile-copy {
-  padding: 1.2rem;
 }
 
 .v3-booking-profile-badges {
@@ -624,15 +557,6 @@ textarea:focus,
   letter-spacing: -0.06em;
 }
 
-@media (max-width: 767px) {
-  .v3-booking-profile-photo {
-    min-height: 13rem;
-  }
-
-  .v3-booking-profile-copy {
-    padding: 1rem;
-  }
-}
 
 .browse-card-cta {
   box-shadow: none;
@@ -703,253 +627,76 @@ textarea:focus,
   color: var(--pr-ink);
 }
 
-@media (max-width: 767px) {
-  .browse-toolbar {
-    position: static;
-    display: grid;
-    gap: 0.65rem;
-    margin: 0 0 0.85rem;
-    padding: 0.25rem 0 0.55rem;
-    border: 0;
-    border-bottom: 1px solid rgb(16 47 49 / 12%);
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-  }
-
-  .browse-toolbar-label {
-    gap: 0.3rem;
-  }
-
-  .browse-toolbar-kicker {
-    width: fit-content;
-    padding: 0.22rem 0.5rem;
-    border-radius: 999px;
-    background: var(--pr-accent);
-    color: var(--pr-ink);
-    font-size: 0.68rem;
-    font-weight: 800;
-  }
-
-  .browse-toolbar-label strong {
-    font-size: clamp(1.25rem, 6vw, 1.6rem);
-    letter-spacing: -0.04em;
-  }
-
-  .browse-filters {
-    gap: 0.5rem;
-  }
-
-  .browse-filters .filter-menu-trigger {
-    min-height: 42px;
-    border-radius: 12px;
-    box-shadow: 0 2px 0 rgb(16 47 49 / 6%);
-  }
-
-  .browse-count {
-    width: fit-content;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    font-size: 0.76rem;
-  }
-
-  .browse-count::before {
-    content: '•';
-    margin-right: 0.35rem;
-    color: var(--pr-primary);
-    font-size: 1.2em;
-  }
-
+@media (min-width: 768px) {
   .v3-main {
-    padding-top: 0.8rem;
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
+    padding-top: 1rem;
   }
-
   .v3-topbar {
-    width: calc(100% - 1rem);
+    width: min(1080px, calc(100% - 1.25rem));
   }
-
-  .v3-topbar-actions {
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    scrollbar-width: none;
+  .v3-page-head h1 {
+    font-size: clamp(2rem, 8vw, 3.5rem);
   }
-
-  .v3-topbar-actions::-webkit-scrollbar {
-    display: none;
+  .admin-panel {
+    border-radius: var(--pr-card-radius);
   }
-
-  .browse-plan-rail {
-    box-shadow: 4px 4px 0 var(--pr-accent);
+  .v3-panel {
+    border-radius: var(--pr-card-radius);
   }
-
+  .chat-list-card {
+    border-radius: var(--pr-card-radius);
+  }
+  .card {
+    border-radius: var(--pr-card-radius);
+  }
+  .profile-editor-card {
+    border-radius: var(--pr-card-radius);
+  }
+  .browse-card-cta {
+    min-height: 46px;
+    border-radius: var(--pr-pill);
+  }
+  .v3-auth {
+    border-radius: 28px;
+    box-shadow: 7px 7px 0 var(--pr-accent), var(--pr-shadow-soft);
+  }
+  .v3-auth-aside {
+    padding: 1.15rem 1.25rem 0.95rem;
+  }
+  .v3-auth-main {
+    padding: 1.25rem;
+  }
+  .v3-auth-main h2 {
+    font-size: 1.55rem;
+  }
+  .conversation-layout {
+    grid-template-columns: minmax(15rem, 0.75fr) minmax(0, 1.25fr);
+  }
+  .conversation-list {
+    display: grid;
+  }
+  .conversation-head {
+    align-items: flex-start;
+  }
   .browse-masthead h1 {
-    max-width: 13ch;
-    font-size: clamp(2rem, 10vw, 2.75rem);
-    letter-spacing: -0.04em;
-    line-height: 1.05;
-    word-spacing: 0.04em;
+    letter-spacing: -0.045em;
+    word-spacing: 0.035em;
+    line-height: 1.04;
   }
-
+  .browse-plan-rail {
+    box-shadow: 6px 6px 0 var(--pr-accent);
+  }
   .browse-toolbar {
     border-radius: 24px;
+    box-shadow: 0 12px 30px rgb(16 47 49 / 7%);
   }
-
-  .v3-panel,
-  .card,
-  .profile-editor-card,
-  .admin-panel,
-  .chat-list-card {
-    border-radius: 22px;
-  }
-
-  .v3-page-head h1 {
-    font-size: clamp(2.2rem, 11vw, 3rem);
-  }
-}
-
-@media (max-width: 480px) {
-  .v3-main {
-    padding-left: 0.6rem;
-    padding-right: 0.6rem;
-  }
-
-  .browse-toolbar {
-    gap: 0.65rem;
-    padding: 0.25rem 0 0.55rem;
-  }
-
-  .browse-toolbar-label strong {
-    font-size: 1.02rem;
-  }
-
-  .browse-filters {
-    gap: 0.45rem;
-  }
-
-  .browse-filters .filter-menu-trigger {
-    min-height: 44px;
-    padding-inline: 0.65rem 1.7rem;
-  }
-
-  .browse-filters .filter-menu-value {
-    font-size: 0.72rem;
-  }
-
-  .browse-card-media {
-    height: 12rem;
-    aspect-ratio: auto;
-  }
-
-  .browse-card-body {
-    padding: 0.8rem 0.85rem 0.85rem;
-  }
-
-  .browse-card-name {
-    font-size: 1.12rem;
-  }
-
-  .browse-card-bio {
-    -webkit-line-clamp: 1;
-    font-size: 0.78rem;
-  }
-
-  .browse-card-cta {
-    min-height: 44px;
-  }
-
-  .bottom-nav {
-    width: calc(100% - 0.8rem);
-    padding-inline: 0.2rem;
-  }
-}
-
-/* Mobile catalogue mode: profile cards behave like a food/menu grid. */
-@media (max-width: 767px) {
-  .browse-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.7rem;
-  }
-
   .browse-card {
-    min-width: 0;
-    border-radius: 18px;
-    box-shadow: 0 8px 20px rgb(16 47 49 / 8%);
+    box-shadow: 0 12px 30px rgb(16 47 49 / 8%);
   }
-
-  .browse-card-media {
-    height: auto;
-    min-height: 0;
-    aspect-ratio: 1 / 1;
+  .v3-booking-profile-photo {
+    min-height: 16rem;
   }
-
-  .browse-card-media-foot {
-    left: 0.45rem;
-    right: 0.45rem;
-    bottom: 0.45rem;
-  }
-
-  .browse-card-media-foot .browse-chip {
-    padding: 0.18rem 0.35rem;
-    font-size: 0.52rem;
-  }
-
-  .browse-card-body {
-    gap: 0.25rem;
-    padding: 0.7rem 0.7rem 0.75rem;
-  }
-
-  .browse-card-topline {
-    min-height: 0;
-  }
-
-  .browse-card-vibe {
-    max-width: 100%;
-    padding: 0.18rem 0.35rem;
-    font-size: 0.55rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .browse-card-topline .browse-card-verified {
-    display: none;
-  }
-
-  .browse-card-name {
-    font-size: 0.96rem;
-    line-height: 1.12;
-  }
-
-  .browse-card-city {
-    font-size: 0.78em;
-  }
-
-  .browse-card-rate {
-    min-height: 1.85rem;
-    font-size: 0.7rem;
-    line-height: 1.2;
-  }
-
-  .browse-card-rating {
-    margin-left: 0.15rem;
-    padding: 0.12rem 0.25rem;
-    font-size: 0.64rem;
-  }
-
-  .browse-card-bio {
-    min-height: 1.8rem;
-    font-size: 0.68rem;
-    line-height: 1.3;
-  }
-
-  .browse-card-cta {
-    min-height: 36px;
-    margin-top: 0.15rem;
-    padding: 0.45rem 0.35rem;
-    border-radius: 11px;
-    font-size: 0.7rem;
+  .v3-booking-profile-copy {
+    padding: 1.2rem;
   }
 }
