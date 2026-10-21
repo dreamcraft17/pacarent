@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { Flag } from 'lucide-react';
 import { api } from '../api/client';
 import PageShell from '../components/layout/PageShell';
 import Panel from '../components/layout/Panel';
@@ -372,7 +373,7 @@ export default function BookingsPage() {
               className="v3-btn-quiet is-danger"
               onClick={() => report(isPartner ? b.userId : b.partnerId)}
             >
-              Laporkan
+              <Flag size={16} strokeWidth={2.5} aria-hidden="true" /> Laporkan
             </button>
           </div>
           {chatOpen[b.id] && (

@@ -443,3 +443,12 @@ textarea {
     justify-content: flex-start;
   }
 }
+
+@media (max-width: 380px) {
+  .v3-panel,
+  .pr-card,
+  .browse-card-body,
+  .conversation-schedule-form {
+    padding: var(--pr-space-4);
+  }
+}

@@ -129,7 +129,7 @@
 }
 
 .timeline-step.is-done:not(:last-child)::after {
-  background: var(--pr-primary);
+  background: var(--pr-ink);
 }
 
 .timeline-dot {
@@ -141,22 +141,22 @@
   width: 1.1rem;
   height: 1.1rem;
   flex-shrink: 0;
-  border-radius: 999px;
+  border-radius: var(--pr-pill);
   background: var(--pr-paper);
-  border: 2px solid var(--pr-line-warm);
+  border: var(--pr-border-width) solid var(--pr-border);
   font-size: 0.6rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--pr-paper);
 }
 
 .timeline-step.is-done .timeline-dot {
-  background: var(--pr-primary);
-  border-color: var(--pr-primary);
+  background: var(--pr-ink);
+  border-color: var(--pr-ink);
 }
 
 .timeline-step.is-current .timeline-dot {
-  border-color: var(--pr-primary);
-  box-shadow: 0 0 0 4px var(--pr-primary-soft);
+  border-color: var(--pr-ink);
+  box-shadow: 0 0 0 4px var(--pr-accent);
 }
 
 .timeline-label {
@@ -235,21 +235,27 @@
   white-space: nowrap;
 }
 
-.status-pendingpartner .v3-booking-card-head { background: #fbf0d9; }
-.status-pendingpartner .v3-booking-status { color: #8a5d0b; }
+/* Menunggu */
+.status-pendingpartner .v3-booking-card-head { background: var(--pr-accent); }
 
+/* Berjalan — accepted/paid are "on the way to the meetup", grouped with in-progress */
+.status-accepted .v3-booking-card-head,
+.status-paid .v3-booking-card-head,
 .status-inprogress .v3-booking-card-head { background: var(--pr-primary); }
+.status-accepted .v3-booking-status,
+.status-accepted .v3-booking-date,
+.status-paid .v3-booking-status,
+.status-paid .v3-booking-date,
 .status-inprogress .v3-booking-status,
-.status-inprogress .v3-booking-date { color: #f4fffb; }
+.status-inprogress .v3-booking-date { color: var(--pr-paper); }
 
-.status-completed .v3-booking-card-head { background: var(--pr-canvas); }
+/* Selesai */
+.status-completed .v3-booking-card-head { background: var(--pr-lilac); }
 
+/* Dibatalkan / disengketakan */
 .status-cancelled .v3-booking-card-head,
 .status-refunded .v3-booking-card-head,
-.status-disputed .v3-booking-card-head { background: #fdeceb; }
-.status-cancelled .v3-booking-status,
-.status-refunded .v3-booking-status,
-.status-disputed .v3-booking-status { color: var(--pr-danger); }
+.status-disputed .v3-booking-card-head { background: var(--pr-pink); }
 
 .v3-booking-location {
   display: flex;
@@ -349,6 +355,9 @@
 }
 
 .v3-btn-quiet {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
   padding: 0.2rem 0;
   border: none;
   background: none;
@@ -1418,22 +1427,24 @@
 .booking-chat-starters { display: flex; flex-wrap: wrap; gap: 0.45rem; }
 .booking-chat-starter {
   padding: 0.5rem 0.7rem;
-  border: 1px solid rgb(26 113 105 / 28%);
-  border-radius: 999px;
-  background: var(--pr-paper);
-  color: var(--pr-primary-hover);
+  border: var(--pr-border-width) solid var(--pr-border);
+  border-radius: var(--pr-pill);
+  box-shadow: var(--pr-shadow-sm);
+  background: var(--pr-lilac);
+  color: var(--pr-ink);
   font: inherit;
   font-size: 0.76rem;
   font-weight: 700;
   text-align: left;
   cursor: pointer;
+  transition: transform var(--pr-dur) var(--pr-ease), box-shadow var(--pr-dur) var(--pr-ease);
 }
-.booking-chat-starter:hover { border-color: var(--pr-primary); background: var(--pr-primary-soft); }
-.booking-chat-message { align-self: flex-start; max-width: 85%; padding: 0.65rem 0.8rem; border-radius: 14px 14px 14px 4px; background: var(--pr-paper); color: var(--pr-ink); }
-.booking-chat-message.is-mine { align-self: flex-end; border-radius: 14px 14px 4px 14px; background: var(--pr-ink); color: var(--pr-paper); }
+.booking-chat-starter:hover { transform: translate(-1px, -1px); box-shadow: var(--pr-shadow); }
+.booking-chat-starter:active { transform: translate(1px, 1px); box-shadow: none; }
+.booking-chat-message { align-self: flex-start; max-width: 85%; padding: 0.65rem 0.8rem; background: var(--pr-paper); color: var(--pr-ink); }
+.booking-chat-message.is-mine { align-self: flex-end; }
 .booking-chat-message p { margin: 0; white-space: pre-wrap; line-height: 1.4; }
 .booking-chat-message time { display: block; margin-top: 0.3rem; color: var(--pr-muted); font-size: 0.68rem; }
-.booking-chat-message.is-mine time { color: rgb(255 254 251 / 65%); }
 .booking-chat-compose { display: flex; gap: 0.5rem; }
 .booking-chat-compose input { min-width: 0; flex: 1; padding: 0.65rem 0.75rem; border: 1px solid var(--pr-line-warm); border-radius: 999px; background: var(--pr-paper); font: inherit; }
 .booking-chat-compose button { width: auto !important; flex: 0 0 auto; margin: 0 !important; }

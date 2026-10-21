@@ -13,12 +13,15 @@ export const productCopy = {
   },
   discover: {
     eyebrow: 'Lagi mau ngapain?',
-    title: 'Cari temen buat nemenin.',
+    title: 'Cari temen ngopi?',
+    tagline: 'Bukan app swipe jodoh.',
     lead: 'Mau ngopi, nongkrong, jalan, makan, atau datang ke acara? Pilih profil yang vibes-nya oke, terus chat aja.',
     heroCtaPrimary: 'Lihat-lihat profil ↓',
     heroCtaRegister: 'Daftar dulu yuk',
-    heroCtaChat: 'Cek chat',
+    heroCtaChat: 'Gas chat dulu',
     heroProof: ['18+ aja', 'Profil verified', 'Ketemu di tempat rame'],
+    earlyAccessBadge: 'Early access',
+    earlyAccessCta: 'Jadi yang pertama daftar',
     howItWorks: {
       kicker: 'Gampang kok',
       title: 'Lihat-lihat, chat, jalan.',

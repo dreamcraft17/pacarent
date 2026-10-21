@@ -4,12 +4,6 @@
 
 body {
   background-color: var(--pr-canvas);
-  background-image:
-    radial-gradient(circle at 8% 0%, rgb(201 242 97 / 16%), transparent 24%),
-    radial-gradient(circle at 100% 18%, rgb(255 146 124 / 12%), transparent 22%),
-    linear-gradient(rgb(16 47 49 / 2.8%) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(16 47 49 / 2.8%) 1px, transparent 1px);
-  background-size: auto, auto, 28px 28px, 28px 28px;
 }
 
 .v3-main {
@@ -21,10 +15,10 @@ body {
   width: min(1080px, calc(100% - 1.25rem));
   margin-top: 0.55rem;
   padding: 0.5rem 0.65rem 0.5rem 0.75rem;
-  border: 1px solid rgb(16 47 49 / 16%);
+  border: var(--pr-border-width) solid var(--pr-border);
   border-radius: 22px;
   background: rgb(255 253 250 / 92%);
-  box-shadow: 0 8px 24px rgb(16 47 49 / 7%);
+  box-shadow: var(--pr-shadow);
 }
 
 .v3-brand {
@@ -83,10 +77,10 @@ body {
 .admin-stat,
 .chat-list-card,
 .membership-card {
-  border: 1px solid var(--pr-border);
+  border: var(--pr-border-width) solid var(--pr-border);
   border-radius: var(--pr-card-radius);
-  background: rgb(255 253 250 / 94%);
-  box-shadow: 0 10px 30px rgb(16 47 49 / 6%);
+  background: var(--pr-paper);
+  box-shadow: var(--pr-shadow);
 }
 
 .v3-panel {
@@ -105,10 +99,12 @@ body {
 .browse-card-cta,
 .launch-btn {
   min-height: 46px;
-  border-radius: 999px;
-  font-weight: 800;
+  border: var(--pr-border-width) solid var(--pr-border);
+  border-radius: var(--pr-pill);
+  font-weight: 700;
   letter-spacing: -0.01em;
-  transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+  box-shadow: var(--pr-shadow);
+  transition: transform var(--pr-dur) var(--pr-ease), box-shadow var(--pr-dur) var(--pr-ease), background var(--pr-dur) var(--pr-ease);
 }
 
 .v3-btn-primary,
@@ -117,39 +113,50 @@ body {
 .browse-card-cta {
   background: var(--pr-accent);
   color: var(--pr-ink);
-  box-shadow: 0 5px 0 rgb(16 47 49 / 13%);
 }
 
 .v3-btn-primary:hover,
 .profile-save-button:hover,
 .launch-btn-primary:hover,
-.browse-card-cta:hover {
-  background: #b9e94b;
-  color: var(--pr-ink);
-  transform: translateY(-1px);
-  box-shadow: 0 7px 0 rgb(16 47 49 / 13%);
+.browse-card-cta:hover,
+.v3-btn-secondary:hover,
+.launch-btn-secondary:hover,
+.launch-btn-ghost:hover,
+.v3-btn-danger:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--pr-shadow-hover);
+}
+
+.v3-btn-primary:active,
+.profile-save-button:active,
+.launch-btn-primary:active,
+.browse-card-cta:active,
+.v3-btn-secondary:active,
+.launch-btn-secondary:active,
+.launch-btn-ghost:active,
+.v3-btn-danger:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
 }
 
 .v3-btn-secondary,
 .launch-btn-secondary,
 .launch-btn-ghost {
-  border-color: var(--pr-border);
-  background: #fffdfa;
+  background: var(--pr-paper);
   color: var(--pr-ink);
 }
 
 .v3-btn-danger {
-  background: #fff4f1;
-  color: #a33c32;
-  border-color: #ffc8bd;
+  background: var(--pr-paper);
+  color: var(--pr-danger);
 }
 
 input,
 select,
 textarea {
-  border-color: var(--pr-border) !important;
-  border-radius: 14px !important;
-  background: #fffdfa !important;
+  border: var(--pr-border-width) solid var(--pr-border) !important;
+  border-radius: 12px !important;
+  background: var(--pr-paper) !important;
 }
 
 input:focus,
@@ -157,20 +164,28 @@ select:focus,
 textarea:focus,
 .filter-menu.open .filter-menu-trigger {
   border-color: var(--pr-primary) !important;
-  box-shadow: 0 0 0 4px rgb(24 122 112 / 12%) !important;
+  box-shadow: 0 0 0 4px var(--pr-primary-soft) !important;
 }
 
 .badge,
 .profile-chip,
 .browse-chip {
-  border-radius: 999px;
+  border: var(--pr-border-width) solid var(--pr-border);
+  border-radius: var(--pr-pill);
+  box-shadow: var(--pr-shadow-sm);
+}
+
+/* Only chips layered over a photo get the sticker tilt — chips inside forms,
+   booking status strips, or next to body text stay flat (readability). */
+.browse-card-media-foot .browse-chip {
+  transform: rotate(var(--pr-chip-rotate));
 }
 
 .badge-verified,
 .profile-chip--accent {
-  border-color: transparent;
-  background: var(--pr-primary-soft);
-  color: var(--pr-primary);
+  border-color: var(--pr-border);
+  background: var(--pr-accent);
+  color: var(--pr-ink);
 }
 
 .v3-auth {
@@ -439,14 +454,29 @@ textarea:focus,
 
 .conversation-schedule-form {
   padding: 1rem;
+  border: var(--pr-border-width) solid var(--pr-border);
   border-radius: var(--pr-card-radius);
   background: var(--pr-mint);
 }
 
 .conversation-schedule-safety {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
   margin: 0.75rem 0 0;
   font-size: 0.82rem;
   color: var(--pr-ink-soft);
+}
+
+.conversation-schedule-safety svg {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.conversation-head-actions .v3-btn-quiet {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
 }
 
 .conversation-messages {
@@ -463,20 +493,21 @@ textarea:focus,
   align-self: flex-start;
   max-width: min(85%, 32rem);
   padding: 0.7rem 0.85rem;
-  border-radius: 1rem 1rem 1rem 0.25rem;
-  background: var(--pr-primary-soft);
+  border: var(--pr-border-width) solid var(--pr-border);
+  border-radius: 14px 14px 14px 4px;
+  background: var(--pr-paper);
 }
 
 .conversation-message.is-mine {
   align-self: flex-end;
-  border-radius: 1rem 1rem 0.25rem 1rem;
-  background: var(--pr-ink);
-  color: var(--pr-paper);
+  border-radius: 14px 14px 4px 14px;
+  background: var(--pr-mint);
+  color: var(--pr-text);
 }
 
 .conversation-message p { margin: 0; white-space: pre-wrap; line-height: 1.45; }
 .conversation-message time { display: block; margin-top: 0.25rem; color: var(--pr-muted); font-size: 0.7rem; }
-.conversation-message.is-mine time { color: rgb(255 254 251 / 70%); }
+.conversation-message.is-mine time { color: var(--pr-muted); }
 
 .conversation-compose {
   display: flex;
@@ -619,15 +650,15 @@ textarea:focus,
 }
 
 .booking-chat-message {
-  border: 1px solid var(--pr-border);
-  border-radius: 18px 18px 18px 5px;
-  box-shadow: 0 4px 12px rgb(16 47 49 / 5%);
+  border: var(--pr-border-width) solid var(--pr-border);
+  border-radius: 14px 14px 14px 4px;
 }
 
 .booking-chat-message.is-mine {
-  border: 0;
-  border-radius: 18px 18px 5px 18px;
-  background: var(--pr-primary);
+  border: var(--pr-border-width) solid var(--pr-border);
+  border-radius: 14px 14px 4px 14px;
+  background: var(--pr-mint);
+  color: var(--pr-text);
 }
 
 .chat-list-card-preview {

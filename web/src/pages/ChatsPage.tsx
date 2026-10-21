@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { Flag, ShieldAlert } from 'lucide-react';
 import PageShell from '../components/layout/PageShell';
 import Panel from '../components/layout/Panel';
 import { api, apiAssetUrl } from '../api/client';
@@ -200,7 +201,9 @@ export default function ChatsPage() {
                 <div><p className="v3-kicker">Lanjut ngobrol</p><h2 className="v3-panel-title">{selected.person.fullName || 'Teman ngobrol'}</h2><p className="v3-muted">{selected.person.city || 'Profil verified di PacaRent'}</p></div>
                 <div className="conversation-head-actions">
                   <Link className="v3-btn-secondary" to={`/mitra/${selected.person.id}`}>Lihat profil</Link>
-                  <button type="button" className="v3-btn-quiet is-danger" onClick={() => void report()}>{c.reportCta}</button>
+                  <button type="button" className="v3-btn-quiet is-danger" onClick={() => void report()}>
+                    <Flag size={16} strokeWidth={2.5} aria-hidden="true" /> {c.reportCta}
+                  </button>
                 </div>
               </div>
               <div className="conversation-messages" aria-live="polite">
@@ -279,7 +282,9 @@ export default function ChatsPage() {
                         onChange={(e) => setScheduleForm((prev) => ({ ...prev, notes: e.target.value }))}
                       />
 
-                      <p className="conversation-schedule-safety">🛟 {c.scheduleSafety}</p>
+                      <p className="conversation-schedule-safety">
+                        <ShieldAlert size={16} strokeWidth={2.5} aria-hidden="true" /> {c.scheduleSafety}
+                      </p>
 
                       {scheduleError && <p className="v3-error">{scheduleError}</p>}
 

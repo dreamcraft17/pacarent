@@ -86,7 +86,10 @@ export default function BrowseListPage() {
       <header className="browse-masthead" aria-labelledby="browse-title">
         <div className="browse-hero">
           <p className="browse-kicker">{productCopy.discover.eyebrow}</p>
-          <h1 id="browse-title">{productCopy.discover.title}</h1>
+          <h1 id="browse-title">
+            Cari temen <mark className="pr-hl">ngopi?</mark>
+          </h1>
+          <p className="browse-tagline">{productCopy.discover.tagline}</p>
           <p className="browse-dek">{productCopy.discover.lead}</p>
           <div className="browse-hero-actions">
             <a className="browse-hero-action browse-hero-action--primary" href="#profil">
@@ -127,6 +130,16 @@ export default function BrowseListPage() {
           </ol>
         </aside>
       </header>
+
+      <div className="pr-marquee" aria-hidden="true">
+        <div className="pr-marquee__track">
+          {[...productCopy.trustRail, ...productCopy.trustRail].map((item, i) => (
+            <span key={`${item}-${i}`} className="pr-marquee__item">
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
       <BrowseTrustRail />
 
       <div className="browse-toolbar" id="profil">
@@ -238,6 +251,16 @@ export default function BrowseListPage() {
               </Link>
             );
           })}
+          {partners.length > 0 && partners.length < 3 && (
+            <Link className="browse-card-link" to="/register">
+              <article className="browse-card browse-card--promo">
+                <span className="badge badge-verified">{productCopy.discover.earlyAccessBadge}</span>
+                <h2 className="browse-card-name">Masih dikit yang gabung</h2>
+                <p className="browse-card-bio">Daftar sekarang, jadi salah satu yang pertama muncul di sini.</p>
+                <span className="browse-card-cta">{productCopy.discover.earlyAccessCta}</span>
+              </article>
+            </Link>
+          )}
         </div>
       )}
 

@@ -1,44 +1,79 @@
-/* Single source of truth for PacaRent theme tokens.
-   Previously these were re-declared (with drifting values) in design-tokens.css,
-   01-shell.css, and 05-redesign.css; only the last :root in load order ever won,
-   so the earlier declarations were silently dead. Values below are the ones that
-   were actually rendering. */
+/* PacaRent theme tokens — Sticker Brutalism (PACARENT-UI-SPEC-GEN-Z-2026-10-21.md).
+   Single source of truth for all design tokens in the app. */
 :root {
-  --font-display: 'DM Sans', system-ui, sans-serif;
+  /* Warna */
+  --pr-primary: #097466; /* spec said #0b8f7f; darkened so white text on it passes 4.5:1 contrast */
+  --pr-accent: #d9ff3d;
+  --pr-pink: #ff5fa2;
+  --pr-lilac: #c8b6ff;
+  --pr-coral: #ff7a59;
+  --pr-ink: #0a0a0a;
+  --pr-text: #1f2a2b;
+  --pr-ink-soft: #4a5657;
+  --pr-muted: #5f6c6d; /* spec said #6e7a7b; darkened so it passes 4.5:1 on --pr-canvas */
+  --pr-canvas: #fff6e5;
+  --pr-paper: #ffffff;
+  --pr-mint: #e4fff7;
+  --pr-danger: #d92d20;
+
+  /* Shape */
+  --pr-border-width: 2px;
+  /* --pr-border is a COLOR (not the full shorthand) because several existing
+     rules already consume it as `border: 1px solid var(--pr-border)`. Use
+     `var(--pr-border-width) solid var(--pr-border)` when you want the full
+     spec-style thick black border. */
+  --pr-border: var(--pr-ink);
+  --pr-shadow-sm: 3px 3px 0 var(--pr-ink);
+  --pr-shadow: 4px 4px 0 var(--pr-ink);
+  --pr-shadow-hover: 6px 6px 0 var(--pr-ink);
+  --pr-card-radius: 14px;
+  --pr-pill: 999px;
+
+  /* Spacing (kelipatan 4) */
+  --pr-space-1: 4px;
+  --pr-space-2: 8px;
+  --pr-space-3: 12px;
+  --pr-space-4: 16px;
+  --pr-space-6: 24px;
+  --pr-space-8: 32px;
+
+  /* Typography */
+  --font-display: 'Bricolage Grotesque', 'DM Sans', system-ui, sans-serif;
   --font-body: 'DM Sans', system-ui, sans-serif;
+  --pr-display-tracking: -0.03em;
+  --pr-text-sm: 14px;
+  --pr-text-base: 16px;
+  --pr-text-lg: 20px;
+  --pr-text-h2: 28px;
+  --pr-text-h1: 40px;
 
-  --pr-primary: #187a70;
-  --pr-primary-hover: #0f5e57;
-  --pr-primary-soft: #e8f5ef;
+  /* Motion */
+  --pr-ease: cubic-bezier(.2, .8, .2, 1);
+  --pr-dur: 120ms;
+
+  --pr-chip-rotate: -2deg;
+
+  /* Back-compat aliases — keep every page that hasn't been migrated to the
+     new .pr-* components (section 4) rendering sane colors instead of
+     breaking on an undefined var. These all derive from the tokens above. */
   --pr-heading: var(--pr-ink);
-  --pr-text: #405052;
-  --pr-muted: #7c8788;
-  --pr-border: #dfe4df;
-  --pr-surface: var(--pr-paper);
-  --pr-bg: var(--pr-canvas);
-  --pr-danger: #b42318;
-  --pr-success: #059669;
-  --pr-radius: 16px;
-  --pr-shadow: 0 1px 2px rgb(15 23 42 / 6%), 0 4px 12px rgb(15 118 110 / 6%);
-
-  /* Booking accent stays teal so discovery does not imply a romantic match mechanic. */
-  --pr-booking: var(--pr-primary);
-  /* PacaRent editorial marketplace semantic tokens */
-  --pr-ink: #102f31;
-  --pr-ink-soft: #5d696b;
-  --pr-canvas: #f6f2ea;
-  --pr-paper: #fffdfa;
+  --pr-line: var(--pr-ink);
   --pr-line-warm: #ddd9d0;
-  --pr-mint: #eef8f3;
-  --pr-discover-bg: #faf7f5;
-  --pr-card-radius: 24px;
-  --pr-shadow-soft: 0 18px 45px rgb(16 47 49 / 9%);
-  --pr-accent: #c9f261;
-  --pr-coral: #ff927c;
-
-  /* Launch empty state */
-  --pr-launch-surface: #f7fbfa;
-  --pr-launch-border: color-mix(in srgb, var(--pr-primary) 35%, #d4cfc9);
-  --pr-launch-item-surface: rgb(15 118 110 / 8%);
+  --pr-primary-hover: #065950;
+  --pr-primary-soft: #e3f7f3;
+  --pr-shadow-soft: var(--pr-shadow);
+  --pr-radius: var(--pr-card-radius);
+  --pr-booking: var(--pr-primary);
+  --pr-success: #1a8a5f;
+  --pr-discover-bg: #fff9ec;
+  --pr-launch-surface: #fff9ec;
+  --pr-launch-border: var(--pr-ink);
+  --pr-launch-item-surface: var(--pr-mint);
   --pr-launch-item-icon: var(--pr-primary);
+}
+
+@media (max-width: 380px) {
+  :root {
+    --pr-chip-rotate: 0deg;
+  }
 }
