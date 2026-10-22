@@ -75,6 +75,25 @@ h4,
   text-decoration: none;
 }
 
+.v3-brand-copy {
+  display: grid;
+  gap: 0.05rem;
+  line-height: 1;
+}
+
+.v3-brand-copy strong {
+  font: inherit;
+}
+
+.v3-brand-copy small {
+  color: var(--pr-primary);
+  font-family: var(--font-body);
+  font-size: 0.54rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .v3-brand-mark {
   display: grid;
   place-items: center;
@@ -113,6 +132,40 @@ h4,
 .v3-topbar-actions a:hover,
 .v3-topbar-actions button:hover {
   color: var(--pr-primary);
+}
+
+.v3-topbar-actions .v3-topbar-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.2rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: var(--pr-accent);
+  color: var(--pr-ink);
+  font-size: 0.78rem;
+  font-weight: 850;
+  box-shadow: 3px 3px 0 var(--pr-ink);
+}
+
+.v3-topbar-actions .v3-topbar-cta:hover {
+  color: var(--pr-ink);
+  transform: translate(-1px, -1px);
+}
+
+.v3-topbar-actions .v3-topbar-login {
+  min-height: 2.2rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--pr-line-warm);
+  border-radius: 999px;
+  color: var(--pr-ink);
+  font-weight: 800;
+}
+
+.v3-topbar-actions .v3-topbar-login:hover {
+  border-color: var(--pr-ink);
+  background: var(--pr-paper);
+  color: var(--pr-ink);
 }
 
 .v3-topbar--admin {

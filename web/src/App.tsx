@@ -19,6 +19,7 @@ function Shell() {
   const { me, logout, loading } = useAuth();
   const { pathname } = useLocation();
   const isAdminRoute = pathname === '/admin';
+  const isLanding = pathname === '/';
   const hideBottomNav = pathname === '/login' || pathname === '/register' || isAdminRoute;
 
   return (
@@ -28,7 +29,10 @@ function Shell() {
           <span className="v3-brand-mark" aria-hidden="true">
             P
           </span>
-          <span>PacaRent</span>
+          <span className="v3-brand-copy">
+            <strong>PacaRent</strong>
+            {isLanding && <small>rental pacar</small>}
+          </span>
         </Link>
         <div className="v3-topbar-actions">
           {isAdminRoute ? (
@@ -38,8 +42,16 @@ function Shell() {
             </>
           ) : (
             <>
-              <Link to="/syarat">S&amp;K</Link>
-              <Link to="/aturan">Aturan</Link>
+              {isLanding ? (
+                <a className="v3-topbar-cta" href="#profil">
+                  Pilih yang nemenin <span aria-hidden="true">↘</span>
+                </a>
+              ) : (
+                <>
+                  <Link to="/syarat">S&amp;K</Link>
+                  <Link to="/aturan">Aturan</Link>
+                </>
+              )}
               {me?.role === 'Admin' && <Link to="/admin">Admin</Link>}
               {me && me.role !== 'Partner' && (
                 <Link to="/mitra/daftar">{productCopy.topNav.becomeCompanion}</Link>
@@ -57,7 +69,7 @@ function Shell() {
               </button>
             </>
           ) : (
-            <Link to="/login">Masuk</Link>
+            <Link className="v3-topbar-login" to="/login">Masuk</Link>
           )}
         </div>
       </header>
