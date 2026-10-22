@@ -3,5 +3,5 @@ export function getAuthRedirect(state: unknown): string {
     const from = (state as { from?: unknown }).from;
     if (typeof from === 'string' && from.startsWith('/')) return from;
   }
-  return '/bookings';
+  return '/';
 }

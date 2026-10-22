@@ -6,8 +6,8 @@ describe('getAuthRedirect', () => {
     expect(getAuthRedirect({ from: '/mitra/daftar' })).toBe('/mitra/daftar');
   });
 
-  it('falls back to bookings for missing or unsafe state', () => {
-    expect(getAuthRedirect(undefined)).toBe('/bookings');
-    expect(getAuthRedirect({ from: 'https://example.com' })).toBe('/bookings');
+  it('falls back to home for missing or unsafe state', () => {
+    expect(getAuthRedirect(undefined)).toBe('/');
+    expect(getAuthRedirect({ from: 'https://example.com' })).toBe('/');
   });
 });
