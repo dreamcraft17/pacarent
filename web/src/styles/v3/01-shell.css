@@ -456,6 +456,35 @@ h4,
   font-weight: 600;
 }
 
+.v3-terms-consent {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.45rem;
+}
+
+.v3-inline-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--pr-primary);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.v3-inline-link:hover {
+  color: var(--pr-primary-hover);
+}
+
+.v3-inline-link:focus-visible,
+.terms-modal-close:focus-visible {
+  outline: 3px solid var(--pr-primary-soft);
+  outline-offset: 3px;
+}
+
 .badge {
   display: inline-block;
   font-size: 0.72rem;

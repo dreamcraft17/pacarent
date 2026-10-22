@@ -1,6 +1,7 @@
-import { useRef, useState, type FormEvent } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AuthLayout from '../components/layout/AuthLayout';
+import TermsPage from './TermsPage';
 import { productCopy } from '../copy/productCopy';
 import { api } from '../api/client';
 import { useAuth } from '../auth/AuthContext';
@@ -45,6 +46,7 @@ export default function RegisterPage() {
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
   const fieldRefs = {
     email: useRef<HTMLInputElement>(null),
     fullName: useRef<HTMLInputElement>(null),
@@ -52,6 +54,22 @@ export default function RegisterPage() {
     password: useRef<HTMLInputElement>(null),
     termsAccepted: useRef<HTMLInputElement>(null),
   };
+
+  useEffect(() => {
+    if (!showTerms) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setShowTerms(false);
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', closeOnEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [showTerms]);
 
   const validate = (): FieldErrors => {
     const errors: FieldErrors = {};
@@ -222,23 +240,23 @@ export default function RegisterPage() {
           </p>
         )}
 
-        <label className="v3-checkbox-label" htmlFor="terms">
-          <input
-            id="terms"
-            ref={fieldRefs.termsAccepted}
-            type="checkbox"
-            checked={form.termsAccepted}
-            onChange={(e) => setForm({ ...form, termsAccepted: e.target.checked })}
-            aria-invalid={Boolean(fieldErrors.termsAccepted)}
-            aria-describedby={fieldErrors.termsAccepted ? 'terms-error' : undefined}
-          />
-          <span>
-            Gue setuju{' '}
-            <Link to="/syarat" target="_blank" rel="noreferrer" className="v3-link">
-              Syarat &amp; Ketentuan
-            </Link>
-          </span>
-        </label>
+        <div className="v3-terms-consent">
+          <label className="v3-checkbox-label" htmlFor="terms">
+            <input
+              id="terms"
+              ref={fieldRefs.termsAccepted}
+              type="checkbox"
+              checked={form.termsAccepted}
+              onChange={(e) => setForm({ ...form, termsAccepted: e.target.checked })}
+              aria-invalid={Boolean(fieldErrors.termsAccepted)}
+              aria-describedby={fieldErrors.termsAccepted ? 'terms-error' : undefined}
+            />
+            <span>Gue setuju</span>
+          </label>
+          <button type="button" className="v3-inline-link" onClick={() => setShowTerms(true)}>
+            Syarat &amp; Ketentuan
+          </button>
+        </div>
         {fieldErrors.termsAccepted && (
           <p id="terms-error" className="v3-field-error" role="alert">
             {fieldErrors.termsAccepted}
@@ -254,6 +272,30 @@ export default function RegisterPage() {
           {submitting ? 'Lagi daftar…' : c.registerSubmit}
         </button>
       </form>
+      {showTerms && (
+        <div
+          className="terms-modal-backdrop"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setShowTerms(false);
+          }}
+        >
+          <div className="terms-modal" role="dialog" aria-modal="true" aria-label="Syarat dan Ketentuan">
+            <div className="terms-modal-header">
+              <div>
+                <p className="terms-modal-kicker">Sebelum lo mulai</p>
+                <strong>Syarat &amp; Ketentuan</strong>
+              </div>
+              <button type="button" className="terms-modal-close" onClick={() => setShowTerms(false)} aria-label="Tutup Syarat dan Ketentuan">
+                ×
+              </button>
+            </div>
+            <div className="terms-modal-body">
+              <TermsPage />
+            </div>
+          </div>
+        </div>
+      )}
     </AuthLayout>
   );
 }
