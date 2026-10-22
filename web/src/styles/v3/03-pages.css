@@ -960,14 +960,13 @@
 
 .terms-section-callout {
   padding: 1rem 1.1rem;
-  border: 1px solid #ead3d8;
+  border: var(--pr-border-width) solid var(--pr-border);
   border-radius: 1rem;
-  background: #fff9fa;
 }
 
 .terms-callout-lead {
   margin: 0 0 0.85rem;
-  color: #8f3c50;
+  color: var(--pr-ink);
   font-size: 0.82rem;
   font-weight: 700;
 }
@@ -975,8 +974,9 @@
 .terms-disclaimer {
   margin: 1rem 0 0;
   padding: 0.85rem 1rem;
+  border: var(--pr-border-width) solid var(--pr-border);
   border-radius: 0.75rem;
-  background: #f3f4f4;
+  background: var(--pr-paper);
   color: var(--pr-muted);
   font-size: 0.82rem;
 }
