@@ -20,6 +20,13 @@ export const productCopy = {
     heroCtaPrimary: 'Cari pacar sewaan ↓',
     heroCtaRegister: 'Mau ditemenin?',
     heroCtaChat: 'Tanya dulu',
+    momentPrompt: 'Lo mau ditemenin buat…',
+    moments: [
+      { label: 'Acara', icon: '✦' },
+      { label: 'Makan', icon: '♡' },
+      { label: 'Jalan', icon: '↗' },
+      { label: 'Ngobrol', icon: '•••' },
+    ],
     heroProof: ['18+ aja', 'Profil verified', 'Ketemu di tempat rame'],
     earlyAccessBadge: 'Early access',
     earlyAccessCta: 'Jadi yang pertama daftar',

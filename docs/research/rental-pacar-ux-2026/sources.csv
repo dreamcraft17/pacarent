@@ -1,0 +1,6 @@
+id,title,type,url,credibility,recency,bias,used_for
+01,Baymard: Understanding Mobile E-Commerce UX,industry UX research,https://baymard.com/research-articles/mobile-commerce-design,high,medium,low,mobile overview and information hierarchy
+02,DRS 2024: Tinder I Don’t Like This,academic design research,https://dl.designresearchsociety.org/drs-conference-papers/drs2024/researchpapers/80/,high,medium,low,playfulness trust safety reciprocity
+03,Deloitte Digital: Generation to Generation,industry consumer research,https://www.deloittedigital.com/content/dam/digital/us/documents/insights/insights-20240610-personalization-report.pdf,medium,medium,medium,personalization and generation signals
+04,Eventbrite: Dating Report 2024,industry audience research,https://mms.businesswire.com/media/20240606525971/en/2153130/1/Eventbrite_2024_Dating_Report_Final.pdf,medium,medium,medium,authenticity safety meaningful conversation
+05,Aalborg University: It’s a Match,academic thesis,https://projekter.aau.dk/it-s-a-match-investigating-user-experience-and-algorithmic-trust-in-dating-platforms-toward-inclusiv-299fa6de.html,medium,high,medium,transparency onboarding and profile control

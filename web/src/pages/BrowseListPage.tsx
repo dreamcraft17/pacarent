@@ -76,6 +76,12 @@ export default function BrowseListPage() {
     setCity('');
   };
 
+  const chooseMoment = (label: string) => {
+    const match = categories.find((item) => item.name.toLowerCase().includes(label.toLowerCase()));
+    if (match) setCategory(String(match.id));
+    document.getElementById('profil')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   const profileCountLabel = loading
     ? 'Lagi muat…'
     : productCopy.discover.profileCount(partners.length);
@@ -100,6 +106,22 @@ export default function BrowseListPage() {
           <p className="browse-tagline">{productCopy.discover.tagline}</p>
           <p className="browse-tagline-disclaimer">{productCopy.discover.taglineDisclaimer}</p>
           <p className="browse-dek">{productCopy.discover.lead}</p>
+          <div className="browse-moment-picker" aria-label="Pilih momen yang mau ditemenin">
+            <span className="browse-moment-label">{productCopy.discover.momentPrompt}</span>
+            <div className="browse-moment-options">
+              {productCopy.discover.moments.map((moment) => (
+                <button
+                  key={moment.label}
+                  type="button"
+                  className="browse-moment-chip"
+                  onClick={() => chooseMoment(moment.label)}
+                >
+                  <span aria-hidden="true">{moment.icon}</span>
+                  {moment.label}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="browse-hero-actions">
             <a className="browse-hero-action browse-hero-action--primary" href="#profil">
               {productCopy.discover.heroCtaPrimary}
@@ -114,14 +136,19 @@ export default function BrowseListPage() {
               </Link>
             )}
           </div>
-          <p className="browse-hero-stat">
-            <span className="browse-hero-stat-dot" aria-hidden="true" />
-            {loading
-              ? 'Lagi muat profil…'
-              : partners.length > 0
-                ? `${partners.length} pendamping siap diajak ngobrol sekarang`
-                : 'Baru mulai di Jabodetabek — jadi yang pertama gabung'}
-          </p>
+          <div className="browse-hero-meta">
+            <p className="browse-hero-stat">
+              <span className="browse-hero-stat-dot" aria-hidden="true" />
+              {loading
+                ? 'Lagi muat profil…'
+                : partners.length > 0
+                  ? `${partners.length} pacar sewaan siap nemenin sekarang`
+                  : 'Baru mulai di Jabodetabek — jadi yang pertama tampil'}
+            </p>
+            <Link className="browse-terms-link" to="/syarat">
+              {productCopy.launchEmpty.ctaTerms}
+            </Link>
+          </div>
         </div>
         <aside className="browse-plan-rail" aria-label="Cara kerja PacaRent">
           <p className="browse-plan-kicker">{productCopy.discover.howItWorks.kicker}</p>
@@ -139,10 +166,6 @@ export default function BrowseListPage() {
           </ol>
         </aside>
       </header>
-
-      <p className="browse-terms-link">
-        <Link to="/syarat">{productCopy.launchEmpty.ctaTerms}</Link>
-      </p>
 
       <div className="browse-toolbar" id="profil">
         <div className="browse-toolbar-label">

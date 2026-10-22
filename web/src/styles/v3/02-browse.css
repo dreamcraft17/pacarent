@@ -63,6 +63,61 @@
   line-height: 1.55;
 }
 
+.browse-moment-picker {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1rem;
+}
+
+.browse-moment-label {
+  color: var(--pr-ink);
+  font-size: 0.76rem;
+  font-weight: 850;
+  letter-spacing: 0.02em;
+}
+
+.browse-moment-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.browse-moment-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.4rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--pr-line-warm);
+  border-radius: 999px;
+  background: var(--pr-paper);
+  color: var(--pr-ink);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform var(--pr-dur) var(--pr-ease), background var(--pr-dur) var(--pr-ease), border-color var(--pr-dur) var(--pr-ease);
+}
+
+.browse-moment-chip span {
+  color: var(--pr-primary);
+  font-size: 0.9rem;
+}
+
+.browse-moment-chip:hover,
+.browse-moment-chip:focus-visible {
+  transform: translateY(-2px) rotate(-1deg);
+  border-color: var(--pr-ink);
+  background: var(--pr-accent);
+}
+
+.browse-moment-chip:focus-visible,
+.browse-hero-action:focus-visible,
+.browse-terms-link:focus-visible {
+  outline: 3px solid var(--pr-primary-soft);
+  outline-offset: 3px;
+}
+
 .browse-hero-actions {
   display: flex;
   flex-wrap: wrap;
@@ -100,10 +155,20 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin: 1.1rem 0 0;
+  margin: 0;
   color: var(--pr-ink-soft);
   font-size: 0.85rem;
   font-weight: 700;
+}
+
+.browse-hero-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
+  margin-top: 1.1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--pr-line-warm);
 }
 
 .browse-hero-stat-dot {
@@ -116,7 +181,7 @@
 }
 
 .browse-terms-link {
-  margin: 0.75rem 0 1.5rem;
+  margin: 0;
   font-size: 0.82rem;
 }
 
