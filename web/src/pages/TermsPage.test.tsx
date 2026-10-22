@@ -1,11 +1,16 @@
 import '@testing-library/jest-dom/vitest';
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
 import TermsPage from './TermsPage';
 
 describe('TermsPage', () => {
   it('organizes the summary with navigable sections', () => {
-    render(<TermsPage />);
+    render(
+      <MemoryRouter>
+        <TermsPage />
+      </MemoryRouter>,
+    );
 
     expect(screen.getByRole('heading', { name: 'Syarat & Ketentuan' })).toBeInTheDocument();
     expect(screen.getByRole('navigation', { name: 'Daftar isi Syarat dan Ketentuan' })).toBeInTheDocument();

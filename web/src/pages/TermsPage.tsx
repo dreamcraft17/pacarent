@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function TermsPage() {
   return (
     <article className="terms-page">
@@ -8,7 +10,9 @@ export default function TermsPage() {
           Ringkasan aturan PacaRent biar lo dan pendamping sama-sama tahu batasnya, tanggung jawabnya, dan cara pakai
           platform ini dengan aman.
         </p>
-        <p className="terms-updated">Ringkasan · Diperbarui 19 Oktober 2026</p>
+        <p className="terms-updated">
+          Ringkasan · Diperbarui 19 Oktober 2026 · Berlaku bersama <Link to="/aturan">Aturan Komunitas</Link>
+        </p>
       </header>
 
       <section className="terms-summary" aria-labelledby="terms-summary-title">

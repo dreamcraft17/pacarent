@@ -11,6 +11,7 @@ import PartnerDetailPage from './pages/PartnerDetailPage';
 import ProfilePage from './pages/ProfilePage';
 import RegisterPage from './pages/RegisterPage';
 import TermsPage from './pages/TermsPage';
+import CommunityGuidelinesPage from './pages/CommunityGuidelinesPage';
 import BottomNav from './components/BottomNav';
 import { productCopy } from './copy/productCopy';
 
@@ -38,6 +39,7 @@ function Shell() {
           ) : (
             <>
               <Link to="/syarat">S&amp;K</Link>
+              <Link to="/aturan">Aturan</Link>
               {me?.role === 'Admin' && <Link to="/admin">Admin</Link>}
               {me && me.role !== 'Partner' && (
                 <Link to="/mitra/daftar">{productCopy.topNav.becomeCompanion}</Link>
@@ -66,6 +68,7 @@ function Shell() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/syarat" element={<TermsPage />} />
+          <Route path="/aturan" element={<CommunityGuidelinesPage />} />
           <Route path="/mitra/:id" element={<PartnerDetailPage />} />
           <Route path="/mitra/daftar" element={<RequireAuth><PartnerApplyPage /></RequireAuth>} />
           <Route path="/profile" element={<RequireAuth><ProfilePage /></RequireAuth>} />
