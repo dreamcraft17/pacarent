@@ -42,15 +42,12 @@ function Shell() {
             </>
           ) : (
             <>
-              {isLanding ? (
+              <Link to="/syarat">S&amp;K</Link>
+              <Link to="/aturan">Aturan</Link>
+              {isLanding && (
                 <a className="v3-topbar-cta" href="#profil">
                   Pilih yang nemenin <span aria-hidden="true">↘</span>
                 </a>
-              ) : (
-                <>
-                  <Link to="/syarat">S&amp;K</Link>
-                  <Link to="/aturan">Aturan</Link>
-                </>
               )}
               {me?.role === 'Admin' && <Link to="/admin">Admin</Link>}
               {me && me.role !== 'Partner' && (

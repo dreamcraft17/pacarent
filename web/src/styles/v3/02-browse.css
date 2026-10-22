@@ -112,8 +112,7 @@
 }
 
 .browse-moment-chip:focus-visible,
-.browse-hero-action:focus-visible,
-.browse-terms-link:focus-visible {
+.browse-hero-action:focus-visible {
   outline: 3px solid var(--pr-primary-soft);
   outline-offset: 3px;
 }
@@ -175,28 +174,6 @@
   left: 0;
   color: var(--pr-primary);
   font-weight: 900;
-}
-
-.browse-hero-meta {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.65rem 1rem;
-  margin-top: 1.1rem;
-  padding-top: 0.85rem;
-  border-top: 1px solid var(--pr-line-warm);
-}
-
-.browse-terms-link {
-  margin: 0;
-  font-size: 0.82rem;
-}
-
-.browse-terms-link a {
-  color: var(--pr-ink-soft);
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 2px;
 }
 
 .browse-plan-rail {

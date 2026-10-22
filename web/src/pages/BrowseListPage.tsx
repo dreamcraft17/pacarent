@@ -137,11 +137,6 @@ export default function BrowseListPage() {
               <li key={item}>{item}</li>
             ))}
           </ul>
-          <div className="browse-hero-meta">
-            <Link className="browse-terms-link" to="/syarat">
-              {productCopy.launchEmpty.ctaTerms}
-            </Link>
-          </div>
         </div>
         <aside className="browse-plan-rail" aria-label="Cara kerja PacaRent">
           <p className="browse-plan-kicker">{productCopy.discover.howItWorks.kicker}</p>
