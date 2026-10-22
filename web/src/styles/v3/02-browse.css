@@ -161,6 +161,32 @@
   font-weight: 700;
 }
 
+.browse-hero-trust {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.9rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.browse-hero-trust li {
+  position: relative;
+  padding-left: 1.1rem;
+  color: var(--pr-ink-soft);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.browse-hero-trust li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--pr-primary);
+  font-weight: 900;
+}
+
 .browse-hero-meta {
   display: flex;
   align-items: center;
@@ -193,8 +219,8 @@
 }
 
 .browse-plan-rail {
-  align-self: stretch;
-  padding: 1.25rem 1.1rem;
+  align-self: start;
+  padding: 1.25rem 1.1rem 1.5rem;
   border-radius: 22px;
   background: var(--pr-ink);
   color: #fffefb;
@@ -331,6 +357,7 @@
 .browse-card {
   display: flex;
   flex-direction: column;
+  height: 100%;
   border: var(--pr-border-width) solid var(--pr-border);
   border-top-width: 8px;
   border-radius: var(--pr-card-radius);

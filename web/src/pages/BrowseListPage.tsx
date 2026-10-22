@@ -136,6 +136,11 @@ export default function BrowseListPage() {
               </Link>
             )}
           </div>
+          <ul className="browse-hero-trust" aria-label="Komitmen keamanan PacaRent">
+            {productCopy.discover.heroProof.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
           <div className="browse-hero-meta">
             <p className="browse-hero-stat">
               <span className="browse-hero-stat-dot" aria-hidden="true" />
