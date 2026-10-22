@@ -64,6 +64,11 @@ public class AuthController(
             return BadRequest(new ApiError("underage", "Usia minimal 18 tahun."));
         }
 
+        if (!BusinessRules.IsValidPassword(req.Password))
+        {
+            return BadRequest(new ApiError("password_too_short", $"Password minimal {BusinessRules.MinPasswordLength} karakter."));
+        }
+
         var normalizedEmail = string.IsNullOrWhiteSpace(req.Email) ? null : req.Email.Trim().ToLowerInvariant();
         var normalizedPhone = string.IsNullOrWhiteSpace(req.Phone) ? null : req.Phone.Trim();
 

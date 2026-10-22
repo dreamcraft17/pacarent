@@ -6,6 +6,7 @@ namespace PacaRent.Core.Rules;
 public static class BusinessRules
 {
     public const int MinAgeYears = 18;
+    public const int MinPasswordLength = 8;
     public const int OtpLength = 6;
     public const int OtpExpiryMinutes = 5;
     public const int MaxFailedLogins = 5;
@@ -35,6 +36,9 @@ public static class BusinessRules
 
         return age >= MinAgeYears;
     }
+
+    public static bool IsValidPassword(string? password) =>
+        !string.IsNullOrWhiteSpace(password) && password.Length >= MinPasswordLength;
 
     public static bool IsValidMeetingLocation(string location) =>
         !string.IsNullOrWhiteSpace(location) && location.Trim().Length >= 3;
