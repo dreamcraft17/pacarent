@@ -157,7 +157,7 @@ export default function BookingsPage() {
       alert(productCopy.booking.shareNoContact);
       return;
     }
-    const partnerName = partnerNames[b.partnerId] || 'pendamping';
+    const partnerName = partnerNames[b.partnerId] || 'pacar sewaan';
     const when = new Date(b.scheduledAt).toLocaleString('id-ID');
     const message = productCopy.booking.shareMessage(partnerName, when, b.meetingLocation);
     const link = waShareLink(phone, message);

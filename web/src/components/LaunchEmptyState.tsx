@@ -63,7 +63,7 @@ export default function LaunchEmptyState({
             <div className="launch-preview-topline">
               <span className="browse-card-vibe">{productCopy.discover.defaultCategoryLabel}</span>
             </div>
-            <p className="launch-preview-name">Nama pendamping</p>
+            <p className="launch-preview-name">Nama pacar sewaan</p>
             <p className="launch-preview-rate">
               Rp 000.000<span>/jam</span>
             </p>

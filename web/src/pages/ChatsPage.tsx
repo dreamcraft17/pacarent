@@ -116,7 +116,7 @@ export default function ChatsPage() {
       setScheduleCategories(categories);
       if (categories[0]) setScheduleForm((prev) => ({ ...prev, categoryId: String(categories[0].id) }));
     } catch (error) {
-      setScheduleError('Kategori pendampingnya nggak kebaca. Coba lagi ya.');
+      setScheduleError('Kategori pacar sewaannya nggak kebaca. Coba lagi ya.');
       console.error(error);
     }
   };

@@ -96,7 +96,7 @@ export default function PartnerApplyPage() {
               required
             />
           )}
-          <button type="submit">Bikin profil pendamping</button>
+          <button type="submit">Bikin profil pacar sewaan</button>
         </form>
         {msg && <p className="v3-muted">{msg}</p>}
       </Panel>
