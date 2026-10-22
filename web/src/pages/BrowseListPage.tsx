@@ -98,6 +98,7 @@ export default function BrowseListPage() {
             })()}
           </h1>
           <p className="browse-tagline">{productCopy.discover.tagline}</p>
+          <p className="browse-tagline-disclaimer">{productCopy.discover.taglineDisclaimer}</p>
           <p className="browse-dek">{productCopy.discover.lead}</p>
           <div className="browse-hero-actions">
             <a className="browse-hero-action browse-hero-action--primary" href="#profil">

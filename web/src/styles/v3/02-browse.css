@@ -48,6 +48,13 @@
   color: var(--pr-ink-soft);
 }
 
+.browse-tagline-disclaimer {
+  margin: 0.25rem 0 0;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--pr-muted);
+}
+
 .browse-dek {
   max-width: 36rem;
   margin: 0.9rem 0 0;

@@ -15,6 +15,7 @@ export const productCopy = {
     eyebrow: 'LAGI BUTUH SIAPA?',
     title: 'Butuh temen? Lu sendiri?',
     tagline: 'Rental pacar, bukan cari jodoh.',
+    taglineDisclaimer: 'Tapi kalau beneran jadian... yaudah, bukan tanggung jawab kita ya 😄',
     lead: 'Butuh yang nemenin ke acara, makan, jalan, atau sekadar ngobrol? Pilih pacar sewaan yang cocok, chat dulu, baru gas.',
     heroCtaPrimary: 'Cari pacar sewaan ↓',
     heroCtaRegister: 'Mau ditemenin?',
