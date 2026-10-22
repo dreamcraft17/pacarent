@@ -82,10 +82,6 @@ export default function BrowseListPage() {
     document.getElementById('profil')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  const profileCountLabel = loading
-    ? 'Lagi muat…'
-    : productCopy.discover.profileCount(partners.length);
-
   return (
     <div className="browse-home v3-page v3-page--wide">
       <header className="browse-masthead" aria-labelledby="browse-title">
@@ -185,9 +181,6 @@ export default function BrowseListPage() {
             onChange={setCity}
           />
         </div>
-        <p className="browse-count" aria-live="polite">
-          {profileCountLabel}
-        </p>
       </div>
 
       {loadError && (

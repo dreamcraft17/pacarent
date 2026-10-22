@@ -298,18 +298,6 @@
   min-width: min(100%, 420px);
 }
 
-.browse-count {
-  margin: 0;
-  padding: 0.35rem 0.85rem;
-  border-radius: 999px;
-  border: 1px solid #d8d3cc;
-  background: var(--pr-paper);
-  color: var(--pr-ink-soft);
-  font-size: 0.82rem;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
 .browse-alert {
   display: flex;
   flex-wrap: wrap;

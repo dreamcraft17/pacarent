@@ -157,12 +157,6 @@ textarea {
     font-size: 0.8rem;
   }
 
-  .browse-count {
-    justify-self: start;
-    padding: 0.3rem 0.65rem;
-    font-size: 0.74rem;
-  }
-
   .browse-grid {
     grid-template-columns: 1fr;
     gap: 0.9rem;
@@ -481,21 +475,6 @@ textarea {
     min-height: 42px;
     border-radius: 12px;
     box-shadow: 0 2px 0 rgb(16 47 49 / 6%);
-  }
-
-  .browse-count {
-    width: fit-content;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    font-size: 0.76rem;
-  }
-
-  .browse-count::before {
-    content: '•';
-    margin-right: 0.35rem;
-    color: var(--pr-primary);
-    font-size: 1.2em;
   }
 
   .v3-main {

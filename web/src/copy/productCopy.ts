@@ -42,7 +42,6 @@ export const productCopy = {
     toolbarKicker: 'LAGI BUTUH DITEMENIN?',
     toolbarTitle: 'Lo mau ditemenin ngapain?',
     defaultCategoryLabel: 'Semua kebutuhan',
-    profileCount: (n: number) => (n === 1 ? '1 pacar sewaan available' : `${n} pacar sewaan buat lo pilih`),
     cardTeaser: 'Siap nemenin lo',
     ctaProfile: 'Lihat & chat',
     filterEmptyTitle: 'Kosong nih',
