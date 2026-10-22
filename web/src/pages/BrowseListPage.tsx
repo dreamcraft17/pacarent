@@ -86,7 +86,16 @@ export default function BrowseListPage() {
         <div className="browse-hero">
           <p className="browse-kicker">{productCopy.discover.eyebrow}</p>
           <h1 id="browse-title">
-            Cari temen <mark className="pr-hl">ngopi?</mark>
+            {(() => {
+              const words = productCopy.discover.title.trim().split(' ');
+              const last = words.pop();
+              return (
+                <>
+                  {words.join(' ')}{words.length > 0 ? ' ' : ''}
+                  <mark className="pr-hl">{last}</mark>
+                </>
+              );
+            })()}
           </h1>
           <p className="browse-tagline">{productCopy.discover.tagline}</p>
           <p className="browse-dek">{productCopy.discover.lead}</p>
