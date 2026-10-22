@@ -46,6 +46,12 @@ body {
   background: var(--pr-primary-soft);
 }
 
+/* The hero owns the primary conversion on desktop; the sticky CTA is useful
+   on mobile where the hero action quickly leaves the viewport. */
+.v3-topbar-actions .v3-topbar-cta {
+  display: none;
+}
+
 .v3-page-head {
   margin-bottom: 1.1rem;
 }
@@ -151,12 +157,17 @@ body {
   color: var(--pr-danger);
 }
 
-input,
+input:not([type='checkbox']):not([type='radio']),
 select,
 textarea {
   border: var(--pr-border-width) solid var(--pr-border) !important;
   border-radius: 12px !important;
   background: var(--pr-paper) !important;
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: var(--pr-primary);
 }
 
 input:focus,
@@ -701,5 +712,11 @@ textarea:focus,
   }
   .v3-booking-profile-copy {
     padding: 1.2rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .v3-topbar-actions .v3-topbar-cta {
+    display: inline-flex;
   }
 }

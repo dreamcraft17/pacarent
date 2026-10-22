@@ -327,7 +327,7 @@ h4,
   margin-top: 0;
 }
 
-.v3-form input,
+.v3-form input:not([type='checkbox']):not([type='radio']),
 .v3-form select,
 .v3-form textarea {
   width: 100%;
@@ -337,6 +337,22 @@ h4,
   background: #fff;
   font: inherit;
   color: var(--pr-text);
+}
+
+.v3-checkbox-label {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 0.55rem;
+  cursor: pointer;
+}
+
+.v3-checkbox-label input[type='checkbox'] {
+  flex-shrink: 0;
+  width: 1.15rem !important;
+  height: 1.15rem;
+  margin-top: 0.1rem;
+  accent-color: var(--pr-primary);
+  cursor: pointer;
 }
 
 .v3-form textarea {
@@ -392,6 +408,47 @@ h4,
 .v3-error {
   color: var(--pr-danger);
   font-size: 0.9rem;
+}
+
+.v3-field-error {
+  margin: 0.3rem 0 0;
+  color: var(--pr-danger);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.v3-field-hint {
+  margin: 0.3rem 0 0;
+  color: var(--pr-muted);
+  font-size: 0.78rem;
+}
+
+.v3-password-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.v3-password-field input {
+  padding-right: 6rem;
+}
+
+.v3-password-toggle {
+  position: absolute;
+  right: 0.5rem;
+  padding: 0.3rem 0.6rem !important;
+  min-height: auto !important;
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  color: var(--pr-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.v3-password-toggle:hover {
+  text-decoration: underline;
 }
 
 .v3-link {

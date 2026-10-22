@@ -83,8 +83,9 @@ export default function PartnerApplyPage() {
           />
           <p className="v3-field-hint">Tulis dengan gaya lo sendiri biar orang tahu lo bisa diajak ngapain.</p>
           {categories.map((c) => (
-            <label key={c.id}>
-              <input type="checkbox" checked={selected.includes(c.id)} onChange={() => toggle(c.id)} /> {c.name}
+            <label key={c.id} className="v3-checkbox-label">
+              <input type="checkbox" checked={selected.includes(c.id)} onChange={() => toggle(c.id)} />
+              <span>{c.name}</span>
             </label>
           ))}
           {categories.some((c) => c.name.toLowerCase() === 'lainnya' && selected.includes(c.id)) && (
