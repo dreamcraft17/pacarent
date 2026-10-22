@@ -142,14 +142,6 @@ export default function BrowseListPage() {
             ))}
           </ul>
           <div className="browse-hero-meta">
-            <p className="browse-hero-stat">
-              <span className="browse-hero-stat-dot" aria-hidden="true" />
-              {loading
-                ? 'Lagi muat profil…'
-                : partners.length > 0
-                  ? `${partners.length} pacar sewaan siap nemenin sekarang`
-                  : 'Baru mulai di Jabodetabek — jadi yang pertama tampil'}
-            </p>
             <Link className="browse-terms-link" to="/syarat">
               {productCopy.launchEmpty.ctaTerms}
             </Link>
