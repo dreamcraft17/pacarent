@@ -456,13 +456,16 @@ textarea:focus,
 }
 
 .conversation-messages {
-  min-height: 16rem;
-  max-height: 30rem;
+  min-height: 10rem;
+  max-height: 28rem;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
-  padding: 1rem 0;
+  padding: 1rem;
+  border: var(--pr-border-width) solid var(--pr-border);
+  border-radius: 18px;
+  background: var(--pr-mint);
 }
 
 .conversation-message {
