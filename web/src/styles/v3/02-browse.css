@@ -276,10 +276,10 @@
 
 .browse-filters {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.55rem;
   flex: 1;
-  min-width: min(100%, 420px);
+  min-width: min(100%, 620px);
 }
 
 .browse-filter-field { display: grid; gap: 0.3rem; min-width: 0; }
