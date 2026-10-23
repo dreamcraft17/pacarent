@@ -27,6 +27,7 @@ public class PartnersController(
     public async Task<IActionResult> Search(
         [FromQuery] int? category,
         [FromQuery] string? city,
+        [FromQuery] string? gender,
         [FromQuery] DateTime? date,
         [FromQuery] decimal? minPrice,
         [FromQuery] decimal? maxPrice,
@@ -50,6 +51,11 @@ public class PartnersController(
             query = query.Where(u =>
                 u.Profile!.City.ToLower().Contains(c)
                 || c.Contains(u.Profile!.City.ToLower()));
+        }
+
+        if (!string.IsNullOrWhiteSpace(gender) && Enum.TryParse<Gender>(gender, true, out var parsedGender))
+        {
+            query = query.Where(u => u.Profile!.Gender == parsedGender);
         }
 
         var partners = await query.Take(100).ToListAsync(ct);

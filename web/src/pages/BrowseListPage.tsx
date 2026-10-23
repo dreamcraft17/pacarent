@@ -31,6 +31,7 @@ export default function BrowseListPage() {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [category, setCategory] = useState('');
   const [city, setCity] = useState('');
+  const [gender, setGender] = useState('');
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
 
@@ -48,6 +49,7 @@ export default function BrowseListPage() {
     const q = new URLSearchParams();
     if (category) q.set('category', category);
     if (city) q.set('city', city);
+    if (gender) q.set('gender', gender);
     api<Partner[]>(`/api/partners?${q}`)
       .then(setPartners)
       .catch(() => {
@@ -55,7 +57,7 @@ export default function BrowseListPage() {
         setPartners([]);
       })
       .finally(() => setLoading(false));
-  }, [category, city]);
+  }, [category, city, gender]);
 
   useEffect(() => {
     load();
@@ -71,9 +73,19 @@ export default function BrowseListPage() {
 
   const cityOptions = useMemo(() => jabodetabekFilterOptions('Semua kota (Jabodetabek)'), []);
 
+  const genderOptions = useMemo(
+    () => [
+      { value: '', label: 'Semua' },
+      { value: 'Male', label: 'Pria' },
+      { value: 'Female', label: 'Wanita' },
+    ],
+    [],
+  );
+
   const resetFilters = () => {
     setCategory('');
     setCity('');
+    setGender('');
   };
 
   const chooseMoment = (label: string) => {
@@ -182,6 +194,16 @@ export default function BrowseListPage() {
               onChange={setCity}
             />
           </div>
+          <div className="browse-filter-field">
+            <span className="browse-filter-label">Jenis kelamin</span>
+            <FilterMenu
+              label="Jenis kelamin"
+              placeholder="Semua"
+              value={gender}
+              options={genderOptions}
+              onChange={setGender}
+            />
+          </div>
         </div>
       </div>
 
@@ -281,7 +303,7 @@ export default function BrowseListPage() {
         </div>
       )}
 
-      {!loading && !loadError && partners.length === 0 && !category && !city && (
+      {!loading && !loadError && partners.length === 0 && !category && !city && !gender && (
         <LaunchEmptyState
           id="browse-launch-title"
           showUserRegister
@@ -290,7 +312,7 @@ export default function BrowseListPage() {
         />
       )}
 
-      {!loading && !loadError && partners.length === 0 && (category || city) && (
+      {!loading && !loadError && partners.length === 0 && (category || city || gender) && (
         <section className="browse-empty-filter" aria-labelledby="filter-empty-title">
           <h2 id="filter-empty-title">{productCopy.discover.filterEmptyTitle}</h2>
           <p>{productCopy.discover.filterEmptyLead}</p>
