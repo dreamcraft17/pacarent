@@ -38,6 +38,7 @@ export default function PartnerDetailPage() {
   if (!data) return <p className="v3-muted">Lagi muat profil…</p>;
   const partner = data.partner;
   const photoSrc = apiAssetUrl(partner.profile?.photoUrl);
+  const chatCopy = productCopy.chat;
 
   return (
     <div className="v3-booking v3-conversation-start">
@@ -65,16 +66,26 @@ export default function PartnerDetailPage() {
       </aside>
 
       <div className="v3-booking-form-col">
-        <Panel title="Chat aja dulu">
+        <Panel title={productCopy.booking.detailPanel}>
           <form className="v3-form" onSubmit={startChat}>
-          <p className="v3-conversation-lead">Belum perlu tentuin tanggal, durasi, atau tempat. Kenalan dulu, bahas maunya apa, baru atur detail kalau udah sama-sama oke.</p>
-            <label htmlFor="opening-message">Mau bilang apa? <span className="v3-muted">(opsional)</span></label>
-            <textarea id="opening-message" value={openingMessage} onChange={(e) => setOpeningMessage(e.target.value)} placeholder="Hai, lagi available buat nemenin ngopi atau nongkrong?" rows={5} />
-            <button type="submit">Chat sekarang</button>
+          <p className="v3-conversation-lead">{productCopy.booking.form.openingLead}</p>
+            <label htmlFor="opening-message">{productCopy.booking.form.notes}</label>
+            <textarea id="opening-message" value={openingMessage} onChange={(e) => setOpeningMessage(e.target.value)} placeholder={productCopy.booking.form.openingPlaceholder} rows={5} />
+            <div className="booking-opening-prompts" aria-label="Pilihan pembuka chat">
+              <span>{chatCopy.openingPrompt}</span>
+              <div className="booking-chat-starters">
+                {chatCopy.starters.map((starter) => (
+                  <button key={starter} type="button" className="booking-chat-starter" onClick={() => setOpeningMessage(starter)}>
+                    {starter}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <button type="submit">{productCopy.booking.submit}</button>
             <ul className="booking-policy">
-              <li>Jadwal, durasi, tempat, dan deal dibahas langsung di chat.</li>
-              <li>Ketemuan pertama? Pilih tempat umum yang ramai.</li>
-              <li>Kalau udah sepakat, baru lanjut bikin jadwal di PacaRent.</li>
+              <li>{productCopy.booking.form.policyChat}</li>
+              <li>{productCopy.booking.form.policySafety}</li>
+              <li>{productCopy.booking.form.policySchedule}</li>
               <li>Sebelum gas, baca <Link to="/syarat" className="v3-link">S&amp;K</Link>.</li>
             </ul>
           </form>

@@ -1555,6 +1555,8 @@
 .booking-chat-empty strong { color: var(--pr-ink); font-size: 0.9rem; }
 .booking-chat-empty p { margin: 0.25rem 0 0.75rem; color: var(--pr-muted); font-size: 0.82rem; line-height: 1.45; }
 .booking-chat-starters { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.booking-opening-prompts { display: grid; gap: 0.45rem; margin: -0.35rem 0 1rem; }
+.booking-opening-prompts > span { color: var(--pr-muted); font-size: 0.76rem; font-weight: 700; }
 .booking-chat-starter {
   padding: 0.5rem 0.7rem;
   border: var(--pr-border-width) solid var(--pr-border);
