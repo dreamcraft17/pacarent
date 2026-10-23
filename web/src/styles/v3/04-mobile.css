@@ -115,10 +115,10 @@ textarea {
     gap: 0.8rem;
     margin-bottom: 1rem;
     padding: 1rem;
-    border-color: #d6e4de;
+    border-color: var(--pr-ink);
     border-radius: 22px;
-    background: linear-gradient(145deg, #fffefb 0%, #f1f7f3 100%);
-    box-shadow: 0 10px 24px rgb(16 47 49 / 8%);
+    background: linear-gradient(145deg, #0b5b54 0%, var(--pr-primary) 100%);
+    box-shadow: 5px 5px 0 var(--pr-accent);
   }
 
   .browse-toolbar-label {
@@ -132,7 +132,17 @@ textarea {
     line-height: 1.15;
   }
 
+  .browse-toolbar-label small {
+    color: #c9e4dc;
+    font-size: 0.78rem;
+  }
+
   .browse-toolbar-kicker {
+    width: fit-content;
+    padding: 0.22rem 0.5rem;
+    border-radius: 999px;
+    background: var(--pr-accent);
+    color: var(--pr-ink);
     font-size: 0.8rem;
     letter-spacing: 0.02em;
     text-transform: none;
@@ -147,7 +157,7 @@ textarea {
 
   .browse-filters .filter-menu-trigger {
     min-height: 48px;
-    border-color: #d4ddd8;
+    border-color: transparent;
     border-radius: 14px;
     background: #fffefb;
     box-shadow: 0 2px 0 rgb(16 47 49 / 4%);
@@ -440,12 +450,11 @@ textarea {
     display: grid;
     gap: 0.65rem;
     margin: 0 0 0.85rem;
-    padding: 0.25rem 0 0.55rem;
-    border: 0;
-    border-bottom: 1px solid rgb(16 47 49 / 12%);
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
+    padding: 1rem;
+    border: var(--pr-border-width) solid var(--pr-ink);
+    border-radius: 20px;
+    background: linear-gradient(145deg, #0b5b54 0%, var(--pr-primary) 100%);
+    box-shadow: 5px 5px 0 var(--pr-accent);
   }
 
   .browse-toolbar-label {
@@ -453,11 +462,6 @@ textarea {
   }
 
   .browse-toolbar-kicker {
-    width: fit-content;
-    padding: 0.22rem 0.5rem;
-    border-radius: 999px;
-    background: var(--pr-accent);
-    color: var(--pr-ink);
     font-size: 0.68rem;
     font-weight: 800;
   }
@@ -469,6 +473,10 @@ textarea {
 
   .browse-filters {
     gap: 0.5rem;
+  }
+
+  .browse-filter-label {
+    font-size: 0.64rem;
   }
 
   .browse-filters .filter-menu-trigger {

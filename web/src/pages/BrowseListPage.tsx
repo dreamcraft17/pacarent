@@ -158,23 +158,30 @@ export default function BrowseListPage() {
       <div className="browse-toolbar" id="profil">
         <div className="browse-toolbar-label">
           <span className="browse-toolbar-kicker">{productCopy.discover.toolbarKicker}</span>
-          <strong>{productCopy.discover.toolbarTitle}</strong>
+          <strong id="browse-filter-title">{productCopy.discover.toolbarTitle}</strong>
+          <small>Atur filter, terus pilih yang paling nyambung.</small>
         </div>
         <div className="browse-filters">
-          <FilterMenu
-            label="Kategori"
-            placeholder="Kategori"
-            value={category}
-            options={categoryOptions}
-            onChange={setCategory}
-          />
-          <FilterMenu
-            label="Kota"
-            placeholder="Kota"
-            value={city}
-            options={cityOptions}
-            onChange={setCity}
-          />
+          <div className="browse-filter-field">
+            <span className="browse-filter-label">Kebutuhan lo</span>
+            <FilterMenu
+              label="Kebutuhan lo"
+              placeholder="Semua kebutuhan"
+              value={category}
+              options={categoryOptions}
+              onChange={setCategory}
+            />
+          </div>
+          <div className="browse-filter-field">
+            <span className="browse-filter-label">Lokasi</span>
+            <FilterMenu
+              label="Lokasi"
+              placeholder="Semua kota"
+              value={city}
+              options={cityOptions}
+              onChange={setCity}
+            />
+          </div>
         </div>
       </div>
 
