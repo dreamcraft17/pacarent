@@ -12,6 +12,8 @@ public static class DataSeeder
         "Teman nongkrong",
         "Teman jalan",
         "Teman acara",
+        "Makan",
+        "Ngobrol",
         "Lainnya",
     };
 

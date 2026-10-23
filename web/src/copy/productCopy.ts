@@ -26,6 +26,7 @@ export const productCopy = {
       { label: 'Makan', icon: '♡' },
       { label: 'Jalan', icon: '↗' },
       { label: 'Ngobrol', icon: '•••' },
+      { label: 'Lainnya', icon: '…' },
     ],
     heroProof: ['18+ aja', 'Profil verified', 'Ketemu di tempat rame'],
     earlyAccessBadge: 'Early access',
