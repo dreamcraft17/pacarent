@@ -23,7 +23,7 @@ describe('analytics', () => {
     expect(buf).toHaveLength(1);
     expect(buf[0].name).toBe('test_event');
     expect(buf[0].payload.foo).toBe('bar');
-    expect(buf[0].ts).toBeTruthy();
+    expect(buf[0].ts).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/);
   });
 
   it('records discovery_view as browse', () => {

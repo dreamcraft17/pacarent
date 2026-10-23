@@ -23,6 +23,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PacaRent.Core\PacaRent.Core.csproj" />
+    <ProjectReference Include="..\PacaRent.Infra\PacaRent.Infra.csproj" />
+    <ProjectReference Include="..\PacaRent.Api\PacaRent.Api.csproj" />
   </ItemGroup>
 
 </Project>
