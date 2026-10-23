@@ -76,7 +76,7 @@ describe('RegisterPage validation', () => {
     await user.type(screen.getByLabelText('Nama lengkap'), 'Budi');
     await user.type(screen.getByLabelText('Tanggal lahir'), '2000-01-01');
     await user.type(screen.getByLabelText('Password'), 'short');
-    await user.click(screen.getByLabelText('Gue setuju'));
+    await user.click(screen.getByLabelText(/Gue setuju/));
     await submit(user);
 
     expect(await screen.findByText((_, el) => el?.id === 'pw-error')).toHaveTextContent('Minimal 8 karakter.');
@@ -114,7 +114,7 @@ describe('RegisterPage validation', () => {
     await user.type(screen.getByLabelText('Nama lengkap'), 'Budi');
     await user.type(screen.getByLabelText('Tanggal lahir'), '2000-01-01');
     await user.type(screen.getByLabelText('Password'), 'password123');
-    await user.click(screen.getByLabelText('Gue setuju'));
+    await user.click(screen.getByLabelText(/Gue setuju/));
     await submit(user);
 
     await waitFor(() => {

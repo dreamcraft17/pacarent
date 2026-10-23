@@ -264,11 +264,13 @@ export default function RegisterPage() {
               aria-invalid={Boolean(fieldErrors.termsAccepted)}
               aria-describedby={fieldErrors.termsAccepted ? 'terms-error' : undefined}
             />
-            <span>Gue setuju</span>
+            <span>
+              Gue setuju sama{' '}
+              <button type="button" className="v3-inline-link" onClick={() => setShowTerms(true)}>
+                Syarat &amp; Ketentuan
+              </button>
+            </span>
           </label>
-          <button type="button" className="v3-inline-link" onClick={() => setShowTerms(true)}>
-            Syarat &amp; Ketentuan
-          </button>
         </div>
         {fieldErrors.termsAccepted && (
           <p id="terms-error" className="v3-field-error" role="alert">
