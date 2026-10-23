@@ -95,6 +95,7 @@ public class AuthController(
                 UserId = userId,
                 FullName = req.FullName.Trim(),
                 BirthDate = req.BirthDate,
+                Gender = req.Gender,
                 City = req.City.Trim()
             }
         };

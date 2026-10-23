@@ -28,6 +28,7 @@ public class UserProfile
     public User User { get; set; } = null!;
     public string FullName { get; set; } = "";
     public DateOnly BirthDate { get; set; }
+    public Gender? Gender { get; set; }
     public string City { get; set; } = "";
     public string? PhotoUrl { get; set; }
     public byte[]? PhotoBlob { get; set; }

@@ -1,3 +1,5 @@
+using PacaRent.Core.Enums;
+
 namespace PacaRent.Api.Models;
 
 public record ApiError(string Code, string Message, object? Detail = null);
@@ -9,7 +11,8 @@ public record AuthRegisterRequest(
     string FullName,
     DateOnly BirthDate,
     string City,
-    bool TermsAccepted);
+    bool TermsAccepted,
+    Gender? Gender = null);
 
 public record AuthVerifyOtpRequest(string Destination, string Code);
 

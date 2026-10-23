@@ -39,6 +39,7 @@ export default function RegisterPage() {
     password: '',
     fullName: '',
     birthDate: '',
+    gender: '',
     city: 'Jakarta Selatan',
     termsAccepted: false,
   });
@@ -103,7 +104,7 @@ export default function RegisterPage() {
         requiresOtp?: boolean;
       }>('/api/auth/register', {
         method: 'POST',
-        body: JSON.stringify({ ...form, termsAccepted: true }),
+        body: JSON.stringify({ ...form, gender: form.gender || null, termsAccepted: true }),
       });
 
       if (data.accessToken && data.refreshToken) {
@@ -195,6 +196,18 @@ export default function RegisterPage() {
             {fieldErrors.birthDate}
           </p>
         )}
+
+        <label htmlFor="gender">Jenis kelamin (opsional)</label>
+        <select
+          id="gender"
+          value={form.gender}
+          onChange={(e) => setForm({ ...form, gender: e.target.value })}
+        >
+          <option value="">Nggak usah dijawab</option>
+          <option value="Male">Pria</option>
+          <option value="Female">Wanita</option>
+          <option value="Undisclosed">Tidak mau menyebutkan</option>
+        </select>
 
         <label htmlFor="city">Kota (Jabodetabek)</label>
         <select
