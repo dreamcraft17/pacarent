@@ -37,7 +37,7 @@ h4,
 .v3-main {
   flex: 1;
   width: 100%;
-  max-width: 1120px;
+  max-width: var(--pr-content-max);
   margin: 0 auto;
   padding: 1.15rem 1.25rem calc(2rem + env(safe-area-inset-bottom));
 }
@@ -264,7 +264,7 @@ h4,
 }
 
 .v3-page--wide {
-  max-width: 1080px;
+  max-width: var(--pr-content-max);
 }
 
 .v3-page-head {

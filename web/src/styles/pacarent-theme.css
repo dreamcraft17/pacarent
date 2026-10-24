@@ -29,6 +29,12 @@
   --pr-card-radius: 14px;
   --pr-pill: 999px;
 
+  /* Layout */
+  /* Scales the page container up on wide desktop monitors instead of
+     capping at a fixed width that leaves huge empty margins on either
+     side; still settles back to a normal max-width on laptop screens. */
+  --pr-content-max: clamp(1120px, 80vw, 1440px);
+
   /* Spacing (kelipatan 4) */
   --pr-space-1: 4px;
   --pr-space-2: 8px;
